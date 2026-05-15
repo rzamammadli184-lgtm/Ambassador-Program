@@ -1,107 +1,45 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AzEstetik - Müşt?ril?r</title>
+    <title>AzEstetik - Müştərilər</title>
     <link rel="stylesheet" href="ambassador_style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="animate-entrance">
-    <div class="app-wrapper">
-        <aside class="sidebar" id="sidebar">
-            <div class="logo-container">
-                <div class="logo-box">Az</div>
-                <div style="font-weight:700; font-size:1.25rem;">AzEstetik</div>
-            </div>
-            <nav class="nav-group">
-                <a href="index.html" class="nav-item "><span class="nav-icon">??</span> Dashboard</a>
-                <a href="ambassador_network.html" class="nav-item "><span class="nav-icon">??</span> Ş?b?k?m</a>
-                <a href="ambassador_bonuses.html" class="nav-item "><span class="nav-icon">??</span> Bonuslar</a>
-                <a href="ambassador_customers.html" class="nav-item active"><span class="nav-icon">??</span> Müşt?ril?r</a>
-                <a href="ambassador_marketing.html" class="nav-item "><span class="nav-icon">??</span> Materiallar</a>
-                <a href="ambassador_academy.html" class="nav-item "><span class="nav-icon">??</span> Akademiya</a>
-                <a href="ambassador_analytics.html" class="nav-item "><span class="nav-icon">??</span> Analitika</a>
-                <a href="ambassador_leaderboard.html" class="nav-item "><span class="nav-icon">??</span> Liderl?r</a>
-                <a href="ambassador_events.html" class="nav-item "><span class="nav-icon">??</span> T?dbirl?r</a>
-                <a href="ambassador_support.html" class="nav-item 0"><span class="nav-icon">??</span> D?st?k</a>
-                <a href="ambassador_settings.html" class="nav-item 1"><span class="nav-icon">??</span> T?nziml?m?l?r</a>
-            </nav>
-            <div style="margin-top:auto; padding-top:20px;">
-                <button class="btn btn-secondary" style="width:100%; justify-content:flex-start;" onclick="toggleTheme()">
-                    <span id="theme-icon">??</span> Dark Mode
-                </button>
-            </div>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <a href="ambassador_dashboard.html" class="brand"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
+            <nav><ul class="nav-list">
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+                <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
+                <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+                <li><a href="ambassador_customers.html" class="nav-link active"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+                <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+                <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+                <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+            </ul></nav>
         </aside>
-
         <main class="main">
-            <header class="header">
-                <div>
-                    <h1 style="margin:0;">Müşt?ril?r</h1>
-                    <p style="color:var(--text-muted); font-size:0.875rem; margin-top:4px;">Müşt?ri bazanızı idar? edin.</p>
-                </div>
-                <div style="display:flex; gap:12px; align-items:center;">
-                    <div class="lang-selector">
-                        <button onclick="changeLang('az')" class="lang-pill" id="btn-az"><img src="https://flagcdn.com/w40/az.png"> AZ</button>
-                        <button onclick="changeLang('en')" class="lang-pill" id="btn-en"><img src="https://flagcdn.com/w40/gb.png"> EN</button>
-                        <button onclick="changeLang('ru')" class="lang-pill" id="btn-ru"><img src="https://flagcdn.com/w40/ru.png"> RU</button>
-                    </div>
-                    <div style="width:40px; height:40px; border-radius:50%; background:#E2E8F0; display:flex; align-items:center; justify-content:center; font-weight:600;">AM</div>
-                </div>
-            </header>
-
-            <div class="grid grid-cols-3">
-    <div class="card"><div class="stat-label">Ümumi Müşt?ril?r</div><div class="stat-value">124</div></div>
-    <div class="card"><div class="stat-label">Aktiv (30 gün)</div><div class="stat-value" style="color:var(--primary);">45</div></div>
-    <div class="card"><div class="stat-label">M?mnuniyy?t</div><div class="stat-value">98%</div></div>
-</div>
-<div class="card">
-    <div class="card-header"><div class="card-title">Müşt?ri Siyahısı</div><button class="btn btn-primary">+ Yeni Müşt?ri</button></div>
-    <div class="table-container"><table>
-        <thead><tr><th>Müşt?ri</th><th>Xidm?t</th><th>Toplam X?rc</th><th>Sizin Bonus</th><th>Status</th></tr></thead>
-        <tbody>
-            <tr><td><div><strong>Aysel M?mm?dova</strong><br><small style="color:var(--text-muted);">+994 50 111 22 33</small></div></td><td>Lazer Epilyasiya</td><td>1,200 ?</td><td>84 ?</td><td><span class="badge badge-success">Daimi</span></td></tr>
-            <tr><td><div><strong>Günel S?f?rova</strong><br><small style="color:var(--text-muted);">+994 70 777 88 99</small></div></td><td>Mezoterapiya</td><td>2,800 ?</td><td>196 ?</td><td><span class="badge badge-success">VIP</span></td></tr>
-            <tr><td><div><strong>Vüqar Hüseynov</strong><br><small style="color:var(--text-muted);">+994 55 444 55 66</small></div></td><td>Cilt Baxımı</td><td>450 ?</td><td>31 ?</td><td><span class="badge badge-warning">Yeni</span></td></tr>
-        </tbody>
-    </table></div>
-</div>
-
+            <header class="header"><div class="header-title"><h1>Müştərilər</h1><p>Müştəri bazanız və onların xidmət tarixçəsi.</p></div></header>
+            <div class="modern-card">
+                <div class="card-title-row"><h2>Müştəri Siyahısı</h2><button class="btn-modern" style="width: auto; margin-top: 0; padding: 10px 20px;">+ Yeni Müştəri</button></div>
+                <table class="modern-table">
+                    <thead><tr><th>AD SOYAD</th><th>XİDMƏT</th><th>TARİX</th><th>MƏBLƏĞ</th></tr></thead>
+                    <tbody>
+                        <tr><td style="font-weight:700;">Günel Məmmədova</td><td>Üz baxımı</td><td>15.05.2026</td><td>85 ₼</td></tr>
+                        <tr><td style="font-weight:700;">Samirə Əliyeva</td><td>Lazer epilyasiya</td><td>14.05.2026</td><td>120 ₼</td></tr>
+                        <tr><td style="font-weight:700;">Fidan Quliyeva</td><td>Mezoterapiya</td><td>13.05.2026</td><td>210 ₼</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </main>
     </div>
-
-    <nav class="mobile-nav">
-        <a href="index.html" class="bottom-nav-item "><span>??</span></a>
-        <a href="ambassador_network.html" class="bottom-nav-item "><span>??</span></a>
-        <a href="ambassador_academy.html" class="bottom-nav-item "><span>??</span></a>
-        <a href="ambassador_settings.html" class="bottom-nav-item 1"><span>??</span></a>
-    </nav>
-
-    <div id="google_translate_element" style="display:none;"></div>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'az', includedLanguages: 'en,ru,az', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
-        }
-        function changeLang(lang) {
-            localStorage.setItem('selected_lang', lang);
-            document.cookie = lang === 'az' ? "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;" : "googtrans=/az/" + lang + "; path=/";
-            window.location.reload();
-        }
-        function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
-            const isDark = document.body.classList.contains('dark-theme');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            document.getElementById('theme-icon').innerText = isDark ? '??' : '??';
-        }
-        document.addEventListener("DOMContentLoaded", () => {
-            if (localStorage.getItem('theme') === 'dark') {
-                document.body.classList.add('dark-theme');
-                document.getElementById('theme-icon').innerText = '??';
-            }
-            const lang = localStorage.getItem('selected_lang') || 'az';
-            document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
-            if(document.getElementById('btn-'+lang)) document.getElementById('btn-'+lang).classList.add('active');
-        });
-    </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>

@@ -1,116 +1,50 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>AzEstetik - Bonuslar</title>
     <link rel="stylesheet" href="ambassador_style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="animate-entrance">
-    <div class="app-wrapper">
-        <aside class="sidebar" id="sidebar">
-            <div class="logo-container">
-                <div class="logo-box">Az</div>
-                <div style="font-weight:700; font-size:1.25rem;">AzEstetik</div>
-            </div>
-            <nav class="nav-group">
-                <a href="index.html" class="nav-item "><span class="nav-icon">??</span> Dashboard</a>
-                <a href="ambassador_network.html" class="nav-item "><span class="nav-icon">??</span> Ş?b?k?m</a>
-                <a href="ambassador_bonuses.html" class="nav-item active"><span class="nav-icon">??</span> Bonuslar</a>
-                <a href="ambassador_customers.html" class="nav-item "><span class="nav-icon">??</span> Müşt?ril?r</a>
-                <a href="ambassador_marketing.html" class="nav-item "><span class="nav-icon">??</span> Materiallar</a>
-                <a href="ambassador_academy.html" class="nav-item "><span class="nav-icon">??</span> Akademiya</a>
-                <a href="ambassador_analytics.html" class="nav-item "><span class="nav-icon">??</span> Analitika</a>
-                <a href="ambassador_leaderboard.html" class="nav-item "><span class="nav-icon">??</span> Liderl?r</a>
-                <a href="ambassador_events.html" class="nav-item "><span class="nav-icon">??</span> T?dbirl?r</a>
-                <a href="ambassador_support.html" class="nav-item 0"><span class="nav-icon">??</span> D?st?k</a>
-                <a href="ambassador_settings.html" class="nav-item 1"><span class="nav-icon">??</span> T?nziml?m?l?r</a>
-            </nav>
-            <div style="margin-top:auto; padding-top:20px;">
-                <button class="btn btn-secondary" style="width:100%; justify-content:flex-start;" onclick="toggleTheme()">
-                    <span id="theme-icon">??</span> Dark Mode
-                </button>
-            </div>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <a href="ambassador_dashboard.html" class="brand"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
+            <nav><ul class="nav-list">
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+                <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
+                <li><a href="ambassador_bonuses.html" class="nav-link active"><i data-lucide="coins"></i> Bonuslar</a></li>
+                <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+                <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+                <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+                <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+            </ul></nav>
         </aside>
-
         <main class="main">
-            <header class="header">
-                <div>
-                    <h1 style="margin:0;">Bonuslar</h1>
-                    <p style="color:var(--text-muted); font-size:0.875rem; margin-top:4px;">Qazanclarınızı v? çıxarış tarixç?nizi izl?yin.</p>
-                </div>
-                <div style="display:flex; gap:12px; align-items:center;">
-                    <div class="lang-selector">
-                        <button onclick="changeLang('az')" class="lang-pill" id="btn-az"><img src="https://flagcdn.com/w40/az.png"> AZ</button>
-                        <button onclick="changeLang('en')" class="lang-pill" id="btn-en"><img src="https://flagcdn.com/w40/gb.png"> EN</button>
-                        <button onclick="changeLang('ru')" class="lang-pill" id="btn-ru"><img src="https://flagcdn.com/w40/ru.png"> RU</button>
-                    </div>
-                    <div style="width:40px; height:40px; border-radius:50%; background:#E2E8F0; display:flex; align-items:center; justify-content:center; font-weight:600;">AM</div>
-                </div>
-            </header>
-
-            <div class="grid grid-cols-3">
-    <div class="card" style="border-left: 4px solid var(--primary);">
-        <div class="stat-label">F?rdi Keşbek (7%)</div>
-        <div class="stat-value">1,420 ?</div>
-    </div>
-    <div class="card" style="border-left: 4px solid #3B82F6;">
-        <div class="stat-label">Ş?b?k? Bonusu (3%)</div>
-        <div class="stat-value">2,450 ?</div>
-    </div>
-    <div class="card" style="border-left: 4px solid #F59E0B;">
-        <div class="stat-label">Xüsusi Bonus</div>
-        <div class="stat-value">3,330 ?</div>
-    </div>
-</div>
-<div class="card">
-    <div class="card-header"><div class="card-title">Çıxarış Tarixç?si</div><button class="btn btn-primary">Çıxarış T?l?b Et</button></div>
-    <div class="table-container"><table>
-        <thead><tr><th>Tarix</th><th>M?bl?ğ</th><th>Metod</th><th>Status</th></tr></thead>
-        <tbody>
-            <tr><td>22 Aprel 2026</td><td style="font-weight:600;">1,500 ?</td><td>Bank Kartı</td><td><span class="badge badge-success">Tamamlandı</span></td></tr>
-            <tr><td>05 Aprel 2026</td><td style="font-weight:600;">2,200 ?</td><td>Nağd</td><td><span class="badge badge-success">Tamamlandı</span></td></tr>
-            <tr><td>15 Mart 2026</td><td style="font-weight:600;">800 ?</td><td>Bank Kartı</td><td><span class="badge badge-success">Tamamlandı</span></td></tr>
-        </tbody>
-    </table></div>
-</div>
-
+            <header class="header"><div class="header-title"><h1>Bonuslar</h1><p>Qazandığınız bonuslar və ödəniş tarixçəsi.</p></div></header>
+            <div class="stats-container">
+                <div class="stat-card"><div class="stat-header">Toplam Bonus</div><div class="stat-value">1,450 ₼</div></div>
+                <div class="stat-card"><div class="stat-header">Bu Ay</div><div class="stat-value">320 ₼</div><div class="stat-badge badge-up">↑ 15%</div></div>
+                <div class="stat-card"><div class="stat-header">Gözləmədə</div><div class="stat-value">120 ₼</div></div>
+            </div>
+            <div class="modern-card">
+                <div class="card-title-row"><h2>Bonus Tarixçəsi</h2></div>
+                <table class="modern-table">
+                    <thead><tr><th>TƏSVİR</th><th>TARİX</th><th>MƏBLƏĞ</th><th>STATUS</th></tr></thead>
+                    <tbody>
+                        <tr><td>Şəbəkə satışı bonusu</td><td>14.05.2026</td><td>+45 ₼</td><td><span class="badge badge-success">Ödənilib</span></td></tr>
+                        <tr><td>Fərdi satış bonusu</td><td>12.05.2026</td><td>+120 ₼</td><td><span class="badge badge-success">Ödənilib</span></td></tr>
+                        <tr><td>Aylıq hədəf bonusu</td><td>01.05.2026</td><td>+150 ₼</td><td><span class="badge badge-success">Ödənilib</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
         </main>
     </div>
-
-    <nav class="mobile-nav">
-        <a href="index.html" class="bottom-nav-item "><span>??</span></a>
-        <a href="ambassador_network.html" class="bottom-nav-item "><span>??</span></a>
-        <a href="ambassador_academy.html" class="bottom-nav-item "><span>??</span></a>
-        <a href="ambassador_settings.html" class="bottom-nav-item 1"><span>??</span></a>
-    </nav>
-
-    <div id="google_translate_element" style="display:none;"></div>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({pageLanguage: 'az', includedLanguages: 'en,ru,az', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, autoDisplay: false}, 'google_translate_element');
-        }
-        function changeLang(lang) {
-            localStorage.setItem('selected_lang', lang);
-            document.cookie = lang === 'az' ? "googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;" : "googtrans=/az/" + lang + "; path=/";
-            window.location.reload();
-        }
-        function toggleTheme() {
-            document.body.classList.toggle('dark-theme');
-            const isDark = document.body.classList.contains('dark-theme');
-            localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            document.getElementById('theme-icon').innerText = isDark ? '??' : '??';
-        }
-        document.addEventListener("DOMContentLoaded", () => {
-            if (localStorage.getItem('theme') === 'dark') {
-                document.body.classList.add('dark-theme');
-                document.getElementById('theme-icon').innerText = '??';
-            }
-            const lang = localStorage.getItem('selected_lang') || 'az';
-            document.querySelectorAll('.lang-pill').forEach(b => b.classList.remove('active'));
-            if(document.getElementById('btn-'+lang)) document.getElementById('btn-'+lang).classList.add('active');
-        });
-    </script>
-    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>lucide.createIcons();</script>
 </body>
 </html>

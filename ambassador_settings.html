@@ -1,90 +1,73 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AzEstetik - T?nziml?m?l?r</title>
+    <title>AzEstetik - Tənzimləmələr</title>
     <link rel="stylesheet" href="ambassador_style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="animate-entrance">
-    <div class="app-wrapper">
-        <aside class="sidebar" id="sidebar">
-            <div class="logo-container">
-                <div class="logo-box">Az</div>
-                <div style="font-weight:700; font-size:1.25rem;">AzEstetik</div>
-            </div>
-            <nav class="nav-group">
-                <a href="index.html" class="nav-item "><span class="nav-icon">??</span> Dashboard</a>
-                <a href="ambassador_network.html" class="nav-item "><span class="nav-icon">??</span> Ş?b?k?m</a>
-                <a href="ambassador_bonuses.html" class="nav-item "><span class="nav-icon">??</span> Bonuslar</a>
-                <a href="ambassador_customers.html" class="nav-item "><span class="nav-icon">??</span> Müşt?ril?r</a>
-                <a href="ambassador_marketing.html" class="nav-item "><span class="nav-icon">??</span> Materiallar</a>
-                <a href="ambassador_academy.html" class="nav-item "><span class="nav-icon">??</span> Akademiya</a>
-                <a href="ambassador_analytics.html" class="nav-item "><span class="nav-icon">??</span> Analitika</a>
-                <a href="ambassador_leaderboard.html" class="nav-item "><span class="nav-icon">??</span> Liderl?r</a>
-                <a href="ambassador_events.html" class="nav-item "><span class="nav-icon">??</span> T?dbirl?r</a>
-                <a href="ambassador_support.html" class="nav-item "><span class="nav-icon">??</span> D?st?k</a>
-                <a href="ambassador_settings.html" class="nav-item active"><span class="nav-icon">??</span> T?nziml?m?l?r</a>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <a href="ambassador_dashboard.html" class="brand">
+                <div class="brand-icon">Az</div>
+                <span class="brand-name">AzEstetik</span>
+            </a>
+            <nav>
+                <ul class="nav-list">
+                    <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+                    <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
+                    <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+                    <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                    <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+                    <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                    <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                    <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+                    <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                    <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+                    <li><a href="ambassador_settings.html" class="nav-link active"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+                </ul>
             </nav>
-            <div style="margin-top:auto; padding-top:20px;">
-                <button class="btn btn-secondary" style="width:100%; justify-content:flex-start;" onclick="toggleTheme()">
-                    <span id="theme-icon">??</span> Dark Mode
-                </button>
-            </div>
         </aside>
+
+        <!-- Main Content -->
         <main class="main">
             <header class="header">
-                <div><h1 style="margin:0;">T?nziml?m?l?r</h1><p style="color:var(--text-muted); font-size:0.875rem; margin-top:4px;">Hesab v? profil parametrl?riniz.</p></div>
-                <div style="display:flex; gap:12px; align-items:center;">
-                    <div class="lang-selector">
-                        <button onclick="changeLang('az')" class="lang-pill" id="btn-az"><img src="https://flagcdn.com/w40/az.png"> AZ</button>
-                        <button onclick="changeLang('en')" class="lang-pill" id="btn-en"><img src="https://flagcdn.com/w40/gb.png"> EN</button>
-                        <button onclick="changeLang('ru')" class="lang-pill" id="btn-ru"><img src="https://flagcdn.com/w40/ru.png"> RU</button>
-                    </div>
-                    <div style="width:40px; height:40px; border-radius:50%; background:#E2E8F0; display:flex; align-items:center; justify-content:center; font-weight:600;">AM</div>
+                <div class="header-title">
+                    <h1>Tənzimləmələr</h1>
+                    <p>Profil məlumatlarınızı və təhlükəsizlik seçimlərinizi idarə edin.</p>
                 </div>
             </header>
-            <div class="grid grid-cols-2">
-    <div class="card">
-        <div class="card-header"><div class="card-title">Ş?xsi M?lumatlar</div></div>
-        <div style="display:flex; flex-direction:column; gap:16px;">
-            <div><label style="font-size:0.85rem; font-weight:500; color:var(--text-muted); display:block; margin-bottom:6px;">Ad Soyad</label><input type="text" value="Ali Mammadov" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:0.9rem; background:var(--bg);"></div>
-            <div><label style="font-size:0.85rem; font-weight:500; color:var(--text-muted); display:block; margin-bottom:6px;">E-poçt</label><input type="email" value="ali@azestetik.az" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:0.9rem; background:var(--bg);"></div>
-            <div><label style="font-size:0.85rem; font-weight:500; color:var(--text-muted); display:block; margin-bottom:6px;">Telefon</label><input type="tel" value="+994 50 123 45 67" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:0.9rem; background:var(--bg);"></div>
-            <button class="btn btn-primary" style="width:100%;">Yadda Saxla</button>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header"><div class="card-title">T?hlük?sizlik</div></div>
-        <div style="display:flex; flex-direction:column; gap:16px;">
-            <div><label style="font-size:0.85rem; font-weight:500; color:var(--text-muted); display:block; margin-bottom:6px;">Cari Şifr?</label><input type="password" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:0.9rem; background:var(--bg);"></div>
-            <div><label style="font-size:0.85rem; font-weight:500; color:var(--text-muted); display:block; margin-bottom:6px;">Yeni Şifr?</label><input type="password" style="width:100%; padding:10px 14px; border:1px solid var(--border); border-radius:var(--radius-sm); font-size:0.9rem; background:var(--bg);"></div>
-            <button class="btn btn-secondary" style="width:100%;">Şifr?ni D?yiş</button>
-        </div>
-        <hr style="margin:24px 0; border:0; border-top:1px solid var(--border);">
-        <div class="card-header"><div class="card-title">Bildirişl?r</div></div>
-        <div style="display:flex; flex-direction:column; gap:12px; margin-top:12px;">
-            <label style="display:flex; align-items:center; gap:10px; font-size:0.9rem; cursor:pointer;"><input type="checkbox" checked> E-poçt bildirişl?ri</label>
-            <label style="display:flex; align-items:center; gap:10px; font-size:0.9rem; cursor:pointer;"><input type="checkbox" checked> SMS bildirişl?r</label>
-            <label style="display:flex; align-items:center; gap:10px; font-size:0.9rem; cursor:pointer;"><input type="checkbox"> Push bildirişl?r</label>
-        </div>
-    </div>
-</div>
+
+            <div class="modern-card" style="max-width: 600px;">
+                <div style="display: flex; gap: 24px; align-items: center; margin-bottom: 32px;">
+                    <div style="width: 80px; height: 80px; border-radius: 20px; background: var(--card-border); display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 800;">AM</div>
+                    <div>
+                        <h3 style="margin-bottom: 4px;">Aysel Məmmədova</h3>
+                        <p style="color: var(--text-muted); font-size: 0.875rem;">Premium Ambassador</p>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <div>
+                        <label style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 8px; color: var(--text-muted);">AD SOYAD</label>
+                        <input type="text" value="Aysel Məmmədova" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); padding: 12px 16px; border-radius: 10px; color: white; font-weight: 500;">
+                    </div>
+                    <div>
+                        <label style="display: block; font-size: 0.875rem; font-weight: 600; margin-bottom: 8px; color: var(--text-muted);">E-POÇT</label>
+                        <input type="email" value="aysel@azestetik.az" style="width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); padding: 12px 16px; border-radius: 10px; color: white; font-weight: 500;">
+                    </div>
+                </div>
+                
+                <button class="btn-modern" style="margin-top: 40px;">Dəyişiklikləri Saxla</button>
+            </div>
         </main>
     </div>
-    <nav class="mobile-nav">
-        <a href="index.html" class="bottom-nav-item "><span>??</span></a>
-        <a href="ambassador_network.html" class="bottom-nav-item "><span>??</span></a>
-        <a href="ambassador_academy.html" class="bottom-nav-item "><span>??</span></a>
-        <a href="ambassador_settings.html" class="bottom-nav-item active"><span>??</span></a>
-    </nav>
-    <div id="google_translate_element" style="display:none;"></div>
+
     <script>
-        function googleTranslateElementInit(){new google.translate.TranslateElement({pageLanguage:'az',includedLanguages:'en,ru,az',layout:google.translate.TranslateElement.InlineLayout.SIMPLE,autoDisplay:false},'google_translate_element');}
-        function changeLang(l){localStorage.setItem('selected_lang',l);document.cookie=l==='az'?"googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;":"googtrans=/az/"+l+"; path=/";window.location.reload();}
-        function toggleTheme(){document.body.classList.toggle('dark-theme');var d=document.body.classList.contains('dark-theme');localStorage.setItem('theme',d?'dark':'light');document.getElementById('theme-icon').innerText=d?'??':'??';}
-        document.addEventListener("DOMContentLoaded",()=>{if(localStorage.getItem('theme')==='dark'){document.body.classList.add('dark-theme');document.getElementById('theme-icon').innerText='??';}var l=localStorage.getItem('selected_lang')||'az';document.querySelectorAll('.lang-pill').forEach(b=>b.classList.remove('active'));if(document.getElementById('btn-'+l))document.getElementById('btn-'+l).classList.add('active');});
+        lucide.createIcons();
     </script>
-    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
