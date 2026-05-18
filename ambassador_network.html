@@ -8,111 +8,286 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+    <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-drawer" id="drawer">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
+            <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
+        </div>
+        <nav><ul class="nav-list">
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li><a href="ambassador_network.html" class="nav-link active"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
+            <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+            <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+            <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+            <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+            <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+            <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+        </ul></nav>
+    </div>
+
     <div class="app-container">
-        <!-- Sidebar -->
         <aside class="sidebar">
-            <a href="ambassador_dashboard.html" class="brand">
-                <div class="brand-icon">Az</div>
-                <span class="brand-name">AzEstetik</span>
-            </a>
-            
-            <nav>
-                <ul class="nav-list">
-                    <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
-                    <li><a href="ambassador_network.html" class="nav-link active"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
-                    <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
-                    <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-                    <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
-                    <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
-                    <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
-                    <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
-                    <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
-                    <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
-                    <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
-                </ul>
-            </nav>
+            <a href="ambassador_dashboard.html" class="brand"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
+            <nav><ul class="nav-list">
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+                <li><a href="ambassador_network.html" class="nav-link active"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
+                <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+                <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+                <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+                <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+                <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+            </ul></nav>
         </aside>
 
-        <!-- Main Content -->
         <main class="main">
             <header class="header">
-                <div class="header-title">
-                    <h1>Şəbəkəm</h1>
-                    <p>Komandanızın performansını izləyin və böyüdün.</p>
-                </div>
-                
-                <div class="header-actions">
-                    <div class="lang-box">
-                        <button class="lang-btn active"><img src="https://flagcdn.com/w40/az.png" width="16"> AZ</button>
-                        <button class="lang-btn"><img src="https://flagcdn.com/w40/gb.png" width="16"> EN</button>
+                <div style="display:flex; align-items:center; gap:16px;">
+                    <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
+                    <div class="header-title">
+                        <h1>Şəbəkəm</h1>
+                        <p>Excel-dən gələn real vaxt məlumatları ilə rəsmi Ambassador bazası.</p>
                     </div>
                 </div>
             </header>
 
             <div class="stats-container">
                 <div class="stat-card">
-                    <div class="stat-header">Birbaşa Üzvlər</div>
-                    <div class="stat-value">12</div>
-                    <div class="stat-trend badge-up">↑ 3 bu ay</div>
+                    <div class="stat-header">Ümumi Ambassador</div>
+                    <div class="stat-value" id="total-count">0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-header">Toplam Şəbəkə</div>
-                    <div class="stat-value">48</div>
-                    <div class="stat-trend badge-up">↑ 8 bu rüb</div>
+                    <div class="stat-header">Aktiv Üzvlər</div>
+                    <div class="stat-value" id="active-count" style="color: var(--primary);">0</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-header">Şəbəkə Dövriyyəsi</div>
-                    <div class="stat-value" style="color:var(--primary);">45,200 ₼</div>
-                    <div class="stat-trend badge-up">↑ 18%</div>
+                    <div class="stat-header">Ümumi Toplanmış Bal</div>
+                    <div class="stat-value" id="total-points">0</div>
                 </div>
             </div>
 
+            <!-- Search and Filter Bar -->
+            <div class="modern-card" style="margin-bottom: 24px; padding: 16px;">
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px; position: relative;">
+                        <input type="text" id="search-input" placeholder="Ad, ID və ya Qrup Rəhbəri ilə axtar..." style="width: 100%; padding: 12px 16px 12px 40px; background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 10px; color: white; font-size: 0.9rem;">
+                        <i data-lucide="search" style="position: absolute; left: 14px; top: 14px; width: 18px; height: 18px; color: var(--text-muted);"></i>
+                    </div>
+                    <select id="status-filter" style="padding: 12px 16px; background: var(--sidebar); border: 1px solid var(--card-border); border-radius: 10px; color: white; cursor: pointer;">
+                        <option value="all">Bütün Statuslar</option>
+                        <option value="A">Aktiv (A)</option>
+                        <option value="K">Klassik/Passiv (K)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Live Table -->
             <div class="modern-card">
                 <div class="card-title-row">
-                    <h2>Komanda Üzvləri</h2>
-                    <button class="btn-modern" style="width: auto; margin-top: 0; padding: 10px 20px;">+ Yeni Dəvət</button>
+                    <h2>Ambassador Siyahısı</h2>
                 </div>
-                
                 <table class="modern-table">
                     <thead>
                         <tr>
-                            <th>AD SOYAD</th>
-                            <th>SƏVİYYƏ</th>
-                            <th>DÖVRİYYƏ</th>
-                            <th>BONUS</th>
-                            <th>STATUS</th>
+                            <th>ID Code</th>
+                            <th>Ad Soyad</th>
+                            <th>Qrup Rəhbəri</th>
+                            <th>Müqavilə Tarixi</th>
+                            <th>Bal</th>
+                            <th>Səviyyə</th>
+                            <th>Telefon</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="table-body">
                         <tr>
-                            <td style="font-weight:700;">Nigar Əliyeva</td>
-                            <td>Ambassador-1</td>
-                            <td>4,500 ₼</td>
-                            <td style="color: var(--primary); font-weight: 700;">315 ₼</td>
-                            <td><span class="badge badge-success">Aktiv</span></td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:700;">Rəşad Səmədov</td>
-                            <td>Kompanyon</td>
-                            <td>1,200 ₼</td>
-                            <td style="color: var(--primary); font-weight: 700;">84 ₼</td>
-                            <td><span class="badge badge-success">Aktiv</span></td>
-                        </tr>
-                        <tr>
-                            <td style="font-weight:700;">Leyla Quliyeva</td>
-                            <td>Müştəri</td>
-                            <td>850 ₼</td>
-                            <td style="color: var(--primary); font-weight: 700;">59 ₼</td>
-                            <td><span class="badge badge-warning" style="background: rgba(245, 158, 11, 0.1); color: #F59E0B; padding: 4px 10px; border-radius: 100px; font-size: 0.75rem; font-weight: 700;">Passiv</span></td>
+                            <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 40px;">Yüklənir...</td>
                         </tr>
                     </tbody>
                 </table>
+
+                <!-- Pagination -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; flex-wrap: wrap; gap: 12px;">
+                    <div style="color: var(--text-muted); font-size: 0.875rem;" id="pagination-info">
+                        Göstərilir: 0 - 0 (Cəmi: 0)
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button id="prev-btn" class="btn-modern" style="margin-top: 0; min-height: unset; padding: 8px 16px; font-size: 0.875rem; width: auto; background: var(--card); border: 1px solid var(--card-border); box-shadow: none;">Əvvəlki</button>
+                        <button id="next-btn" class="btn-modern" style="margin-top: 0; min-height: unset; padding: 8px 16px; font-size: 0.875rem; width: auto; background: var(--card); border: 1px solid var(--card-border); box-shadow: none;">Növbəti</button>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
 
+    <nav class="mobile-nav">
+        <a href="ambassador_dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i></a>
+        <a href="ambassador_network.html" class="bottom-nav-item active"><i data-lucide="users-2"></i></a>
+        <a href="ambassador_academy.html" class="bottom-nav-item"><i data-lucide="graduation-cap"></i></a>
+        <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
+    </nav>
+
     <script>
         lucide.createIcons();
+
+        function toggleMenu() {
+            const drawer = document.getElementById('drawer');
+            const overlay = document.getElementById('overlay');
+            drawer.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        // Live Data Handler
+        let ambassadors = [];
+        let filteredData = [];
+        let currentPage = 1;
+        const rowsPerPage = 15;
+
+        // Fetch Excel database
+        fetch('database.json')
+            .then(res => res.json())
+            .then(data => {
+                // In database.json, AMB contains raw rows. Row 1-2 are header/metadata.
+                // We will map all entries from AMB sheet where rowNum >= 4
+                const rawAmb = data.AMB || [];
+                ambassadors = rawAmb
+                    .filter(item => item.rowNum >= 4 && item.data.B && item.data.B.trim() !== '')
+                    .map(item => {
+                        const d = item.data;
+                        return {
+                            id: d.A,
+                            name: d.B,
+                            points: d.C,
+                            idCode: d.D,
+                            leader: d.E,
+                            contractDate: d.F,
+                            birthday: d.G,
+                            status: d.H,
+                            level: d.I,
+                            phone: d.J
+                        };
+                    });
+                
+                filteredData = [...ambassadors];
+                updateStats();
+                renderTable();
+            })
+            .catch(err => {
+                console.error("Data load failed:", err);
+                document.getElementById('table-body').innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; color: #EF4444; padding: 40px;">Məlumatları yükləmək mümkün olmadı.</td>
+                    </tr>`;
+            });
+
+        function updateStats() {
+            const total = ambassadors.length;
+            const active = ambassadors.filter(a => a.status === 'A' || a.status === 'A+').length;
+            const totalPoints = ambassadors.reduce((sum, a) => sum + (parseFloat(a.points) || 0), 0);
+
+            document.getElementById('total-count').textContent = total.toLocaleString();
+            document.getElementById('active-count').textContent = active.toLocaleString();
+            document.getElementById('total-points').textContent = Math.round(totalPoints).toLocaleString() + ' Bal';
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('table-body');
+            tbody.innerHTML = '';
+
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const pageData = filteredData.slice(start, end);
+
+            if (pageData.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 40px;">Məlumat tapılmadı.</td>
+                    </tr>`;
+                document.getElementById('pagination-info').textContent = 'Göstərilir: 0 - 0 (Cəmi: 0)';
+                return;
+            }
+
+            pageData.forEach(amb => {
+                const tr = document.createElement('tr');
+                
+                const isActive = amb.status === 'A' || amb.status === 'A+';
+                const statusBadge = isActive 
+                    ? `<span class="badge badge-success">Aktiv</span>` 
+                    : `<span class="badge badge-warning" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">Passiv</span>`;
+
+                tr.innerHTML = `
+                    <td><b style="color: var(--primary);">${amb.idCode || '--'}</b></td>
+                    <td><b>${amb.name || '--'}</b></td>
+                    <td style="color: var(--text-muted);">${amb.leader || '--'}</td>
+                    <td>${amb.contractDate || '--'}</td>
+                    <td><b>${amb.points || '0'}</b></td>
+                    <td>${amb.level || '--'}</td>
+                    <td><a href="tel:${amb.phone}" style="color: inherit; text-decoration: none;">${amb.phone || '--'}</a></td>
+                    <td>${statusBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Update pagination info
+            const displayStart = start + 1;
+            const displayEnd = Math.min(end, filteredData.length);
+            document.getElementById('pagination-info').textContent = `Göstərilir: ${displayStart} - ${displayEnd} (Cəmi: ${filteredData.length})`;
+
+            // Disable buttons
+            document.getElementById('prev-btn').disabled = currentPage === 1;
+            document.getElementById('next-btn').disabled = end >= filteredData.length;
+        }
+
+        // Search and filter logic
+        const searchInput = document.getElementById('search-input');
+        const statusFilter = document.getElementById('status-filter');
+
+        function filterData() {
+            const query = searchInput.value.toLowerCase().trim();
+            const status = statusFilter.value;
+
+            filteredData = ambassadors.filter(amb => {
+                const matchesQuery = 
+                    (amb.name && amb.name.toLowerCase().includes(query)) ||
+                    (amb.idCode && amb.idCode.toLowerCase().includes(query)) ||
+                    (amb.leader && amb.leader.toLowerCase().includes(query)) ||
+                    (amb.phone && amb.phone.includes(query));
+
+                const matchesStatus = status === 'all' || 
+                    (status === 'A' && (amb.status === 'A' || amb.status === 'A+')) ||
+                    (status === 'K' && amb.status === 'K');
+
+                return matchesQuery && matchesStatus;
+            });
+
+            currentPage = 1;
+            renderTable();
+        }
+
+        searchInput.addEventListener('input', filterData);
+        statusFilter.addEventListener('change', filterData);
+
+        // Pagination buttons
+        document.getElementById('prev-btn').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+            }
+        });
+
+        document.getElementById('next-btn').addEventListener('click', () => {
+            if ((currentPage * rowsPerPage) < filteredData.length) {
+                currentPage++;
+                renderTable();
+            }
+        });
     </script>
 </body>
 </html>

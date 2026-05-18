@@ -8,6 +8,27 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+    <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-drawer" id="drawer">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
+            <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
+        </div>
+        <nav><ul class="nav-list">
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
+            <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+            <li><a href="ambassador_customers.html" class="nav-link active"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+            <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+            <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+            <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+            <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+        </ul></nav>
+    </div>
+
     <div class="app-container">
         <aside class="sidebar">
             <a href="ambassador_dashboard.html" class="brand"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
@@ -16,7 +37,7 @@
                 <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
                 <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
                 <li><a href="ambassador_customers.html" class="nav-link active"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
                 <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
                 <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
                 <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
@@ -25,21 +46,238 @@
                 <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
             </ul></nav>
         </aside>
+
         <main class="main">
-            <header class="header"><div class="header-title"><h1>Müştərilər</h1><p>Müştəri bazanız və onların xidmət tarixçəsi.</p></div></header>
+            <header class="header">
+                <div style="display:flex; align-items:center; gap:16px;">
+                    <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
+                    <div class="header-title">
+                        <h1>Müştərilər</h1>
+                        <p>Excel-dən gələn 507+ müştəri və tərəfdaş bazası.</p>
+                    </div>
+                </div>
+            </header>
+
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-header">Toplam Müştəri</div>
+                    <div class="stat-value" id="total-customers">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">Aktiv Müştərilər</div>
+                    <div class="stat-value" id="active-customers" style="color: var(--primary);">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-header">Klassik (K) Müştərilər</div>
+                    <div class="stat-value" id="passive-customers" style="color: #F59E0B;">0</div>
+                </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="modern-card" style="margin-bottom: 24px; padding: 16px;">
+                <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <div style="flex: 1; min-width: 250px; position: relative;">
+                        <input type="text" id="customer-search" placeholder="Müştəri adı, ID və ya Telefon nömrəsi ilə axtar..." style="width: 100%; padding: 12px 16px 12px 40px; background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 10px; color: white; font-size: 0.9rem;">
+                        <i data-lucide="search" style="position: absolute; left: 14px; top: 14px; width: 18px; height: 18px; color: var(--text-muted);"></i>
+                    </div>
+                    <select id="type-filter" style="padding: 12px 16px; background: var(--sidebar); border: 1px solid var(--card-border); border-radius: 10px; color: white; cursor: pointer;">
+                        <option value="all">Bütün Tiplər</option>
+                        <option value="A">Aktiv Müştəri (A / A+)</option>
+                        <option value="K">Klassik Müştəri (K)</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Table -->
             <div class="modern-card">
-                <div class="card-title-row"><h2>Müştəri Siyahısı</h2><button class="btn-modern" style="width: auto; margin-top: 0; padding: 10px 20px;">+ Yeni Müştəri</button></div>
+                <div class="card-title-row">
+                    <h2>Müştəri Siyahısı</h2>
+                </div>
                 <table class="modern-table">
-                    <thead><tr><th>AD SOYAD</th><th>XİDMƏT</th><th>TARİX</th><th>MƏBLƏĞ</th></tr></thead>
-                    <tbody>
-                        <tr><td style="font-weight:700;">Günel Məmmədova</td><td>Üz baxımı</td><td>15.05.2026</td><td>85 ₼</td></tr>
-                        <tr><td style="font-weight:700;">Samirə Əliyeva</td><td>Lazer epilyasiya</td><td>14.05.2026</td><td>120 ₼</td></tr>
-                        <tr><td style="font-weight:700;">Fidan Quliyeva</td><td>Mezoterapiya</td><td>13.05.2026</td><td>210 ₼</td></tr>
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Müştəri Adı</th>
+                            <th>ID Code</th>
+                            <th>Telefon nömrəsi</th>
+                            <th>Müqavilə Tarixi</th>
+                            <th>Bal Balansı</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="customers-table-body">
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">Yüklənir...</td>
+                        </tr>
                     </tbody>
                 </table>
+
+                <!-- Pagination -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; flex-wrap: wrap; gap: 12px;">
+                    <div style="color: var(--text-muted); font-size: 0.875rem;" id="customer-pagination-info">
+                        Göstərilir: 0 - 0 (Cəmi: 0)
+                    </div>
+                    <div style="display: flex; gap: 8px;">
+                        <button id="cust-prev-btn" class="btn-modern" style="margin-top: 0; min-height: unset; padding: 8px 16px; font-size: 0.875rem; width: auto; background: var(--card); border: 1px solid var(--card-border); box-shadow: none;">Əvvəlki</button>
+                        <button id="cust-next-btn" class="btn-modern" style="margin-top: 0; min-height: unset; padding: 8px 16px; font-size: 0.875rem; width: auto; background: var(--card); border: 1px solid var(--card-border); box-shadow: none;">Növbəti</button>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
-    <script>lucide.createIcons();</script>
+
+    <nav class="mobile-nav">
+        <a href="ambassador_dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i></a>
+        <a href="ambassador_network.html" class="bottom-nav-item"><i data-lucide="users-2"></i></a>
+        <a href="ambassador_academy.html" class="bottom-nav-item"><i data-lucide="graduation-cap"></i></a>
+        <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
+    </nav>
+
+    <script>
+        lucide.createIcons();
+
+        function toggleMenu() {
+            const drawer = document.getElementById('drawer');
+            const overlay = document.getElementById('overlay');
+            drawer.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+
+        let customers = [];
+        let filteredCustomers = [];
+        let currentPage = 1;
+        const rowsPerPage = 15;
+
+        // Fetch database.json
+        fetch('database.json')
+            .then(res => res.json())
+            .then(data => {
+                const rawAmb = data.AMB || [];
+                // Map ALL rows where A has index up to 513
+                customers = rawAmb
+                    .filter(item => item.rowNum >= 4 && item.data.A && item.data.B && item.data.B.trim() !== '')
+                    .map(item => {
+                        const d = item.data;
+                        return {
+                            id: d.A,
+                            name: d.B,
+                            points: d.C || '0',
+                            idCode: d.D,
+                            leader: d.E,
+                            contractDate: d.F || '--',
+                            status: d.H || 'K',
+                            phone: d.J || '--'
+                        };
+                    });
+
+                filteredCustomers = [...customers];
+                updateStats();
+                renderTable();
+            })
+            .catch(err => {
+                console.error("Customers data load failed:", err);
+                document.getElementById('customers-table-body').innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; color: #EF4444; padding: 40px;">Məlumatları yükləmək mümkün olmadı.</td>
+                    </tr>`;
+            });
+
+        function updateStats() {
+            const total = customers.length;
+            const active = customers.filter(c => c.status === 'A' || c.status === 'A+').length;
+            const passive = customers.filter(c => c.status === 'K' || !c.status).length;
+
+            document.getElementById('total-customers').textContent = total.toLocaleString();
+            document.getElementById('active-customers').textContent = active.toLocaleString();
+            document.getElementById('passive-customers').textContent = passive.toLocaleString();
+        }
+
+        function renderTable() {
+            const tbody = document.getElementById('customers-table-body');
+            tbody.innerHTML = '';
+
+            const start = (currentPage - 1) * rowsPerPage;
+            const end = start + rowsPerPage;
+            const pageData = filteredCustomers.slice(start, end);
+
+            if (pageData.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">Müştəri tapılmadı.</td>
+                    </tr>`;
+                document.getElementById('customer-pagination-info').textContent = 'Göstərilir: 0 - 0 (Cəmi: 0)';
+                return;
+            }
+
+            pageData.forEach(cust => {
+                const tr = document.createElement('tr');
+                const isActive = cust.status === 'A' || cust.status === 'A+';
+                const statusBadge = isActive 
+                    ? `<span class="badge badge-success">Aktiv</span>` 
+                    : `<span class="badge badge-warning" style="background: rgba(255,255,255,0.05); color: var(--text-muted);">Klassik</span>`;
+
+                tr.innerHTML = `
+                    <td>${cust.id}</td>
+                    <td><b>${cust.name}</b></td>
+                    <td><b style="color: var(--primary);">${cust.idCode || '--'}</b></td>
+                    <td><a href="tel:${cust.phone}" style="color: inherit; text-decoration: none;">${cust.phone}</a></td>
+                    <td>${cust.contractDate}</td>
+                    <td><b>${cust.points}</b></td>
+                    <td>${statusBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            const displayStart = start + 1;
+            const displayEnd = Math.min(end, filteredCustomers.length);
+            document.getElementById('customer-pagination-info').textContent = `Göstərilir: ${displayStart} - ${displayEnd} (Cəmi: ${filteredCustomers.length})`;
+
+            document.getElementById('cust-prev-btn').disabled = currentPage === 1;
+            document.getElementById('cust-next-btn').disabled = end >= filteredCustomers.length;
+        }
+
+        // Search/Filters
+        const searchInput = document.getElementById('customer-search');
+        const typeFilter = document.getElementById('type-filter');
+
+        function filterCustomers() {
+            const query = searchInput.value.toLowerCase().trim();
+            const filterType = typeFilter.value;
+
+            filteredCustomers = customers.filter(cust => {
+                const matchesQuery = 
+                    cust.name.toLowerCase().includes(query) ||
+                    (cust.idCode && cust.idCode.toLowerCase().includes(query)) ||
+                    (cust.phone && cust.phone.includes(query));
+
+                const matchesType = filterType === 'all' || 
+                    (filterType === 'A' && (cust.status === 'A' || cust.status === 'A+')) ||
+                    (filterType === 'K' && (cust.status === 'K' || !cust.status));
+
+                return matchesQuery && matchesType;
+            });
+
+            currentPage = 1;
+            renderTable();
+        }
+
+        searchInput.addEventListener('input', filterCustomers);
+        typeFilter.addEventListener('change', filterCustomers);
+
+        // Pagination buttons
+        document.getElementById('cust-prev-btn').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                renderTable();
+            }
+        });
+
+        document.getElementById('cust-next-btn').addEventListener('click', () => {
+            if ((currentPage * rowsPerPage) < filteredCustomers.length) {
+                currentPage++;
+                renderTable();
+            }
+        });
+    </script>
 </body>
 </html>

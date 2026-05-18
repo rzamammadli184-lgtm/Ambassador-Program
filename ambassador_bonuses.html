@@ -8,6 +8,27 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+    <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-drawer" id="drawer">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
+            <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
+        </div>
+        <nav><ul class="nav-list">
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
+            <li><a href="ambassador_bonuses.html" class="nav-link active"><i data-lucide="coins"></i> Bonuslar</a></li>
+            <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+            <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+            <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+            <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+            <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+            <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+        </ul></nav>
+    </div>
+
     <div class="app-container">
         <aside class="sidebar">
             <a href="ambassador_dashboard.html" class="brand"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
@@ -25,26 +46,36 @@
                 <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
             </ul></nav>
         </aside>
+
         <main class="main">
-            <header class="header"><div class="header-title"><h1>Bonuslar</h1><p>Qazandığınız bonuslar və ödəniş tarixçəsi.</p></div></header>
-            <div class="stats-container">
-                <div class="stat-card"><div class="stat-header">Toplam Bonus</div><div class="stat-value">1,450 ₼</div></div>
-                <div class="stat-card"><div class="stat-header">Bu Ay</div><div class="stat-value">320 ₼</div><div class="stat-badge badge-up">↑ 15%</div></div>
-                <div class="stat-card"><div class="stat-header">Gözləmədə</div><div class="stat-value">120 ₼</div></div>
-            </div>
+            <header class="header">
+                <div style="display:flex; align-items:center; gap:16px;">
+                    <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
+                    <div class="header-title"><h1>Bonuslar</h1><p>Qazanclarınız.</p></div>
+                </div>
+            </header>
             <div class="modern-card">
-                <div class="card-title-row"><h2>Bonus Tarixçəsi</h2></div>
-                <table class="modern-table">
-                    <thead><tr><th>TƏSVİR</th><th>TARİX</th><th>MƏBLƏĞ</th><th>STATUS</th></tr></thead>
-                    <tbody>
-                        <tr><td>Şəbəkə satışı bonusu</td><td>14.05.2026</td><td>+45 ₼</td><td><span class="badge badge-success">Ödənilib</span></td></tr>
-                        <tr><td>Fərdi satış bonusu</td><td>12.05.2026</td><td>+120 ₼</td><td><span class="badge badge-success">Ödənilib</span></td></tr>
-                        <tr><td>Aylıq hədəf bonusu</td><td>01.05.2026</td><td>+150 ₼</td><td><span class="badge badge-success">Ödənilib</span></td></tr>
-                    </tbody>
-                </table>
+                <h3>Toplam Bonus: 1,450 ₼</h3>
+                <button class="btn-modern" style="margin-top:20px;">Detallara Bax</button>
             </div>
         </main>
     </div>
-    <script>lucide.createIcons();</script>
+
+    <nav class="mobile-nav">
+        <a href="ambassador_dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i></a>
+        <a href="ambassador_network.html" class="bottom-nav-item"><i data-lucide="users-2"></i></a>
+        <a href="ambassador_academy.html" class="bottom-nav-item"><i data-lucide="graduation-cap"></i></a>
+        <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
+    </nav>
+
+    <script>
+        lucide.createIcons();
+        function toggleMenu() {
+            const drawer = document.getElementById('drawer');
+            const overlay = document.getElementById('overlay');
+            drawer.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>

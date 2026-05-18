@@ -8,69 +8,78 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+    <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-drawer" id="drawer">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
+            <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
+        </div>
+        <nav><ul class="nav-list">
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
+            <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+            <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+            <li><a href="ambassador_academy.html" class="nav-link active"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+            <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+            <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+            <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+            <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+        </ul></nav>
+    </div>
+
     <div class="app-container">
-        <!-- Sidebar -->
         <aside class="sidebar">
-            <a href="ambassador_dashboard.html" class="brand">
-                <div class="brand-icon">Az</div>
-                <span class="brand-name">AzEstetik</span>
-            </a>
-            <nav>
-                <ul class="nav-list">
-                    <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
-                    <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
-                    <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
-                    <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-                    <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
-                    <li><a href="ambassador_academy.html" class="nav-link active"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
-                    <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
-                    <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
-                    <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
-                    <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
-                    <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
-                </ul>
-            </nav>
+            <a href="ambassador_dashboard.html" class="brand"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
+            <nav><ul class="nav-list">
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+                <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
+                <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+                <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+                <li><a href="ambassador_academy.html" class="nav-link active"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+                <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+                <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+            </ul></nav>
         </aside>
 
-        <!-- Main Content -->
         <main class="main">
             <header class="header">
-                <div class="header-title">
-                    <h1>Akademiya</h1>
-                    <p>Peşəkar inkişafınız üçün dərslər və təlimlər.</p>
+                <div style="display:flex; align-items:center; gap:16px;">
+                    <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
+                    <div class="header-title"><h1>Akademiya</h1><p>Təlimlər.</p></div>
                 </div>
             </header>
 
-            <div class="content-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            <div class="content-grid">
                 <div class="modern-card">
-                    <div style="width: 100%; height: 160px; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center;">
-                        <i data-lucide="play-circle" style="width: 48px; height: 48px; color: var(--primary);"></i>
-                    </div>
-                    <h3 style="margin-bottom: 12px;">Giriş Təlimi</h3>
-                    <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 20px;">Ambassador proqramına yeni başlayanlar üçün əsas qaydalar və imkanlar.</p>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span class="badge badge-success">Başla</span>
-                        <span style="font-size: 0.75rem; color: var(--text-muted);"><i data-lucide="clock" style="width:12px; height:12px; vertical-align: middle;"></i> 15 dəq</span>
-                    </div>
-                </div>
-
-                <div class="modern-card">
-                    <div style="width: 100%; height: 160px; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center;">
-                        <i data-lucide="play-circle" style="width: 48px; height: 48px; color: var(--primary);"></i>
-                    </div>
-                    <h3 style="margin-bottom: 12px;">Satış Texnikaları</h3>
-                    <p style="color: var(--text-muted); font-size: 0.875rem; margin-bottom: 20px;">Effektiv satış və müştəri məmnuniyyəti sirləri.</p>
-                    <div style="display: flex; justify-content: space-between; align-items: center;">
-                        <span class="badge badge-success">Davam et</span>
-                        <span style="font-size: 0.75rem; color: var(--text-muted);"><i data-lucide="clock" style="width:12px; height:12px; vertical-align: middle;"></i> 45 dəq</span>
-                    </div>
+                    <div style="width: 100%; height: 120px; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center;"><i data-lucide="play-circle" style="width: 48px; height: 48px; color: var(--primary);"></i></div>
+                    <h3>Giriş Təlimi</h3>
+                    <button class="btn-modern" style="margin-top: 20px;">Başla</button>
                 </div>
             </div>
         </main>
     </div>
 
+    <nav class="mobile-nav">
+        <a href="ambassador_dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i></a>
+        <a href="ambassador_network.html" class="bottom-nav-item"><i data-lucide="users-2"></i></a>
+        <a href="ambassador_academy.html" class="bottom-nav-item active"><i data-lucide="graduation-cap"></i></a>
+        <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
+    </nav>
+
     <script>
         lucide.createIcons();
+        function toggleMenu() {
+            const drawer = document.getElementById('drawer');
+            const overlay = document.getElementById('overlay');
+            drawer.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
     </script>
 </body>
 </html>
