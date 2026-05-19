@@ -5,9 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>AzEstetik - Liderlər</title>
     <link rel="stylesheet" href="ambassador_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>* { font-family: 'Poppins', sans-serif !important; }
+    .leader-row { display:flex; align-items:center; gap:16px; padding:16px; border-radius:12px; background:rgba(255,255,255,0.02); border:1px solid var(--card-border); transition:all 0.3s ease; }
+    .leader-row:hover { border-color:var(--primary); transform:translateX(4px); }
+    .leader-rank { width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.9rem; }
+    .rank-1 { background:linear-gradient(135deg,#FFD700,#FFA500); color:#000; }
+    .rank-2 { background:linear-gradient(135deg,#C0C0C0,#A0A0A0); color:#000; }
+    .rank-3 { background:linear-gradient(135deg,#CD7F32,#8B4513); color:#fff; }
+    .rank-default { background:rgba(255,255,255,0.08); color:var(--text-muted); }
+    .leader-info { flex:1; }
+    .leader-name { font-weight:700; font-size:0.95rem; }
+    .leader-detail { font-size:0.8rem; color:var(--text-muted); margin-top:2px; }
+    .leader-score { text-align:right; }
+    .leader-points { font-weight:800; color:var(--primary); font-size:1.05rem; }
+    .leader-badge { font-size:0.75rem; color:var(--text-muted); }
+    </style>
 </head>
-<body>
+<body class="animate-fade-in">
     <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="mobile-drawer" id="drawer">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
@@ -15,13 +31,14 @@
             <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
         </div>
         <nav><ul class="nav-list">
-            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> İdarə Paneli</a></li>
             <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
             <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
             <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
             <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
             <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+            <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
             <li><a href="ambassador_leaderboard.html" class="nav-link active"><i data-lucide="trophy"></i> Liderlər</a></li>
             <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
             <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
@@ -33,13 +50,14 @@
         <aside class="sidebar">
             <a href="ambassador_dashboard.html" class="brand"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
             <nav><ul class="nav-list">
-                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> İdarə Paneli</a></li>
                 <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
                 <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
                 <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
                 <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
                 <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
                 <li><a href="ambassador_leaderboard.html" class="nav-link active"><i data-lucide="trophy"></i> Liderlər</a></li>
                 <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
                 <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
@@ -51,12 +69,27 @@
             <header class="header">
                 <div style="display:flex; align-items:center; gap:16px;">
                     <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
-                    <div class="header-title"><h1>Liderlər</h1><p>Şura.</p></div>
+                    <div class="header-title"><h1>Liderlər Cədvəli</h1><p>Excel bazasına əsasən ən güclü qrup rəhbərləri</p></div>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon"></i></button>
                 </div>
             </header>
-            <div class="modern-card">
-                <h3>Top Ambassadorlar</h3>
-                <div style="margin-top:20px;">1. Aysel Məmmədova</div>
+
+            <div class="stats-container">
+                <div class="stat-card animate-slide-up"><div class="stat-header">Ümumi Qrup Rəhbəri</div><div class="stat-value" id="s-leaders">0</div></div>
+                <div class="stat-card animate-slide-up"><div class="stat-header">Ən Böyük Komanda</div><div class="stat-value" id="s-biggest" style="font-size:1rem;">-</div></div>
+                <div class="stat-card animate-slide-up"><div class="stat-header">Ümumi Şəbəkə Balı</div><div class="stat-value" id="s-points">0</div></div>
+            </div>
+
+            <div class="modern-card animate-slide-up delay-100">
+                <div class="card-title-row"><h2>Top Qrup Rəhbərləri (Excel Bazası)</h2></div>
+                <div id="leaders-list" style="display:flex; flex-direction:column; gap:12px; margin-top:16px;"></div>
+            </div>
+
+            <div class="modern-card animate-slide-up delay-100" style="margin-top:24px;">
+                <div class="card-title-row"><h2>Top Ambassadorlar (Fərdi Bal)</h2></div>
+                <div id="top-individuals" style="display:flex; flex-direction:column; gap:12px; margin-top:16px;"></div>
             </div>
         </main>
     </div>
@@ -64,18 +97,61 @@
     <nav class="mobile-nav">
         <a href="ambassador_dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i></a>
         <a href="ambassador_network.html" class="bottom-nav-item"><i data-lucide="users-2"></i></a>
-        <a href="ambassador_academy.html" class="bottom-nav-item"><i data-lucide="graduation-cap"></i></a>
+        <a href="ambassador_ai.html" class="bottom-nav-item"><i data-lucide="bot"></i></a>
         <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
     </nav>
 
+    <script src="database_inline.js"></script>
     <script>
         lucide.createIcons();
-        function toggleMenu() {
-            const drawer = document.getElementById('drawer');
-            const overlay = document.getElementById('overlay');
-            drawer.classList.toggle('open');
-            overlay.classList.toggle('active');
-        }
+        function toggleMenu() { document.getElementById('drawer').classList.toggle('open'); document.getElementById('overlay').classList.toggle('active'); }
+
+        (function loadLeaderboard() {
+            const data = window.RAW_DATABASE || {};
+            const rawAmb = data.AMB || [];
+            const ambassadors = rawAmb.filter(i => i.rowNum >= 4 && i.data.B && i.data.B.trim()).map(i => {
+                const d = i.data;
+                return { name: d.B, points: parseFloat(d.C) || 0, leader: d.E, status: d.H, level: d.I };
+            });
+
+            // Group leaders
+            const leaders = {};
+            ambassadors.forEach(a => {
+                if (a.leader && a.leader.trim()) {
+                    if (!leaders[a.leader]) leaders[a.leader] = { count: 0, points: 0 };
+                    leaders[a.leader].count++;
+                    leaders[a.leader].points += a.points;
+                }
+            });
+            const sorted = Object.entries(leaders).sort((a, b) => b[1].count - a[1].count);
+
+            // Stats
+            document.getElementById('s-leaders').textContent = sorted.length;
+            if (sorted.length > 0) document.getElementById('s-biggest').textContent = sorted[0][0].split(' ').slice(0,2).join(' ') + ' (' + sorted[0][1].count + ')';
+            document.getElementById('s-points').textContent = Math.round(ambassadors.reduce((s, a) => s + a.points, 0)).toLocaleString();
+
+            // Leader list
+            const list = document.getElementById('leaders-list');
+            sorted.slice(0, 15).forEach((l, i) => {
+                const rc = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-default';
+                list.innerHTML += '<div class="leader-row"><div class="leader-rank ' + rc + '">' + (i + 1) + '</div><div class="leader-info"><div class="leader-name">' + l[0] + '</div><div class="leader-detail">Komanda: ' + l[1].count + ' nəfər</div></div><div class="leader-score"><div class="leader-points">' + Math.round(l[1].points).toLocaleString() + ' Bal</div><div class="leader-badge">Ümumi dövriyyə</div></div></div>';
+            });
+
+            // Top individuals
+            const topInd = document.getElementById('top-individuals');
+            const topPeople = [...ambassadors].sort((a, b) => b.points - a.points).slice(0, 10);
+            topPeople.forEach((p, i) => {
+                const rc = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-default';
+                topInd.innerHTML += '<div class="leader-row"><div class="leader-rank ' + rc + '">' + (i + 1) + '</div><div class="leader-info"><div class="leader-name">' + (p.name || 'Adsız') + '</div><div class="leader-detail">Rəhbər: ' + (p.leader || '-') + ' | Səviyyə: ' + (p.level || '0') + '</div></div><div class="leader-score"><div class="leader-points">' + p.points.toLocaleString() + ' Bal</div><div class="leader-badge">Status: ' + (p.status || '-') + '</div></div></div>';
+            });
+        })();
+
+        function initTheme() { const s = localStorage.getItem('theme'); if (s === 'light') document.body.classList.add('light-mode'); updateThemeIcon(); }
+        function toggleTheme() { document.body.classList.toggle('light-mode'); localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark'); updateThemeIcon(); }
+        function updateThemeIcon() { const i = document.getElementById('theme-icon'); if (i) { i.setAttribute('data-lucide', document.body.classList.contains('light-mode') ? 'moon' : 'sun'); lucide.createIcons(); } }
+        document.addEventListener('DOMContentLoaded', initTheme); initTheme();
+        function transitionToPage(e, url) { e.preventDefault(); document.body.style.transition = 'opacity 0.4s ease'; document.body.style.opacity = '0'; setTimeout(() => { window.location.href = url; }, 350); }
+        document.addEventListener('DOMContentLoaded', () => { document.querySelectorAll('.nav-link, .bottom-nav-item, a.brand').forEach(link => { const href = link.getAttribute('href'); if (href && !href.startsWith('#') && !href.startsWith('javascript')) link.addEventListener('click', function(e) { transitionToPage(e, href); }); }); });
     </script>
 </body>
 </html>

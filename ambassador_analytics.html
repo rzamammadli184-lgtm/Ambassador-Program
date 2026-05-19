@@ -5,9 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>AzEstetik - Analitika</title>
     <link rel="stylesheet" href="ambassador_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>* { font-family: 'Poppins', sans-serif !important; }
+    .metric-bar { height:8px; border-radius:4px; background:rgba(255,255,255,0.05); overflow:hidden; margin-top:8px; }
+    .metric-fill { height:100%; border-radius:4px; transition:width 1s ease; }
+    .breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .breakdown-row:last-child { border-bottom:none; }
+    .breakdown-label { font-size:0.9rem; color:var(--text-muted); }
+    .breakdown-value { font-weight:700; font-size:0.95rem; }
+    </style>
 </head>
-<body>
+<body class="animate-fade-in">
     <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="mobile-drawer" id="drawer">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
@@ -15,13 +24,14 @@
             <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
         </div>
         <nav><ul class="nav-list">
-            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> İdarə Paneli</a></li>
             <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
             <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
             <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
             <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
             <li><a href="ambassador_analytics.html" class="nav-link active"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+            <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
             <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
             <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
             <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
@@ -33,13 +43,14 @@
         <aside class="sidebar">
             <a href="ambassador_dashboard.html" class="brand"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
             <nav><ul class="nav-list">
-                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> İdarə Paneli</a></li>
                 <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
                 <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
                 <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
                 <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
                 <li><a href="ambassador_analytics.html" class="nav-link active"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
                 <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
                 <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
                 <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
@@ -51,12 +62,42 @@
             <header class="header">
                 <div style="display:flex; align-items:center; gap:16px;">
                     <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
-                    <div class="header-title"><h1>Analitika</h1><p>Statistika.</p></div>
+                    <div class="header-title"><h1>Analitika</h1><p>Excel bazasına əsasən tam şəbəkə statistikası</p></div>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon"></i></button>
                 </div>
             </header>
-            <div class="modern-card">
-                <h3>Satış Dinamikası</h3>
-                <div style="height:100px; background:rgba(255,255,255,0.05); border-radius:12px; margin-top:20px; display:flex; align-items:center; justify-content:center;"><i data-lucide="line-chart" style="color:var(--primary);"></i></div>
+
+            <div class="stats-container">
+                <div class="stat-card animate-slide-up"><div class="stat-header">Ümumi Qeydiyyat</div><div class="stat-value" id="a-total">0</div></div>
+                <div class="stat-card animate-slide-up"><div class="stat-header">Aktiv Üzvlər</div><div class="stat-value" id="a-active" style="color:#10B981;">0</div></div>
+                <div class="stat-card animate-slide-up"><div class="stat-header">Passiv (K Status)</div><div class="stat-value" id="a-passive" style="color:#EF4444;">0</div></div>
+                <div class="stat-card animate-slide-up"><div class="stat-header">Ümumi Dövriyyə</div><div class="stat-value" id="a-turnover">0</div></div>
+            </div>
+
+            <div class="content-grid animate-fade-in delay-200">
+                <div class="modern-card animate-slide-up delay-100">
+                    <div class="card-title-row"><h2>Aktivlik Analizi</h2></div>
+                    <div style="margin-top:16px;">
+                        <div class="breakdown-row"><span class="breakdown-label">Aktiv nisbəti (A / A+)</span><span class="breakdown-value" id="b-active-pct" style="color:#10B981;">0%</span></div>
+                        <div class="metric-bar"><div class="metric-fill" id="bar-active" style="width:0%; background:linear-gradient(90deg,#10B981,#059669);"></div></div>
+                        <div class="breakdown-row" style="margin-top:12px;"><span class="breakdown-label">Passiv nisbəti (K status)</span><span class="breakdown-value" id="b-passive-pct" style="color:#EF4444;">0%</span></div>
+                        <div class="metric-bar"><div class="metric-fill" id="bar-passive" style="width:0%; background:linear-gradient(90deg,#EF4444,#DC2626);"></div></div>
+                        <div class="breakdown-row" style="margin-top:12px;"><span class="breakdown-label">Ortalama bal (aktiv üzv)</span><span class="breakdown-value" id="b-avg">0</span></div>
+                        <div class="breakdown-row"><span class="breakdown-label">Ən yüksək fərdi bal</span><span class="breakdown-value" id="b-max" style="color:var(--primary);">0</span></div>
+                    </div>
+                </div>
+
+                <div class="modern-card animate-slide-up delay-100">
+                    <div class="card-title-row"><h2>Səviyyə Bölgüsü</h2></div>
+                    <div id="level-breakdown" style="margin-top:16px;"></div>
+                </div>
+            </div>
+
+            <div class="modern-card animate-slide-up delay-100" style="margin-top:24px;">
+                <div class="card-title-row"><h2>Status Bölgüsü</h2></div>
+                <div id="status-breakdown" style="margin-top:16px;"></div>
             </div>
         </main>
     </div>
@@ -64,18 +105,71 @@
     <nav class="mobile-nav">
         <a href="ambassador_dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i></a>
         <a href="ambassador_network.html" class="bottom-nav-item"><i data-lucide="users-2"></i></a>
-        <a href="ambassador_academy.html" class="bottom-nav-item"><i data-lucide="graduation-cap"></i></a>
+        <a href="ambassador_ai.html" class="bottom-nav-item"><i data-lucide="bot"></i></a>
         <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
     </nav>
 
+    <script src="database_inline.js"></script>
     <script>
         lucide.createIcons();
-        function toggleMenu() {
-            const drawer = document.getElementById('drawer');
-            const overlay = document.getElementById('overlay');
-            drawer.classList.toggle('open');
-            overlay.classList.toggle('active');
-        }
+        function toggleMenu() { document.getElementById('drawer').classList.toggle('open'); document.getElementById('overlay').classList.toggle('active'); }
+
+        (function loadAnalytics() {
+            const data = window.RAW_DATABASE || {};
+            const rawAmb = data.AMB || [];
+            const amb = rawAmb.filter(i => i.rowNum >= 4 && i.data.B && i.data.B.trim()).map(i => {
+                const d = i.data;
+                return { name: d.B, points: parseFloat(d.C) || 0, status: d.H, level: d.I };
+            });
+
+            const total = amb.length;
+            const active = amb.filter(a => a.status === 'A' || a.status === 'A+');
+            const passive = amb.filter(a => a.status === 'K');
+            const totalPts = amb.reduce((s, a) => s + a.points, 0);
+            const activePct = total > 0 ? Math.round((active.length / total) * 100) : 0;
+            const passivePct = total > 0 ? Math.round((passive.length / total) * 100) : 0;
+            const avgPts = active.length > 0 ? Math.round(totalPts / active.length) : 0;
+            const maxPts = amb.length > 0 ? Math.max(...amb.map(a => a.points)) : 0;
+
+            document.getElementById('a-total').textContent = total;
+            document.getElementById('a-active').textContent = active.length;
+            document.getElementById('a-passive').textContent = passive.length;
+            document.getElementById('a-turnover').textContent = Math.round(totalPts).toLocaleString() + ' Bal';
+            document.getElementById('b-active-pct').textContent = activePct + '%';
+            document.getElementById('b-passive-pct').textContent = passivePct + '%';
+            document.getElementById('bar-active').style.width = activePct + '%';
+            document.getElementById('bar-passive').style.width = passivePct + '%';
+            document.getElementById('b-avg').textContent = avgPts.toLocaleString() + ' Bal';
+            document.getElementById('b-max').textContent = maxPts.toLocaleString() + ' Bal';
+
+            // Level breakdown
+            const levels = {};
+            amb.forEach(a => { const l = a.level || 'Yoxdur'; levels[l] = (levels[l] || 0) + 1; });
+            const levelDiv = document.getElementById('level-breakdown');
+            const levelNames = { '1': 'Səviyyə 1', '2': 'Səviyyə 2', '3': 'Səviyyə 3', '4': 'Səviyyə 4', '5': 'Səviyyə 5', 'Yoxdur': 'Təyin olunmayıb' };
+            const colors = ['#10B981','#3B82F6','#8B5CF6','#F59E0B','#EF4444','#6B7280'];
+            Object.entries(levels).sort((a,b) => b[1] - a[1]).forEach(([lv, count], i) => {
+                const pct = Math.round((count / total) * 100);
+                levelDiv.innerHTML += '<div class="breakdown-row"><span class="breakdown-label">' + (levelNames[lv] || 'Səviyyə ' + lv) + '</span><span class="breakdown-value">' + count + ' nəfər (' + pct + '%)</span></div><div class="metric-bar"><div class="metric-fill" style="width:' + pct + '%; background:' + (colors[i] || colors[5]) + ';"></div></div>';
+            });
+
+            // Status breakdown
+            const statuses = {};
+            amb.forEach(a => { const s = a.status || 'Bilinməyən'; statuses[s] = (statuses[s] || 0) + 1; });
+            const statusDiv = document.getElementById('status-breakdown');
+            const statusColors = { 'A': '#10B981', 'A+': '#059669', 'K': '#EF4444' };
+            Object.entries(statuses).sort((a,b) => b[1] - a[1]).forEach(([st, count]) => {
+                const pct = Math.round((count / total) * 100);
+                statusDiv.innerHTML += '<div class="breakdown-row"><span class="breakdown-label">Status: <b>' + st + '</b></span><span class="breakdown-value" style="color:' + (statusColors[st] || '#6B7280') + ';">' + count + ' nəfər (' + pct + '%)</span></div><div class="metric-bar"><div class="metric-fill" style="width:' + pct + '%; background:' + (statusColors[st] || '#6B7280') + ';"></div></div>';
+            });
+        })();
+
+        function initTheme() { const s = localStorage.getItem('theme'); if (s === 'light') document.body.classList.add('light-mode'); updateThemeIcon(); }
+        function toggleTheme() { document.body.classList.toggle('light-mode'); localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark'); updateThemeIcon(); }
+        function updateThemeIcon() { const i = document.getElementById('theme-icon'); if (i) { i.setAttribute('data-lucide', document.body.classList.contains('light-mode') ? 'moon' : 'sun'); lucide.createIcons(); } }
+        document.addEventListener('DOMContentLoaded', initTheme); initTheme();
+        function transitionToPage(e, url) { e.preventDefault(); document.body.style.transition = 'opacity 0.4s ease'; document.body.style.opacity = '0'; setTimeout(() => { window.location.href = url; }, 350); }
+        document.addEventListener('DOMContentLoaded', () => { document.querySelectorAll('.nav-link, .bottom-nav-item, a.brand').forEach(link => { const href = link.getAttribute('href'); if (href && !href.startsWith('#') && !href.startsWith('javascript')) link.addEventListener('click', function(e) { transitionToPage(e, href); }); }); });
     </script>
 </body>
 </html>

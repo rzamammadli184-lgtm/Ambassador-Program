@@ -2,12 +2,14 @@
 <html lang="az">
 <head>
     <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>* { font-family: 'Poppins', sans-serif !important; }</style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AzEstetik - Tənzimləmələr</title>
+    <title>AzEstetik - Tenzimlemeler</title>
     <link rel="stylesheet" href="ambassador_style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body>
+<body class="animate-fade-in">
     <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="mobile-drawer" id="drawer">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
@@ -15,13 +17,14 @@
             <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
         </div>
         <nav><ul class="nav-list">
-            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> İdarə Paneli</a></li>
             <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
             <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
             <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Məhsullar</a></li>
             <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
             <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+            <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
             <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
             <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
             <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
@@ -33,14 +36,15 @@
         <aside class="sidebar">
             <a href="ambassador_dashboard.html" class="brand"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
             <nav><ul class="nav-list">
-                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> İdarə Paneli</a></li>
                 <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
                 <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
                 <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Məhsullar</a></li>
                 <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
                 <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
-                <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+                <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
+            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
                 <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
                 <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
                 <li><a href="ambassador_settings.html" class="nav-link active"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
@@ -53,9 +57,17 @@
                     <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
                     <div class="header-title"><h1>Ayarlar</h1><p>Profiliniz.</p></div>
                 </div>
+                            <div class="header-actions">
+                    <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon"></i></button>
+                    <div class="lang-box">
+                        <button class="lang-btn active">AZ</button>
+                        <button class="lang-btn">EN</button>
+                        <button class="lang-btn">RU</button>
+                    </div>
+                </div>
             </header>
 
-            <div class="modern-card">
+            <div class="modern-card animate-slide-up delay-100">
                 <div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
                     <div style="width:60px; height:60px; border-radius:50%; background:var(--card-border); display:flex; align-items:center; justify-content:center; font-weight:700;">AM</div>
                     <div><h4 style="margin:0;">Aysel Məmmədova</h4><p style="margin:0; font-size:0.8rem; color:var(--text-muted);">Premium</p></div>
@@ -80,6 +92,55 @@
             drawer.classList.toggle('open');
             overlay.classList.toggle('active');
         }
+    
+        // Theme Toggle Logic
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+            }
+            updateThemeIcon();
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const iconElement = document.getElementById('theme-icon');
+            if(iconElement) {
+                const isLight = document.body.classList.contains('light-mode');
+                iconElement.setAttribute('data-lucide', isLight ? 'moon' : 'sun');
+                lucide.createIcons();
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', initTheme);
+        initTheme();
+
+        // Page Transitions
+        function transitionToPage(e, url) {
+            e.preventDefault();
+            document.body.style.transition = 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(15px)';
+            setTimeout(() => { window.location.href = url; }, 350);
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-link, .bottom-nav-item, a.brand, .card-title-row a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('javascript') && !href.startsWith('tel:')) {
+                    link.addEventListener('click', function(e) {
+                        transitionToPage(e, href);
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
+
+

@@ -19,6 +19,9 @@ try {
             elseif ($filePath.EndsWith('.json')) { $context.Response.ContentType = "application/json; charset=utf-8" }
             elseif ($filePath.EndsWith('.png')) { $context.Response.ContentType = "image/png" }
             elseif ($filePath.EndsWith('.jpg') -or $filePath.EndsWith('.jpeg')) { $context.Response.ContentType = "image/jpeg" }
+            $context.Response.Headers.Add("Cache-Control", "no-cache, no-store, must-revalidate")
+            $context.Response.Headers.Add("Pragma", "no-cache")
+            $context.Response.Headers.Add("Expires", "0")
             $context.Response.OutputStream.Write($buffer, 0, $buffer.Length)
         } else {
             $context.Response.StatusCode = 404

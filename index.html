@@ -1,11 +1,30 @@
-<!DOCTYPE html>
+﻿﻿﻿﻿<!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="refresh" content="0; url=ambassador_dashboard.html">
     <title>AzEstetik - Redirecting...</title>
 </head>
-<body>
+<body class="animate-fade-in">
     <p>Giriş edilir... <a href="ambassador_dashboard.html">Bura klikləyin</a> əgər yönləndirilmədinizsə.</p>
+    <script>
+        function transitionToPage(e, url) {
+            e.preventDefault();
+            document.body.style.transition = 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(15px)';
+            setTimeout(() => { window.location.href = url; }, 350);
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-link, .bottom-nav-item, a.brand, .card-title-row a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('javascript') && !href.startsWith('tel:')) {
+                    link.addEventListener('click', function(e) {
+                        transitionToPage(e, href);
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

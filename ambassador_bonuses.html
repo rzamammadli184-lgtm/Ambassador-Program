@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>AzEstetik - Bonuslar</title>
     <link rel="stylesheet" href="ambassador_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <style>* { font-family: 'Poppins', sans-serif !important; }</style>
 </head>
-<body>
+<body class="animate-fade-in">
     <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="mobile-drawer" id="drawer">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
@@ -15,13 +17,14 @@
             <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
         </div>
         <nav><ul class="nav-list">
-            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> İdarə Paneli</a></li>
             <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
             <li><a href="ambassador_bonuses.html" class="nav-link active"><i data-lucide="coins"></i> Bonuslar</a></li>
             <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
             <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
             <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+            <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
             <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
             <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
             <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
@@ -33,13 +36,14 @@
         <aside class="sidebar">
             <a href="ambassador_dashboard.html" class="brand"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
             <nav><ul class="nav-list">
-                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> İdarə Paneli</a></li>
                 <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
                 <li><a href="ambassador_bonuses.html" class="nav-link active"><i data-lucide="coins"></i> Bonuslar</a></li>
                 <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Materiallar</a></li>
+                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
                 <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
                 <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
                 <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
                 <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
                 <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
@@ -51,12 +55,41 @@
             <header class="header">
                 <div style="display:flex; align-items:center; gap:16px;">
                     <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
-                    <div class="header-title"><h1>Bonuslar</h1><p>Qazanclarınız.</p></div>
+                    <div class="header-title"><h1>Bonuslar</h1><p>Excel bazasına əsasən bonus hesablamaları</p></div>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon"></i></button>
                 </div>
             </header>
-            <div class="modern-card">
-                <h3>Toplam Bonus: 1,450 ₼</h3>
-                <button class="btn-modern" style="margin-top:20px;">Detallara Bax</button>
+
+            <div class="stats-container">
+                <div class="stat-card animate-slide-up"><div class="stat-header">Ümumi Şəbəkə Balı</div><div class="stat-value" id="b-total" style="color:var(--primary);">0</div></div>
+                <div class="stat-card animate-slide-up"><div class="stat-header">Aktiv Üzvlərin Balı</div><div class="stat-value" id="b-active">0</div></div>
+                <div class="stat-card animate-slide-up"><div class="stat-header">Bonus Haqq Edən (60+ Bal)</div><div class="stat-value" id="b-eligible" style="color:#10B981;">0</div></div>
+            </div>
+
+            <div class="modern-card animate-slide-up delay-100">
+                <div class="card-title-row"><h2>Bonus Sistemi Qaydaları</h2></div>
+                <div style="margin-top:16px; display:flex; flex-direction:column; gap:12px;">
+                    <div style="padding:16px; background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.2); border-radius:12px;">
+                        <div style="font-weight:700; color:#10B981;">💎 Ambassador Bonus</div>
+                        <div style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">Toplam 60 bal = 1,000 AZN bonus. Hər 1 bal = 16.67 AZN dəyərindədir.</div>
+                    </div>
+                    <div style="padding:16px; background:rgba(59,130,246,0.08); border:1px solid rgba(59,130,246,0.2); border-radius:12px;">
+                        <div style="font-weight:700; color:#3B82F6;">🏆 Lider Bonusu</div>
+                        <div style="font-size:0.85rem; color:var(--text-muted); margin-top:4px;">Komandanız 10+ üzv topladıqda əlavə lider bonusu aktivləşir.</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modern-card animate-slide-up delay-100" style="margin-top:24px;">
+                <div class="card-title-row"><h2>Top Bonus Qazananlar (Excel Bazası)</h2></div>
+                <div class="table-responsive" style="margin-top:16px;">
+                    <table class="modern-table">
+                        <thead><tr><th>Ad Soyad</th><th>Bal</th><th>Təxmini Bonus (AZN)</th><th>Status</th></tr></thead>
+                        <tbody id="bonus-table"></tbody>
+                    </table>
+                </div>
             </div>
         </main>
     </div>
@@ -64,18 +97,49 @@
     <nav class="mobile-nav">
         <a href="ambassador_dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i></a>
         <a href="ambassador_network.html" class="bottom-nav-item"><i data-lucide="users-2"></i></a>
-        <a href="ambassador_academy.html" class="bottom-nav-item"><i data-lucide="graduation-cap"></i></a>
+        <a href="ambassador_ai.html" class="bottom-nav-item"><i data-lucide="bot"></i></a>
         <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
     </nav>
 
+    <script src="database_inline.js"></script>
     <script>
         lucide.createIcons();
-        function toggleMenu() {
-            const drawer = document.getElementById('drawer');
-            const overlay = document.getElementById('overlay');
-            drawer.classList.toggle('open');
-            overlay.classList.toggle('active');
-        }
+        function toggleMenu() { document.getElementById('drawer').classList.toggle('open'); document.getElementById('overlay').classList.toggle('active'); }
+
+        (function loadBonuses() {
+            const data = window.RAW_DATABASE || {};
+            const rawAmb = data.AMB || [];
+            const amb = rawAmb.filter(i => i.rowNum >= 4 && i.data.B && i.data.B.trim()).map(i => {
+                const d = i.data;
+                return { name: d.B, points: parseFloat(d.C) || 0, status: d.H, level: d.I, leader: d.E };
+            });
+
+            const totalPts = amb.reduce((s, a) => s + a.points, 0);
+            const activePts = amb.filter(a => a.status === 'A' || a.status === 'A+').reduce((s, a) => s + a.points, 0);
+            const eligible = amb.filter(a => a.points >= 60);
+
+            document.getElementById('b-total').textContent = Math.round(totalPts).toLocaleString() + ' Bal';
+            document.getElementById('b-active').textContent = Math.round(activePts).toLocaleString() + ' Bal';
+            document.getElementById('b-eligible').textContent = eligible.length + ' nəfər';
+
+            // Top bonus earners
+            const tbody = document.getElementById('bonus-table');
+            const topEarners = [...amb].sort((a, b) => b.points - a.points).filter(a => a.points > 0).slice(0, 15);
+            topEarners.forEach(p => {
+                const bonusAZN = Math.round(p.points * 16.67);
+                const sc = (p.status === 'A' || p.status === 'A+') ? '#10B981' : '#EF4444';
+                const tr = document.createElement('tr');
+                tr.innerHTML = '<td style="font-weight:600;">' + p.name + '</td><td style="color:var(--primary); font-weight:700;">' + p.points.toLocaleString() + '</td><td style="font-weight:700;">' + bonusAZN.toLocaleString() + ' ₼</td><td><span style="color:' + sc + '; font-weight:700;">' + (p.status || '-') + '</span></td>';
+                tbody.appendChild(tr);
+            });
+        })();
+
+        function initTheme() { const s = localStorage.getItem('theme'); if (s === 'light') document.body.classList.add('light-mode'); updateThemeIcon(); }
+        function toggleTheme() { document.body.classList.toggle('light-mode'); localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark'); updateThemeIcon(); }
+        function updateThemeIcon() { const i = document.getElementById('theme-icon'); if (i) { i.setAttribute('data-lucide', document.body.classList.contains('light-mode') ? 'moon' : 'sun'); lucide.createIcons(); } }
+        document.addEventListener('DOMContentLoaded', initTheme); initTheme();
+        function transitionToPage(e, url) { e.preventDefault(); document.body.style.transition = 'opacity 0.4s ease'; document.body.style.opacity = '0'; setTimeout(() => { window.location.href = url; }, 350); }
+        document.addEventListener('DOMContentLoaded', () => { document.querySelectorAll('.nav-link, .bottom-nav-item, a.brand').forEach(link => { const href = link.getAttribute('href'); if (href && !href.startsWith('#') && !href.startsWith('javascript')) link.addEventListener('click', function(e) { transitionToPage(e, href); }); }); });
     </script>
 </body>
 </html>
