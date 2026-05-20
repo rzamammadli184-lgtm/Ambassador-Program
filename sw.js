@@ -1,4 +1,4 @@
-const CACHE_NAME = 'azestetik-cache-v1';
+const CACHE_NAME = 'azestetik-cache-v2';
 const ASSETS = [
   'ambassador_dashboard.html',
   'ambassador_style.css',

@@ -114,20 +114,29 @@ body {
     transition: background-color 0.4s ease, color 0.4s ease;
 }
 
-/* Mobile Nav (iOS Style) */
+/* Mobile Nav (iOS Native Design) */
 .mobile-nav {
     display: none;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
-    background: rgba(15, 18, 25, 0.8);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid var(--card-border);
-    padding: 12px 12px calc(12px + var(--safe-bottom));
+    background: rgba(14, 17, 24, 0.82);
+    backdrop-filter: saturate(180%) blur(25px);
+    -webkit-backdrop-filter: saturate(180%) blur(25px);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 12px 16px calc(12px + var(--safe-bottom, 20px));
     justify-content: space-around;
-    z-index: 2000;
+    align-items: center;
+    z-index: 9999;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body.light-mode .mobile-nav {
+    background: rgba(255, 255, 255, 0.85);
+    border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 @media (max-width: 768px) {
@@ -136,22 +145,30 @@ body {
 
 .bottom-nav-item {
     color: var(--text-muted);
-    font-size: 1.5rem;
     text-decoration: none;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 4px;
-    transition: var(--transition);
+    justify-content: center;
+    padding: 6px;
+    flex: 1;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bottom-nav-item i {
+    width: 24px;
+    height: 24px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .bottom-nav-item.active {
     color: var(--primary);
 }
 
-.bottom-nav-item i {
-    width: 24px;
-    height: 24px;
+.bottom-nav-item.active i {
+    transform: scale(1.18);
+    stroke-width: 2.5;
+    filter: drop-shadow(0 4px 6px rgba(0, 168, 89, 0.4));
 }
 
 .app-container {
@@ -626,10 +643,19 @@ body {
 }
 
 @media (max-width: 768px) {
-    .main { padding: 24px 16px 100px 16px; }
-    .header { margin-bottom: 24px; }
+    .main { padding: 20px 16px 100px 16px; }
+    .header { margin-bottom: 20px; }
+    .header-title h1 { font-size: 1.65rem; }
+    .header-title p { font-size: 0.85rem; }
     .burger-btn { display: flex; }
-    .stats-container { grid-template-columns: 1fr; }
+    .stats-container { grid-template-columns: 1fr; gap: 12px; }
+    .stat-card { padding: 16px 20px; }
+    .stat-header { font-size: 0.8rem; margin-bottom: 8px; }
+    .stat-value { font-size: 1.5rem; margin-bottom: 8px; }
+    .modern-card { padding: 20px 16px; }
+    .card-title-row h2 { font-size: 1.1rem; }
+    .table-responsive { border-radius: 8px; margin-bottom: 0; }
+    .modern-table th, .modern-table td { padding: 12px 16px; font-size: 0.85rem; }
 }
 
 /* Burger Menu Drawer */
@@ -641,12 +667,12 @@ body {
     max-width: 320px;
     height: 100vh;
     background: var(--sidebar);
-    z-index: 3000;
+    z-index: 9999; /* Over mobile nav overlay */
     transition: var(--transition);
     padding: 32px 24px;
     border-right: 1px solid var(--card-border);
     box-shadow: 20px 0 50px rgba(0,0,0,0.5);
-    overflow-y: auto; /* Fix scrolling */
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
 }
 
@@ -663,7 +689,7 @@ body {
     background: rgba(0,0,0,0.6);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    z-index: 2999;
+    z-index: 9998;
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
@@ -692,10 +718,10 @@ body {
 
 /* Small Screen Optimizations (320px+) */
 @media (max-width: 380px) {
-    .header-title h1 { font-size: 1.5rem; }
-    .stat-value { font-size: 1.5rem; }
-    .main { padding: 16px; }
-    .modern-card { padding: 20px; }
+    .header-title h1 { font-size: 1.4rem; }
+    .stat-value { font-size: 1.35rem; }
+    .main { padding: 16px 12px 90px 12px; }
+    .modern-card { padding: 16px 12px; }
 }
 
 /* Premium Carousel Styling */
