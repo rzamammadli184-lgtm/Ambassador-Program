@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
@@ -8,17 +8,25 @@
     <title>AzEstetik - Müştərilər</title>
     <link rel="stylesheet" href="ambassador_style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- PWA & iOS Mobile Install Integration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AzEstetik Club">
+    <link rel="apple-touch-icon" href="assets/azestetik_app_icon.png">
+    <script src="pwa_installer.js" defer></script>
 </head>
 <body class="animate-fade-in">
     <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="mobile-drawer" id="drawer">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
-            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
+            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit: cover; border: none; padding: 2px; background: rgba(255,255,255,0.03);" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
             <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
         </div>
         <nav><ul class="nav-list">
-            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
-            <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Shebekem</a></li>
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Shebekem</a></li>
             <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
             <li><a href="ambassador_customers.html" class="nav-link active"><i data-lucide="user-plus"></i> Müştərilər</a></li>
             <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Mehsullar</a></li>
@@ -34,10 +42,10 @@
 
     <div class="app-container">
         <aside class="sidebar">
-            <a href="ambassador_dashboard.html" class="brand"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
+            <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit: cover; border: none; padding: 2px; background: rgba(255,255,255,0.03);" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
             <nav><ul class="nav-list">
-                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Dashboard</a></li>
-                <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Shebekem</a></li>
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+                <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Shebekem</a></li>
                 <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
                 <li><a href="ambassador_customers.html" class="nav-link active"><i data-lucide="user-plus"></i> Müştərilər</a></li>
                 <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Mehsullar</a></li>
@@ -142,7 +150,7 @@
 
     <nav class="mobile-nav">
         <a href="ambassador_dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i></a>
-        <a href="ambassador_network.html" class="bottom-nav-item"><i data-lucide="users-2"></i></a>
+        <a href="ambassador_branches.html" class="bottom-nav-item"><i data-lucide="users-2"></i></a>
         <a href="ambassador_academy.html" class="bottom-nav-item"><i data-lucide="graduation-cap"></i></a>
         <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
     </nav>
@@ -330,5 +338,7 @@
     </script>
 </body>
 </html>
+
+
 
 

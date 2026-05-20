@@ -1,27 +1,310 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>* { font-family: 'Poppins', sans-serif !important; }</style>
+    <style>
+        * { font-family: 'Poppins', sans-serif !important; }
+        
+        /* Premium custom styles for Academy & Exam */
+        .academy-tabs {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 28px;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 8px;
+        }
+        .academy-tab {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 600;
+            padding: 8px 16px;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .academy-tab.active {
+            color: white;
+        }
+        .academy-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -9px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary);
+        }
+        .academy-tab:hover {
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Udemy-style Course Cards */
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        .course-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+        }
+        .course-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--primary);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+        .course-banner {
+            height: 160px;
+            position: relative;
+            background: linear-gradient(135deg, rgba(241, 90, 36, 0.1), rgba(128, 90, 213, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--card-border);
+        }
+        .course-tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .course-body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .course-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1.4;
+        }
+        .course-meta {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .course-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .course-progress {
+            margin-top: 8px;
+        }
+        .progress-bar-container {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            transition: width 0.4s ease;
+        }
+        
+        /* Exam Modal Wizard */
+        .exam-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .exam-overlay.active {
+            display: flex;
+            opacity: 1;
+        }
+        .exam-wizard {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            width: 90%;
+            max-width: 680px;
+            border-radius: 20px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes modalSlideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .exam-header {
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .exam-body {
+            padding: 28px 24px;
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+        .exam-footer {
+            padding: 20px 24px;
+            border-top: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.1);
+        }
+        .question-text {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .difficulty-badge {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .diff-medium {
+            background: rgba(245, 158, 11, 0.1);
+            color: rgb(245, 158, 11);
+        }
+        .diff-hard {
+            background: rgba(239, 68, 68, 0.1);
+            color: rgb(239, 68, 68);
+        }
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .option-item {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .option-item:hover {
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.04);
+        }
+        .option-item.selected {
+            background: rgba(241, 90, 36, 0.05);
+            border-color: var(--primary);
+        }
+        .option-input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+        
+        .feedback-box {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 12px;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        .feedback-correct {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            color: rgb(16, 185, 129);
+        }
+        .feedback-incorrect {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            color: rgb(239, 68, 68);
+        }
+        
+        /* Completion screen inside wizard */
+        .exam-result-screen {
+            text-align: center;
+            padding: 40px 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        /* Stats Dashboard styling */
+        .stats-grid-academy {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>AzEstetik - Akademiya</title>
     <link rel="stylesheet" href="ambassador_style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- PWA & iOS Mobile Install Integration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AzEstetik Club">
+    <link rel="apple-touch-icon" href="assets/azestetik_app_icon.png">
+    <script src="pwa_installer.js" defer></script>
 </head>
-<body>
+<body class="animate-fade-in">
     <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="mobile-drawer" id="drawer">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
-            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
+            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit: cover; border: none; padding: 2px; background: rgba(255,255,255,0.03);" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
             <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
         </div>
         <nav><ul class="nav-list">
-            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> İdarə Paneli</a></li>
-            <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Filiallar</a></li>
             <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
             <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Məhsullar</a></li>
+            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
             <li><a href="ambassador_academy.html" class="nav-link active"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
             <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
             <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
@@ -34,17 +317,17 @@
 
     <div class="app-container">
         <aside class="sidebar">
-            <a href="ambassador_dashboard.html" class="brand"><div class="brand-icon">Az</div><span class="brand-name">AzEstetik</span></a>
+            <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit: cover; border: none; padding: 2px; background: rgba(255,255,255,0.03);" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
             <nav><ul class="nav-list">
-                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> İdarə Paneli</a></li>
-                <li><a href="ambassador_network.html" class="nav-link"><i data-lucide="users-2"></i> Şəbəkəm</a></li>
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+                <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Filiallar</a></li>
                 <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
                 <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Məhsullar</a></li>
+                <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
                 <li><a href="ambassador_academy.html" class="nav-link active"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
                 <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
                 <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
-            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+                <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
                 <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
                 <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
                 <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
@@ -55,9 +338,12 @@
             <header class="header">
                 <div style="display:flex; align-items:center; gap:16px;">
                     <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
-                    <div class="header-title"><h1>Akademiya</h1><p>Teliml?r.</p></div>
+                    <div class="header-title">
+                        <h1>Akademiya</h1>
+                        <p>Estetik cihazlar haqqında interaktiv imtahanlar və təlim platforması.</p>
+                    </div>
                 </div>
-                            <div class="header-actions">
+                <div class="header-actions">
                     <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon"></i></button>
                     <div class="lang-box">
                         <button class="lang-btn active">AZ</button>
@@ -67,32 +353,277 @@
                 </div>
             </header>
 
-            <div class="content-grid animate-fade-in delay-200">
+            <!-- Navigation Tabs -->
+            <div class="academy-tabs animate-slide-up delay-100">
+                <button class="academy-tab active" onclick="switchTab('courses')"><i data-lucide="graduation-cap"></i> Təlim və İmtahanlar</button>
+                <button class="academy-tab" onclick="switchTab('admin')"><i data-lucide="bar-chart-3"></i> Admin İmtahan Analitikası</button>
+            </div>
+
+            <!-- Tab 1: Courses & Exams -->
+            <div id="courses-tab" class="tab-content active animate-fade-in">
+                <div class="course-grid">
+                    <!-- Course Card 1 -->
+                    <div class="course-card">
+                        <div class="course-banner">
+                            <span class="course-tag" style="background: #10B981;">Təlim</span>
+                            <i data-lucide="shield-check" style="width: 48px; height: 48px; color: var(--primary);"></i>
+                        </div>
+                        <div class="course-body">
+                            <h3 class="course-title">Lazer və İşıq Sistemlərinin Əsasları (Soprano Titanium)</h3>
+                            <div class="course-meta">
+                                <div class="course-meta-item"><i data-lucide="clock" style="width: 14px;"></i> 4 saat</div>
+                                <div class="course-meta-item"><i data-lucide="award" style="width: 14px;"></i> Orta Səviyyə</div>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--text-muted); flex: 1;">Epilyasiya texnologiyasında inqilab edən 3 dalğa uzunluğunun əsasları və düzgün tətbiq qaydaları.</p>
+                            <div class="course-progress">
+                                <div style="display:flex; justify-content:space-between; font-size:0.75rem; color: var(--text-muted);">
+                                    <span>Tərəqqi</span>
+                                    <span>100%</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar-fill" style="width: 100%; background: #10B981;"></div>
+                                </div>
+                            </div>
+                            <button class="btn-modern" style="margin-top: 12px; opacity: 0.7; cursor: not-allowed;" disabled><i data-lucide="check-circle" style="width: 16px; height: 16px;"></i> Tamamlandı</button>
+                        </div>
+                    </div>
+
+                    <!-- Course Card 2 -->
+                    <div class="course-card">
+                        <div class="course-banner">
+                            <span class="course-tag" style="background: var(--primary);">Yeni İmtahan</span>
+                            <i data-lucide="zap" style="width: 48px; height: 48px; color: var(--primary);"></i>
+                        </div>
+                        <div class="course-body">
+                            <h3 class="course-title">Estetik Aparatların Texniki Mexanikası (Candela & PicoWay)</h3>
+                            <div class="course-meta">
+                                <div class="course-meta-item"><i data-lucide="clock" style="width: 14px;"></i> 5 saat</div>
+                                <div class="course-meta-item"><i data-lucide="award" style="width: 14px;"></i> Çətin Səviyyə</div>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--text-muted); flex: 1;">Candela GentleMax Pro və PicoWay lazerlərinin iş prinsipləri, dalğa fərqləri və fotoakustik təsirlər haqqında əsas sertifikasiya imtahanı.</p>
+                            <div class="course-progress">
+                                <div style="display:flex; justify-content:space-between; font-size:0.75rem; color: var(--text-muted);">
+                                    <span>Tərəqqi</span>
+                                    <span>0%</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar-fill" style="width: 0%;"></div>
+                                </div>
+                            </div>
+                            <button class="btn-modern" onclick="startExamWizard()" style="margin-top: 12px; background: linear-gradient(135deg, var(--primary), #FF7A00);"><i data-lucide="play-circle" style="width: 16px; height: 16px;"></i> İmtahana Başla</button>
+                        </div>
+                    </div>
+
+                    <!-- Course Card 3 -->
+                    <div class="course-card">
+                        <div class="course-banner">
+                            <span class="course-tag" style="background: #3B82F6;">Təlim</span>
+                            <i data-lucide="sparkles" style="width: 48px; height: 48px; color: var(--primary);"></i>
+                        </div>
+                        <div class="course-body">
+                            <h3 class="course-title">Kollagen Stimulyasiyası və RF Terapiya (Ultraformer III)</h3>
+                            <div class="course-meta">
+                                <div class="course-meta-item"><i data-lucide="clock" style="width: 14px;"></i> 6 saat</div>
+                                <div class="course-meta-item"><i data-lucide="award" style="width: 14px;"></i> Orta Səviyyə</div>
+                            </div>
+                            <p style="font-size: 0.85rem; color: var(--text-muted); flex: 1;">HIFU və Mikro-Fokuslanmış Ultrasəs liftinq aparatları ilə üz və bədən cavanlaşdırma tətbiqləri.</p>
+                            <div class="course-progress">
+                                <div style="display:flex; justify-content:space-between; font-size:0.75rem; color: var(--text-muted);">
+                                    <span>Tərəqqi</span>
+                                    <span>75%</span>
+                                </div>
+                                <div class="progress-bar-container">
+                                    <div class="progress-bar-fill" style="width: 75%; background: #3B82F6;"></div>
+                                </div>
+                            </div>
+                            <button class="btn-modern" style="margin-top: 12px; background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: white;"><i data-lucide="play" style="width: 16px; height: 16px;"></i> Təlimə Davam Et</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab 2: Admin Exam Analytics -->
+            <div id="admin-tab" class="tab-content animate-fade-in">
+                <!-- Admin Stats Overview -->
+                <div class="stats-grid-academy animate-slide-up delay-100">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Ümumi İmtahan Sayı</span>
+                            <div class="stat-icon"><i data-lucide="file-text"></i></div>
+                        </div>
+                        <h2 class="stat-value" id="admin-total-exams">0</h2>
+                        <div class="stat-change text-success"><i data-lucide="trending-up"></i> Son 30 gündə +8 imtahan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Orta Müvəffəqiyyət Balı</span>
+                            <div class="stat-icon" style="background: rgba(128, 90, 213, 0.1); color: #805AD5;"><i data-lucide="award"></i></div>
+                        </div>
+                        <h2 class="stat-value" id="admin-avg-score">0%</h2>
+                        <div class="stat-change" style="color: var(--text-muted);">Keçid limiti: 75% bal</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Uğurlu Keçid Faizı</span>
+                            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10B981;"><i data-lucide="percent"></i></div>
+                        </div>
+                        <h2 class="stat-value" id="admin-pass-rate">0%</h2>
+                        <div class="stat-change text-success"><i data-lucide="check"></i> Yüksək nəticə faizi</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <span class="stat-title">Ən Çətin Mövzu</span>
+                            <div class="stat-icon" style="background: rgba(239, 68, 68, 0.1); color: rgb(239, 68, 68);"><i data-lucide="alert-triangle"></i></div>
+                        </div>
+                        <h2 class="stat-value" style="font-size: 1.25rem; margin-top: 14px;">Soprano Dalğaları</h2>
+                        <div class="stat-change text-danger"><i data-lucide="arrow-down"></i> Orta cavab faizi: 42%</div>
+                    </div>
+                </div>
+
+                <!-- Admin Table Filters -->
+                <div class="modern-card animate-slide-up delay-100" style="margin-bottom: 24px; padding: 16px;">
+                    <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                        <div style="flex: 2; min-width: 250px; position: relative;">
+                            <input type="text" id="admin-search-input" placeholder="Ambassador adı ilə axtar..." style="width: 100%; padding: 12px 16px 12px 40px; background: rgba(255,255,255,0.03); border: 1px solid var(--card-border); border-radius: 10px; color: white; font-size: 0.9rem;">
+                            <i data-lucide="search" style="position: absolute; left: 14px; top: 14px; width: 18px; height: 18px; color: var(--text-muted);"></i>
+                        </div>
+                        <select id="admin-type-filter" style="padding: 12px 16px; background: var(--sidebar); border: 1px solid var(--card-border); border-radius: 10px; color: white; cursor: pointer; font-size: 0.9rem; flex: 1;">
+                            <option value="all">Bütün Ambassadorlar</option>
+                            <option value="A+">Daxili (A+)</option>
+                            <option value="A">Xarici (A)</option>
+                        </select>
+                        <select id="admin-status-filter" style="padding: 12px 16px; background: var(--sidebar); border: 1px solid var(--card-border); border-radius: 10px; color: white; cursor: pointer; font-size: 0.9rem; flex: 1;">
+                            <option value="all">Bütün Nəticələr</option>
+                            <option value="passed">Keçənlər (>= 75%)</option>
+                            <option value="failed">Kəsilənlər (< 75%)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Results Table -->
                 <div class="modern-card animate-slide-up delay-100">
-                    <div style="width: 100%; height: 120px; background: rgba(255,255,255,0.05); border-radius: 12px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center;"><i data-lucide="play-circle" style="width: 48px; height: 48px; color: var(--primary);"></i></div>
-                    <h3>Girie Telimi</h3>
-                    <button class="btn-modern" style="margin-top: 20px;">Baela</button>
+                    <div class="card-title-row">
+                        <h2>İmtahan Siyahısı və Analizi</h2>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="modern-table">
+                            <thead>
+                                <tr>
+                                    <th>Ad Soyad</th>
+                                    <th>Kateqoriya</th>
+                                    <th>Səviyyə</th>
+                                    <th>İmtahan Tarixi</th>
+                                    <th>Topladığı Bal</th>
+                                    <th>Nəticə</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-table-body">
+                                <tr>
+                                    <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 40px;">Məlumatlar yüklənir...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </main>
     </div>
 
+    <!-- Bottom Nav for Mobile -->
     <nav class="mobile-nav">
         <a href="ambassador_dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i></a>
-        <a href="ambassador_network.html" class="bottom-nav-item"><i data-lucide="users-2"></i></a>
+        <a href="ambassador_branches.html" class="bottom-nav-item"><i data-lucide="users-2"></i></a>
         <a href="ambassador_academy.html" class="bottom-nav-item active"><i data-lucide="graduation-cap"></i></a>
         <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
     </nav>
 
+    <!-- Gamified Exam Wizard Modal Overlay -->
+    <div class="exam-overlay" id="exam-overlay">
+        <div class="exam-wizard" id="exam-wizard-content">
+            <!-- Header -->
+            <div class="exam-header">
+                <div>
+                    <h3 id="exam-title" style="margin: 0; font-size: 1.15rem;">Estetik Cihazlar Sertifikasiyası</h3>
+                    <span style="font-size: 0.8rem; color: var(--text-muted);" id="question-index-label">Sual 1 / 5</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <div id="lives-container" style="display: flex; gap: 4px; color: #EF4444;">
+                        <i data-lucide="heart" style="fill: currentColor; width: 18px; height: 18px;"></i>
+                        <i data-lucide="heart" style="fill: currentColor; width: 18px; height: 18px;"></i>
+                        <i data-lucide="heart" style="fill: currentColor; width: 18px; height: 18px;"></i>
+                    </div>
+                    <div style="background: rgba(241, 90, 36, 0.1); color: var(--primary); padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem;" id="xp-counter">
+                        XP: 0
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Progress Line -->
+            <div class="progress-bar-container" style="border-radius: 0; margin: 0; height: 4px;">
+                <div class="progress-bar-fill" id="exam-progress-bar" style="width: 20%; background: linear-gradient(90deg, var(--primary), #805AD5);"></div>
+            </div>
+
+            <!-- Body -->
+            <div class="exam-body" id="exam-body-content">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                    <span class="difficulty-badge diff-hard" id="question-difficulty">Çətin</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;" id="question-type-label">Birdən çox cavab seçin (Multibox)</span>
+                </div>
+                <div class="question-text" id="question-text">
+                    Soprano Titanium aparatının eyni anda işlədiyi 3 dalğa uzunluğu hansılardır?
+                </div>
+                <div class="options-list" id="options-list">
+                    <!-- Options populated by JS -->
+                </div>
+                
+                <!-- Feedback response -->
+                <div class="feedback-box" id="feedback-box">
+                    <div style="display: flex; align-items: flex-start; gap: 12px;">
+                        <i data-lucide="check-circle" id="feedback-icon" style="width: 22px; height: 22px; flex-shrink: 0;"></i>
+                        <div>
+                            <h4 id="feedback-title" style="margin: 0 0 4px 0; font-weight: 700;">Düzdür!</h4>
+                            <p id="feedback-desc" style="margin: 0; font-size: 0.85rem; line-height: 1.4; color: var(--text-muted);"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="exam-footer">
+                <button class="btn-modern" onclick="exitExam()" style="margin: 0; width: auto; background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: white;">Çıxış</button>
+                <div style="display: flex; gap: 12px;">
+                    <button class="btn-modern" id="check-btn" onclick="checkSelectedAnswer()" style="margin: 0; width: auto; background: var(--primary);">Cavabı Yoxla</button>
+                    <button class="btn-modern" id="next-btn" onclick="goToNextQuestion()" style="margin: 0; width: auto; background: #10B981; display: none;">Növbəti Sual <i data-lucide="arrow-right" style="width: 16px; vertical-align: middle;"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         lucide.createIcons();
+
+        // Tabs switcher
+        function switchTab(tabId) {
+            document.querySelectorAll('.academy-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            if (tabId === 'courses') {
+                document.querySelector('[onclick="switchTab(\'courses\')"]').classList.add('active');
+                document.getElementById('courses-tab').classList.add('active');
+            } else if (tabId === 'admin') {
+                document.querySelector('[onclick="switchTab(\'admin\')"]').classList.add('active');
+                document.getElementById('admin-tab').classList.add('active');
+                loadAdminDashboard();
+            }
+        }
+
         function toggleMenu() {
             const drawer = document.getElementById('drawer');
             const overlay = document.getElementById('overlay');
             drawer.classList.toggle('open');
             overlay.classList.toggle('active');
         }
-    
+
         // Theme Toggle Logic
         function initTheme() {
             const savedTheme = localStorage.getItem('theme');
@@ -119,7 +650,6 @@
         }
         
         document.addEventListener('DOMContentLoaded', initTheme);
-        initTheme();
 
         // Page Transitions
         function transitionToPage(e, url) {
@@ -129,6 +659,7 @@
             document.body.style.transform = 'translateY(15px)';
             setTimeout(() => { window.location.href = url; }, 350);
         }
+        
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.nav-link, .bottom-nav-item, a.brand, .card-title-row a').forEach(link => {
                 const href = link.getAttribute('href');
@@ -138,9 +669,527 @@
                     });
                 }
             });
+            
+            // Populating initial mock data for exams in admin panel if not present
+            if (!localStorage.getItem('exam_results')) {
+                const mockSubmissions = [
+                    { name: "Cəlilova Sevinc", type: "A+", level: "3+", date: "2026-05-18", score: 100, status: "passed" },
+                    { name: "Məmmədov Elvin", type: "A", level: "2", date: "2026-05-19", score: 80, status: "passed" },
+                    { name: "Hüseynova Aysel", type: "A+", level: "4+", date: "2026-05-15", score: 60, status: "failed" },
+                    { name: "Əliyev Ramil", type: "A", level: "1", date: "2026-05-17", score: 80, status: "passed" },
+                    { name: "Kazımova Lalə", type: "A+", level: "2+", date: "2026-05-16", score: 40, status: "failed" },
+                    { name: "Süleymanov Nicat", type: "A", level: "5", date: "2026-05-20", score: 100, status: "passed" }
+                ];
+                localStorage.setItem('exam_results', JSON.stringify(mockSubmissions));
+            }
         });
+
+        // ============================================
+        // GAMIFIED ONLINE EXAM SYSTEM LOGIC
+        // ============================================
+        
+        const EXAM_QUESTIONS = [
+            {
+                id: 1,
+                difficulty: "hard",
+                difficultyText: "Çətin",
+                type: "checkbox", // multibox
+                typeText: "Çoxseçimli cavab (Multibox)",
+                text: "Soprano Titanium aparatının eyni anda kombinasiya etdiyi 3 əsas lazer dalğa uzunluğu hansılardır?",
+                options: [
+                    { value: "755", label: "755 nm Alexandrite dalğası", correct: true },
+                    { value: "810", label: "810 nm Diode dalğası", correct: true },
+                    { value: "1064", label: "1064 nm Nd:YAG dalğası", correct: true },
+                    { value: "532", label: "532 nm KTP dalğası", correct: false }
+                ],
+                explanation: "Soprano Titanium texnologiyası eyni anda 3 müxtəlif dalğa uzunluğunu (755nm, 810nm, 1064nm) kombinasiya edərək epilyasiyanın effektivliyini artırır."
+            },
+            {
+                id: 2,
+                difficulty: "medium",
+                difficultyText: "Orta",
+                type: "radio", // single choice
+                typeText: "Təkseçimli cavab",
+                text: "Kollagen liftinqində istifadə edilən Ultraformer III cihazının əsas iş mexanizmi hansı fiziki dalğalara əsaslanır?",
+                options: [
+                    { value: "hifu", label: "HIFU (Yüksək İntensivlikli Fokuslanmış Ultrasəs)", correct: true },
+                    { value: "ipl", label: "IPL Genişzolaqlı İşıq Texnologiyası", correct: false },
+                    { value: "co2", label: "Fraksional CO2 Lazer Dalğası", correct: false },
+                    { value: "rf", label: "Monopolyar Radiofrekans (RF) Radiasiyası", correct: false }
+                ],
+                explanation: "Ultraformer III, dərinin SMAS təbəqəsinə qədər nüfuz edən fokuslanmış yüksək tezlikli ultrasəs (HIFU) dalğaları ilə işləyir."
+            },
+            {
+                id: 3,
+                difficulty: "hard",
+                difficultyText: "Çətin",
+                type: "radio",
+                typeText: "Təkseçimli cavab",
+                text: "PicoWay pikosaniyəlik lazer aparatının ənənəvi nanosaniyəlik (Q-Switched) lazerlərdən əsas üstünlüyü nədir?",
+                options: [
+                    { value: "photoacoustic", label: "Pikosaniyəlik impuls sayəsində dərini qızdırmadan fotoakustik təsirlə piqmenti parçalaması", correct: true },
+                    { value: "cheap", label: "Daha ucuz başlığı sayəsində daha çox prosedur həyata keçirmə imkanı", correct: false },
+                    { value: "cooldown", label: "Prosedur zamanı soyuducu gel tələb etməməsi", correct: false },
+                    { value: "energy", label: "Daha yüksək istilik verərək dərini yandırması", correct: false }
+                ],
+                explanation: "PicoWay lazeri son dərəcə qısa pikosaniyəlik impulslarla işləyir. Bu, istilik effekti yaratmadan (dərini zədələmədən) fotoakustik zərbə dalğası ilə ləkələri və döymələri xırdalayır."
+            },
+            {
+                id: 4,
+                difficulty: "medium",
+                difficultyText: "Orta",
+                type: "radio",
+                typeText: "Təkseçimli cavab",
+                text: "Candela GentleMax Pro epilyasiya cihazının Alexandrite başlığının dalğa uzunluğu nə qədərdir?",
+                options: [
+                    { value: "755", label: "755 nm", correct: true },
+                    { value: "810", label: "810 nm", correct: false },
+                    { value: "1064", label: "1064 nm", correct: false },
+                    { value: "2940", label: "2940 nm", correct: false }
+                ],
+                explanation: "Candela GentleMax Pro cihazının Alexandrite lazer dalğası məhz 755 nm təşkil edir, Nd:YAG dalğası isə 1064 nm-dir."
+            },
+            {
+                id: 5,
+                difficulty: "hard",
+                difficultyText: "Çətin",
+                type: "checkbox", // multibox
+                typeText: "Çoxseçimli cavab (Multibox)",
+                text: "AzEstetik çeşidindəki cihazlardan hansılar xüsusilə bədən korreksiyası, selülit müalicəsi və limfa drenajı üçün nəzərdə tutulub?",
+                options: [
+                    { value: "endosphere", label: "Endosphères Therapy (Kompressiv Mikro-vibrasiya)", correct: true },
+                    { value: "velashape", label: "VelaShape III (RF, İnfraqırmızı və Vakuum)", correct: true },
+                    { value: "picoway", label: "PicoWay Lazer Cihazı", correct: false },
+                    { value: "ultraformer", label: "Ultraformer III Liftinq Cihazı", correct: false }
+                ],
+                explanation: "Endosphères Therapy və VelaShape III aparatları qan dövranını sürətləndirərək, selülit və artıq çəki müalicəsində bədən formalaşdırılması üçün istifadə olunur."
+            }
+        ];
+
+        let currentQuestionIdx = 0;
+        let examScore = 0; // percentage of correct answers
+        let examXP = 0;
+        let examLives = 3;
+        let correctAnswersCount = 0;
+        let isAnswerChecked = false;
+
+        function startExamWizard() {
+            currentQuestionIdx = 0;
+            examScore = 0;
+            examXP = 0;
+            examLives = 3;
+            correctAnswersCount = 0;
+            isAnswerChecked = false;
+            
+            document.getElementById('exam-overlay').classList.add('active');
+            renderQuestion();
+            updateExamWizardUI();
+        }
+
+        function renderQuestion() {
+            isAnswerChecked = false;
+            const question = EXAM_QUESTIONS[currentQuestionIdx];
+            
+            // Set question texts
+            const diffBadge = document.getElementById('question-difficulty');
+            diffBadge.textContent = question.difficultyText;
+            diffBadge.className = `difficulty-badge diff-${question.difficulty}`;
+            
+            document.getElementById('question-type-label').textContent = question.typeText;
+            document.getElementById('question-text').textContent = question.text;
+            
+            // Build options list
+            const optionsList = document.getElementById('options-list');
+            optionsList.innerHTML = '';
+            
+            question.options.forEach((opt, idx) => {
+                const item = document.createElement('div');
+                item.className = 'option-item';
+                item.setAttribute('onclick', `selectOption(${idx})`);
+                
+                const inputType = question.type === 'checkbox' ? 'checkbox' : 'radio';
+                const inputName = question.type === 'checkbox' ? `opt-${idx}` : 'opt-group';
+                
+                item.innerHTML = `
+                    <input type="${inputType}" name="${inputName}" class="option-input" value="${opt.value}" id="input-${idx}" onchange="selectOption(${idx})">
+                    <label for="input-${idx}" style="cursor: pointer; width: 100%; font-weight:500;">${opt.label}</label>
+                `;
+                optionsList.appendChild(item);
+            });
+            
+            // Clear feedback box
+            const feedbackBox = document.getElementById('feedback-box');
+            feedbackBox.style.display = 'none';
+            feedbackBox.className = 'feedback-box';
+            
+            // Reset buttons
+            document.getElementById('check-btn').style.display = 'block';
+            document.getElementById('check-btn').disabled = false;
+            document.getElementById('next-btn').style.display = 'none';
+            
+            updateExamWizardUI();
+        }
+
+        function selectOption(idx) {
+            if (isAnswerChecked) return;
+            const question = EXAM_QUESTIONS[currentQuestionIdx];
+            const input = document.getElementById(`input-${idx}`);
+            const items = document.querySelectorAll('.option-item');
+            
+            if (question.type === 'radio') {
+                items.forEach(el => el.classList.remove('selected'));
+                items.forEach(el => {
+                    const inp = el.querySelector('input');
+                    if(inp) inp.checked = false;
+                });
+                
+                items[idx].classList.add('selected');
+                input.checked = true;
+            } else {
+                // checkbox
+                input.checked = !input.checked;
+                if(input.checked) {
+                    items[idx].classList.add('selected');
+                } else {
+                    items[idx].classList.remove('selected');
+                }
+            }
+        }
+
+        function checkSelectedAnswer() {
+            const question = EXAM_QUESTIONS[currentQuestionIdx];
+            const items = document.querySelectorAll('.option-item');
+            
+            // Get selected indices
+            const selectedIndices = [];
+            items.forEach((item, idx) => {
+                const input = item.querySelector('input');
+                if (input && input.checked) {
+                    selectedIndices.push(idx);
+                }
+            });
+            
+            if (selectedIndices.length === 0) {
+                alert('Zəhmət olmasa ən azı bir cavab seçin!');
+                return;
+            }
+            
+            isAnswerChecked = true;
+            document.getElementById('check-btn').disabled = true;
+            
+            // Validate selections
+            let isCorrect = true;
+            question.options.forEach((opt, idx) => {
+                const wasSelected = selectedIndices.includes(idx);
+                if (opt.correct !== wasSelected) {
+                    isCorrect = false;
+                }
+                
+                // Colorize options for feedback
+                if (opt.correct) {
+                    items[idx].style.borderColor = '#10B981';
+                    items[idx].style.background = 'rgba(16, 185, 129, 0.05)';
+                } else if (wasSelected && !opt.correct) {
+                    items[idx].style.borderColor = '#EF4444';
+                    items[idx].style.background = 'rgba(239, 68, 68, 0.05)';
+                }
+            });
+            
+            const feedbackBox = document.getElementById('feedback-box');
+            const feedbackTitle = document.getElementById('feedback-title');
+            const feedbackDesc = document.getElementById('feedback-desc');
+            const feedbackIcon = document.getElementById('feedback-icon');
+            
+            feedbackBox.style.display = 'block';
+            
+            if (isCorrect) {
+                correctAnswersCount++;
+                examXP += question.difficulty === 'hard' ? 40 : 20;
+                feedbackBox.classList.add('feedback-correct');
+                feedbackTitle.textContent = 'Doğrudur! Mükəmməl cavab.';
+                feedbackTitle.style.color = '#10B981';
+                feedbackDesc.textContent = question.explanation;
+                feedbackIcon.setAttribute('data-lucide', 'check-circle');
+            } else {
+                examLives--;
+                feedbackBox.classList.add('feedback-incorrect');
+                feedbackTitle.textContent = 'Yanlış cavab!';
+                feedbackTitle.style.color = '#EF4444';
+                feedbackDesc.textContent = question.explanation;
+                feedbackIcon.setAttribute('data-lucide', 'alert-circle');
+            }
+            
+            lucide.createIcons();
+            updateExamWizardUI();
+            
+            document.getElementById('check-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'block';
+            
+            if (examLives <= 0) {
+                document.getElementById('next-btn').innerHTML = 'Nəticəni Gör <i data-lucide="award" style="width: 16px; vertical-align: middle;"></i>';
+                lucide.createIcons();
+            } else if (currentQuestionIdx === EXAM_QUESTIONS.length - 1) {
+                document.getElementById('next-btn').innerHTML = 'İmtahanı Bitir <i data-lucide="award" style="width: 16px; vertical-align: middle;"></i>';
+                lucide.createIcons();
+            }
+        }
+
+        function updateExamWizardUI() {
+            // Update progress bar
+            const progressPct = ((currentQuestionIdx + 1) / EXAM_QUESTIONS.length) * 100;
+            document.getElementById('exam-progress-bar').style.width = `${progressPct}%`;
+            
+            // Update labels
+            document.getElementById('question-index-label').textContent = `Sual ${currentQuestionIdx + 1} / ${EXAM_QUESTIONS.length}`;
+            document.getElementById('xp-counter').textContent = `XP: ${examXP}`;
+            
+            // Render lives hearts
+            const livesContainer = document.getElementById('lives-container');
+            livesContainer.innerHTML = '';
+            for (let i = 0; i < 3; i++) {
+                const heart = document.createElement('i');
+                heart.setAttribute('data-lucide', 'heart');
+                heart.style.width = '18px';
+                heart.style.height = '18px';
+                if (i < examLives) {
+                    heart.style.color = '#EF4444';
+                    heart.style.fill = '#EF4444';
+                } else {
+                    heart.style.color = 'rgba(255,255,255,0.15)';
+                }
+                livesContainer.appendChild(heart);
+            }
+            lucide.createIcons();
+        }
+
+        function goToNextQuestion() {
+            if (examLives <= 0 || currentQuestionIdx === EXAM_QUESTIONS.length - 1) {
+                renderExamResultsScreen();
+                return;
+            }
+            
+            currentQuestionIdx++;
+            renderQuestion();
+        }
+
+        function renderExamResultsScreen() {
+            const finalScore = Math.round((correctAnswersCount / EXAM_QUESTIONS.length) * 100);
+            const passed = finalScore >= 75;
+            
+            const wizardContent = document.getElementById('exam-wizard-content');
+            wizardContent.innerHTML = `
+                <div class="exam-result-screen animate-fade-in">
+                    <div style="background: ${passed ? 'rgba(16, 185, 129, 0.1)' : 'rgba(239, 68, 68, 0.1)'}; color: ${passed ? '#10B981' : '#EF4444'}; width: 80px; height: 80px; border-radius: 40px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px;">
+                        <i data-lucide="${passed ? 'award' : 'alert-triangle'}" style="width: 48px; height: 48px;"></i>
+                    </div>
+                    <h2 style="margin: 0; font-size: 1.8rem; font-weight: 800;">İmtahan Tamamlandı!</h2>
+                    <p style="font-size: 1rem; color: var(--text-muted); margin: 0;">Sizin Nəticəniz:</p>
+                    
+                    <div style="display: flex; gap: 20px; justify-content: center; width: 100%; margin: 10px 0;">
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); padding: 16px; border-radius: 12px; flex: 1;">
+                            <span style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Toplanılan Bal</span>
+                            <span style="font-size: 1.6rem; font-weight: 800; color: white;">${finalScore}%</span>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--card-border); padding: 16px; border-radius: 12px; flex: 1;">
+                            <span style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Qazanılan XP</span>
+                            <span style="font-size: 1.6rem; font-weight: 800; color: var(--primary);">+${examXP} XP</span>
+                        </div>
+                    </div>
+                    
+                    <div style="font-size: 1.1rem; font-weight: 700; color: ${passed ? '#10B981' : '#EF4444'}; margin-top: 10px;">
+                        ${passed ? 'TƏBRİKLƏR! Sertifikasiyadan Uğurla Keçdiniz.' : 'Müvəffəqiyyət qazanılmadı. Minimum keçid balı 75%-dir.'}
+                    </div>
+                    
+                    <p style="font-size: 0.85rem; color: var(--text-muted); max-width: 480px;">Nəticələriniz rəsmi olaraq qeydə alındı və analiz edilməsi üçün Admin Panelindəki 'İmtahan Analitikası' moduluna göndərildi.</p>
+                    
+                    <button class="btn-modern" onclick="saveExamResult(${finalScore}, '${passed ? 'passed' : 'failed'}')" style="margin-top: 20px; max-width: 250px; background: linear-gradient(135deg, var(--primary), #FF7A00);">Təsdiqlə və Bitir</button>
+                </div>
+            `;
+            lucide.createIcons();
+        }
+
+        function saveExamResult(score, status) {
+            const results = JSON.parse(localStorage.getItem('exam_results')) || [];
+            
+            // Adding a simulated exam result for the logged-in user (Simulated as Daxili Ambassador Məmmədova Fəridə)
+            const newResult = {
+                name: "Məmmədova Fəridə",
+                type: "A+",
+                level: "2+",
+                date: new Date().toISOString().split('T')[0],
+                score: score,
+                status: status
+            };
+            
+            results.unshift(newResult);
+            localStorage.setItem('exam_results', JSON.stringify(results));
+            
+            exitExam();
+            
+            // Auto navigate to admin panel to see the results
+            switchTab('admin');
+        }
+
+        function exitExam() {
+            document.getElementById('exam-overlay').classList.remove('active');
+            
+            // Restore wizard content structure for next run
+            setTimeout(() => {
+                const wizard = document.getElementById('exam-wizard-content');
+                wizard.innerHTML = `
+                    <div class="exam-header">
+                        <div>
+                            <h3 id="exam-title" style="margin: 0; font-size: 1.15rem;">Estetik Cihazlar Sertifikasiyası</h3>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);" id="question-index-label">Sual 1 / 5</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 12px;">
+                            <div id="lives-container" style="display: flex; gap: 4px; color: #EF4444;">
+                                <i data-lucide="heart" style="fill: currentColor; width: 18px; height: 18px;"></i>
+                                <i data-lucide="heart" style="fill: currentColor; width: 18px; height: 18px;"></i>
+                                <i data-lucide="heart" style="fill: currentColor; width: 18px; height: 18px;"></i>
+                            </div>
+                            <div style="background: rgba(241, 90, 36, 0.1); color: var(--primary); padding: 6px 12px; border-radius: 8px; font-weight: 700; font-size: 0.85rem;" id="xp-counter">
+                                XP: 0
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-bar-container" style="border-radius: 0; margin: 0; height: 4px;">
+                        <div class="progress-bar-fill" id="exam-progress-bar" style="width: 20%; background: linear-gradient(90deg, var(--primary), #805AD5);"></div>
+                    </div>
+
+                    <div class="exam-body" id="exam-body-content">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                            <span class="difficulty-badge diff-hard" id="question-difficulty">Çətin</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 500;" id="question-type-label">Birdən çox cavab seçin (Multibox)</span>
+                        </div>
+                        <div class="question-text" id="question-text">
+                            Soprano Titanium aparatının eyni anda işlədiyi 3 dalğa uzunluğu hansılardır?
+                        </div>
+                        <div class="options-list" id="options-list"></div>
+                        
+                        <div class="feedback-box" id="feedback-box">
+                            <div style="display: flex; align-items: flex-start; gap: 12px;">
+                                <i data-lucide="check-circle" id="feedback-icon" style="width: 22px; height: 22px; flex-shrink: 0;"></i>
+                                <div>
+                                    <h4 id="feedback-title" style="margin: 0 0 4px 0; font-weight: 700;">Düzdür!</h4>
+                                    <p id="feedback-desc" style="margin: 0; font-size: 0.85rem; line-height: 1.4; color: var(--text-muted);"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="exam-footer">
+                        <button class="btn-modern" onclick="exitExam()" style="margin: 0; width: auto; background: rgba(255,255,255,0.05); border: 1px solid var(--card-border); color: white;">Çıxış</button>
+                        <div style="display: flex; gap: 12px;">
+                            <button class="btn-modern" id="check-btn" onclick="checkSelectedAnswer()" style="margin: 0; width: auto; background: var(--primary);">Cavabı Yoxla</button>
+                            <button class="btn-modern" id="next-btn" onclick="goToNextQuestion()" style="margin: 0; width: auto; background: #10B981; display: none;">Növbəti Sual <i data-lucide="arrow-right" style="width: 16px; vertical-align: middle;"></i></button>
+                        </div>
+                    </div>
+                `;
+                lucide.createIcons();
+            }, 500);
+        }
+
+        // ============================================
+        // ADMIN DASHBOARD ANALYTICS LOGIC
+        // ============================================
+        
+        function loadAdminDashboard() {
+            const results = JSON.parse(localStorage.getItem('exam_results')) || [];
+            
+            // 1. Calculate KPI Metrics
+            const totalExams = results.length;
+            const passedExams = results.filter(r => r.status === 'passed').length;
+            const passRate = totalExams > 0 ? Math.round((passedExams / totalExams) * 100) : 0;
+            
+            const totalScore = results.reduce((sum, r) => sum + r.score, 0);
+            const avgScore = totalExams > 0 ? Math.round(totalScore / totalExams) : 0;
+            
+            document.getElementById('admin-total-exams').textContent = totalExams;
+            document.getElementById('admin-avg-score').textContent = `${avgScore}%`;
+            document.getElementById('admin-pass-rate').textContent = `${passRate}%`;
+            
+            renderAdminTable(results);
+        }
+
+        function renderAdminTable(data) {
+            const tbody = document.getElementById('admin-table-body');
+            tbody.innerHTML = '';
+            
+            if (data.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 40px;">Hələ ki imtahan nəticəsi tapılmadı.</td>
+                    </tr>`;
+                return;
+            }
+            
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                
+                const isInternal = row.type === 'A+';
+                const typeBadge = isInternal 
+                    ? `<span class="badge" style="background: linear-gradient(135deg, var(--primary), #805AD5); color: white; border: none; font-size: 0.75rem; padding: 4px 8px;">Daxili (A+)</span>`
+                    : `<span class="badge badge-success" style="font-size: 0.75rem; padding: 4px 8px;">Xarici (A)</span>`;
+                
+                const resultBadge = row.status === 'passed'
+                    ? `<span class="badge badge-success" style="font-size: 0.75rem; padding: 4px 8px;">Keçdi</span>`
+                    : `<span class="badge badge-warning" style="background: rgba(239, 68, 68, 0.1); color: #EF4444; border: 1px solid rgba(239, 68, 68, 0.2); font-size: 0.75rem; padding: 4px 8px;">Kəsildi</span>`;
+                
+                tr.innerHTML = `
+                    <td>
+                        <div style="display: flex; flex-direction: column; gap: 2px;">
+                            <span style="font-weight: 600;">${row.name}</span>
+                            <span style="font-size: 0.75rem; color: var(--text-muted); display: inline-flex; align-items: center; gap: 4px;">
+                                <i data-lucide="shield" style="width: 10px; height: 10px;"></i> Kompanyon
+                            </span>
+                        </div>
+                    </td>
+                    <td>${typeBadge}</td>
+                    <td><b>Səviyyə ${row.level}</b></td>
+                    <td>${row.date}</td>
+                    <td><b>${row.score}%</b></td>
+                    <td>${resultBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+            lucide.createIcons();
+        }
+
+        // Admin Filter Logic
+        const adminSearchInput = document.getElementById('admin-search-input');
+        const adminTypeFilter = document.getElementById('admin-type-filter');
+        const adminStatusFilter = document.getElementById('admin-status-filter');
+
+        function filterAdminData() {
+            const results = JSON.parse(localStorage.getItem('exam_results')) || [];
+            const query = adminSearchInput.value.toLowerCase().trim();
+            const type = adminTypeFilter.value;
+            const status = adminStatusFilter.value;
+            
+            const filtered = results.filter(row => {
+                const matchesQuery = row.name.toLowerCase().includes(query);
+                
+                let matchesType = true;
+                if (type !== 'all') {
+                    matchesType = row.type === type;
+                }
+                
+                let matchesStatus = true;
+                if (status !== 'all') {
+                    matchesStatus = row.status === status;
+                }
+                
+                return matchesQuery && matchesType && matchesStatus;
+            });
+            
+            renderAdminTable(filtered);
+        }
+
+        adminSearchInput.addEventListener('input', filterAdminData);
+        adminTypeFilter.addEventListener('change', filterAdminData);
+        adminStatusFilter.addEventListener('change', filterAdminData);
     </script>
 </body>
 </html>
-
-
