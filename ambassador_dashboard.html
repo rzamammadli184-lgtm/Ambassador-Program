@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="ambassador_style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
     
     <!-- PWA & iOS Mobile Install Integration -->
     <link rel="manifest" href="manifest.json">
@@ -15,6 +16,8 @@
     <meta name="apple-mobile-web-app-title" content="AzEstetik Club">
     <link rel="apple-touch-icon" href="assets/azestetik_app_icon.png">
     <script src="pwa_installer.js" defer></script>
+    <script src="app_core.js" defer></script>
+    <script src="firebase_service.js" defer></script>
     <style>
         * { font-family: 'Poppins', sans-serif !important; }
 
@@ -186,6 +189,12 @@
                     </div>
                 </div>
                 <div class="header-actions">
+                    <select class="role-switcher-select" onchange="AzCore.setRole(this.value)" style="background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--card-border); border-radius: 8px; padding: 6px 12px; font-size: 0.8rem; cursor: pointer; outline: none;">
+                        <option value="user">İstifadəçi</option>
+                        <option value="moderator">Moderator</option>
+                        <option value="admin">Admin</option>
+                        <option value="superadmin">Super Admin</option>
+                    </select>
                     <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon"></i></button>
                     <div class="lang-box">
                         <button class="lang-btn active">AZ</button>
@@ -204,7 +213,9 @@
                     <a href="ambassador_academy.html" class="quick-action-btn"><i data-lucide="graduation-cap" style="width: 18px;"></i> İmtahana Keç</a>
                     <a href="ambassador_branches.html" class="quick-action-btn"><i data-lucide="users-2" style="width: 18px;"></i> Filiallarım</a>
                     <a href="ambassador_leaderboard.html" class="quick-action-btn"><i data-lucide="trophy" style="width: 18px;"></i> Liderlər</a>
-                    <button onclick="openPwaModal()" class="quick-action-btn" style="background: rgba(0, 168, 89, 0.15); border-color: rgba(0, 168, 89, 0.3); color: #00A859;"><i data-lucide="smartphone" style="width: 18px;"></i> Tətbiqi Yüklə 📲</button>
+                    <button data-role-required="admin" onclick="AzCore.openAddAmbassadorModal()" class="quick-action-btn" style="background: linear-gradient(135deg, rgba(0,168,89,0.15), rgba(0,208,110,0.1)); border-color: rgba(0,168,89,0.3); color: #00A859;"><i data-lucide="user-plus" style="width: 18px;"></i> Əlavə Et</button>
+                    <button data-role-required="admin" onclick="exportData()" class="quick-action-btn" style="background: rgba(59,130,246,0.15); border-color: rgba(59,130,246,0.3); color: #3B82F6;"><i data-lucide="download" style="width: 18px;"></i> İxrac</button>
+                    <button onclick="openPwaModal()" class="quick-action-btn" style="background: rgba(128,90,213,0.12); border-color: rgba(128,90,213,0.3); color: #805AD5;"><i data-lucide="smartphone" style="width: 18px;"></i> Tətbiqi Yüklə 📲</button>
                 </div>
             </div>
             <!-- KPI Stats -->
@@ -351,6 +362,27 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Interactive Charts Section -->
+            <div class="chart-row animate-slide-up delay-300">
+                <div class="modern-card">
+                    <div class="card-title-row">
+                        <h2><i data-lucide="pie-chart" style="width:20px;height:20px;color:var(--primary);margin-right:8px"></i> Status Bölgüsü</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="statusChart" height="220"></canvas>
+                    </div>
+                </div>
+                <div class="modern-card">
+                    <div class="card-title-row">
+                        <h2><i data-lucide="trending-up" style="width:20px;height:20px;color:var(--primary);margin-right:8px"></i> Aylıq Böyümə</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="growthChart" height="220"></canvas>
+                    </div>
+                </div>
+            </div>
+
         </main>
     </div>
 
@@ -473,6 +505,167 @@
                 if (href && !href.startsWith('#') && !href.startsWith('javascript')) link.addEventListener('click', function(e) { transitionToPage(e, href); });
             });
         });
+
+        // ── Chart.js Interactive Charts ─────────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof Chart === 'undefined') return;
+
+            const data = window.RAW_DATABASE || {};
+            const rawAmb = data.AMB || [];
+            const ambassadors = rawAmb.filter(r => r.rowNum > 3).map(r => ({
+                status: r.data.H || '',
+                contractDate: r.data.F || '',
+                points: parseFloat(r.data.C) || 0
+            }));
+
+            const activeCount = ambassadors.filter(a => a.status === 'A').length;
+            const premiumCount = ambassadors.filter(a => a.status === 'A+').length;
+            const passiveCount = ambassadors.filter(a => a.status !== 'A' && a.status !== 'A+').length;
+
+            const isLight = document.body.classList.contains('light-mode');
+            const textColor = isLight ? '#1B2559' : '#94A3B8';
+            const gridColor = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)';
+
+            // Status Doughnut Chart
+            const statusCtx = document.getElementById('statusChart');
+            if (statusCtx) {
+                new Chart(statusCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Aktiv (A)', 'Premium (A+)', 'Passiv (K)'],
+                        datasets: [{
+                            data: [activeCount, premiumCount, passiveCount],
+                            backgroundColor: [
+                                'rgba(0, 168, 89, 0.8)',
+                                'rgba(128, 90, 213, 0.8)',
+                                'rgba(245, 158, 11, 0.7)'
+                            ],
+                            borderColor: 'transparent',
+                            borderWidth: 0,
+                            hoverOffset: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        cutout: '65%',
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { color: textColor, padding: 16, font: { family: 'Poppins', size: 12, weight: 600 }, usePointStyle: true, pointStyleWidth: 10 }
+                            }
+                        },
+                        animation: { animateRotate: true, duration: 1200, easing: 'easeOutQuart' }
+                    }
+                });
+            }
+
+            // Monthly Growth Line Chart
+            const growthCtx = document.getElementById('growthChart');
+            if (growthCtx) {
+                const months = ['Noy 23', 'Dek 23', 'Yan 24', 'Fev 24', 'Mar 24', 'Apr 24', 'May 24'];
+                const growthData = [45, 52, 68, 72, 78, 85, ambassadors.length];
+
+                new Chart(growthCtx, {
+                    type: 'line',
+                    data: {
+                        labels: months,
+                        datasets: [{
+                            label: 'Ambassadorlar',
+                            data: growthData,
+                            borderColor: '#00A859',
+                            backgroundColor: (ctx) => {
+                                const g = ctx.chart.ctx.createLinearGradient(0, 0, 0, 220);
+                                g.addColorStop(0, 'rgba(0, 168, 89, 0.25)');
+                                g.addColorStop(1, 'rgba(0, 168, 89, 0.0)');
+                                return g;
+                            },
+                            fill: true,
+                            tension: 0.45,
+                            pointRadius: 5,
+                            pointBackgroundColor: '#00A859',
+                            pointBorderColor: isLight ? '#fff' : '#0B0E14',
+                            pointBorderWidth: 3,
+                            pointHoverRadius: 8,
+                            borderWidth: 3
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: {
+                                grid: { color: gridColor },
+                                ticks: { color: textColor, font: { family: 'Poppins', size: 11 } }
+                            },
+                            y: {
+                                grid: { color: gridColor },
+                                ticks: { color: textColor, font: { family: 'Poppins', size: 11 } },
+                                beginAtZero: true
+                            }
+                        },
+                        animation: { duration: 1500, easing: 'easeOutQuart' }
+                    }
+                });
+            }
+        });
+
+        // ── Data Export ─────────────────────────────────────
+        function exportData() {
+            try {
+                if (typeof AzCore !== 'undefined') AzCore.haptic('medium');
+                const data = window.RAW_DATABASE || {};
+                const rawAmb = data.AMB || [];
+                // Skip header rows (rowNum <= 3)
+                const ambassadors = rawAmb.filter(r => r.rowNum > 3).map(r => ({
+                    Name: r.data.B || '',
+                    Points: parseFloat(r.data.C) || 0,
+                    Leader: r.data.E || '',
+                    ContractDate: r.data.F || '',
+                    Status: r.data.H || ''
+                }));
+
+                if (ambassadors.length === 0) {
+                    if (typeof AzCore !== 'undefined') AzCore.toast('Məlumat tapılmadı', 'İxrac ediləcək ambassador yoxdur.', 'warning');
+                    return;
+                }
+
+                // Create CSV string
+                const headers = ['Ad Soyad', 'Bal', 'Rəhbər', 'Müqavilə Tarixi', 'Status'];
+                const csvRows = [];
+                csvRows.push(headers.join(','));
+
+                ambassadors.forEach(amb => {
+                    const row = [
+                        `"${amb.Name}"`,
+                        amb.Points,
+                        `"${amb.Leader}"`,
+                        `"${amb.ContractDate}"`,
+                        `"${amb.Status}"`
+                    ];
+                    csvRows.push(row.join(','));
+                });
+
+                const csvString = csvRows.join('\n');
+                const blob = new Blob([new Uint8Array([0xEF, 0xBB, 0xBF]), csvString], { type: 'text/csv;charset=utf-8;' }); // BOM for Excel
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `Ambassadorlar_${new Date().toISOString().split('T')[0]}.csv`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                if (typeof AzCore !== 'undefined') AzCore.toast('Uğurlu İxrac', 'Məlumatlar uğurla yükləndi.', 'success');
+            } catch (err) {
+                console.error("Export error", err);
+                if (typeof AzCore !== 'undefined') AzCore.toast('Xəta', 'İxrac zamanı xəta baş verdi.', 'error');
+            }
+        }
     </script>
 </body>
 </html>
