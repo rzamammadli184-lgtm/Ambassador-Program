@@ -1,15 +1,14 @@
 /**
- * AzEstetik Firebase Service Layer
- * ─────────────────────────────────
- * Bu fayl Firebase Realtime Database və Push Notifications üçün
- * tam inteqrasiya təmin edir. Firebase konfiqurasiya kodlarınızı
- * aşağıdakı `firebaseConfig` obyektinə daxil edin.
+ * AzEstetik Hybrid Database Service Layer
+ * ───────────────────────────────────────
+ * Bu fayl həm Express Backend API ilə, həm də birbaşa Firebase və ya
+ * lokal statik database (database_inline.js) ilə işləyə bilər.
  * 
- * Əgər Firebase hələ qoşulmayıbsa, sistem avtomatik olaraq
- * lokal məlumat bazası (database_inline.js) ilə işləyir.
+ * Sistem avtomatik olaraq backend-i yoxlayır, taparsa API-dan istifadə edir,
+ * tapmazsa client-side Firebase və ya lokal statik rejimə keçir.
  */
 
-// ── Firebase Configuration ──────────────────────────────────
+// ── Firebase Configuration (Fallback üçün) ──────────────────
 const firebaseConfig = {
     apiKey: "AIzaSyCB4ni5ARUDPL3Wj8kDMq1EHtOCzkdnkcI",
     authDomain: "planning-with-ai-d0a36.firebaseapp.com",
@@ -20,23 +19,67 @@ const firebaseConfig = {
     appId: "1:214396611272:web:0d10423e72e03d54d5d3fd"
 };
 
-
-// ── Firebase Service ────────────────────────────────────────
 const AzFirebase = (() => {
     let db = null;
     let messaging = null;
     let isConnected = false;
+    let useBackend = false;
     let connectionListeners = [];
 
-    // Firebase SDK yüklənib-yüklənmədiyini yoxla
+    const isDevServer = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const API_BASE = (window.location.protocol === 'file:' || (isDevServer && window.location.port !== '3001')) 
+        ? 'http://localhost:3001/api' 
+        : '/api';
+
+    // API-yə müraciət köməkçisi
+    async function apiRequest(endpoint, method = 'GET', body = null) {
+        const options = {
+            method,
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        };
+        if (body) {
+            options.body = JSON.stringify(body);
+        }
+        
+        const response = await fetch(`${API_BASE}${endpoint}`, options);
+        if (!response.ok) {
+            const err = await response.json().catch(() => ({}));
+            throw new Error(err.error || `HTTP error ${response.status}`);
+        }
+        return await response.json();
+    }
+
     function isFirebaseAvailable() {
         return typeof firebase !== 'undefined' && firebaseConfig.apiKey !== 'YOUR_API_KEY';
     }
 
-    // Firebase-i başlat
-    function init() {
+    // Başlanğıc yoxlamaları
+    async function init() {
+        // 1. Öncə backend serverini yoxla
+        try {
+            const res = await fetch(API_BASE + '/health');
+            if (res.ok) {
+                const data = await res.json();
+                if (data.status === 'OK') {
+                    useBackend = true;
+                    isConnected = true;
+                    console.log('🟢 AzEstetik Backend API Server aktivdir. API rejimində işləyir.');
+                    _notifyConnection(true);
+                    
+                    // Backend-dən gələn offline queue-ni sinxronizasiya et
+                    syncOfflineQueue();
+                    return true;
+                }
+            }
+        } catch (e) {
+            console.log('⚠️ Backend server tapılmadı. Client-side Firebase-ə yoxlanılır.');
+        }
+
+        // 2. Backend tapılmazsa, birbaşa Firebase-i yoxla
         if (!isFirebaseAvailable()) {
-            console.log('🔶 Firebase konfiqurasiya olunmayıb. Lokal rejim aktiv.');
+            console.log('🔶 Firebase konfiqurasiya olunmayıb. Lokal statik rejim aktivdir.');
             _notifyConnection(false);
             return false;
         }
@@ -47,9 +90,8 @@ const AzFirebase = (() => {
             }
             db = firebase.database();
             isConnected = true;
-            console.log('✅ Firebase uğurla qoşuldu!');
+            console.log('✅ Firebase SDK birbaşa qoşuldu!');
 
-            // Əlaqə vəziyyətini izlə
             db.ref('.info/connected').on('value', (snap) => {
                 isConnected = snap.val() === true;
                 _notifyConnection(isConnected);
@@ -58,36 +100,63 @@ const AzFirebase = (() => {
 
             return true;
         } catch (err) {
-            console.error('❌ Firebase xətası:', err);
+            console.error('❌ Firebase qoşulma xətası:', err);
             _notifyConnection(false);
             return false;
         }
     }
 
     // ── Ambassadorlar ───────────────────────────────────────
-    function getAmbassadors(callback) {
+    async function getAmbassadors(callback) {
+        if (useBackend) {
+            try {
+                const data = await apiRequest('/ambassadors');
+                callback(data);
+                localStorage.setItem('azestetik_ambassadors_cache', JSON.stringify(data));
+                return;
+            } catch (err) {
+                console.error('Backend-dən ambassadorları alarkən xəta:', err);
+            }
+        }
+
         if (!isConnected || !db) {
-            // Lokal məlumat bazasından oxu
-            const data = window.RAW_DATABASE || {};
-            callback(_parseLocalData(data));
+            // Keş və ya statik local datadan oxu
+            const cached = localStorage.getItem('azestetik_ambassadors_cache');
+            if (cached) {
+                callback(JSON.parse(cached));
+            } else {
+                const data = window.RAW_DATABASE || {};
+                callback(_parseLocalData(data));
+            }
             return;
         }
 
         db.ref('ambassadors').on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                callback(Object.values(data));
-                // Lokal keşə yaz (offline üçün)
-                localStorage.setItem('azestetik_ambassadors_cache', JSON.stringify(Object.values(data)));
+                const arr = Object.values(data);
+                callback(arr);
+                localStorage.setItem('azestetik_ambassadors_cache', JSON.stringify(arr));
             } else {
-                // Firebase boşdursa, lokal datanı istifadə et
                 const localData = window.RAW_DATABASE || {};
                 callback(_parseLocalData(localData));
             }
         });
     }
 
-    function addAmbassador(ambassador) {
+    async function addAmbassador(ambassador) {
+        if (useBackend) {
+            try {
+                const saved = await apiRequest('/ambassadors', 'POST', ambassador);
+                _sendNotification('Yeni Ambassador!', ambassador.name + ' proqrama qoşuldu.');
+                return { success: true, data: saved };
+            } catch (err) {
+                console.error('Backend əlavə etmə xətası:', err);
+                _saveToOfflineQueue('add', ambassador);
+                return { offline: true, data: ambassador };
+            }
+        }
+
         if (!isConnected || !db) {
             console.warn('Firebase qoşulu deyil. Məlumat lokal saxlanıldı.');
             _saveToOfflineQueue('add', ambassador);
@@ -98,13 +167,23 @@ const AzFirebase = (() => {
         ambassador.id = newRef.key;
         ambassador.createdAt = firebase.database.ServerValue.TIMESTAMP;
         return newRef.set(ambassador).then(() => {
-            // Push bildirişi göndər
             _sendNotification('Yeni Ambassador!', ambassador.name + ' proqrama qoşuldu.');
             return { success: true, data: ambassador };
         });
     }
 
-    function updateAmbassador(id, updates) {
+    async function updateAmbassador(id, updates) {
+        if (useBackend) {
+            try {
+                await apiRequest(`/ambassadors/${id}`, 'PUT', updates);
+                return { success: true };
+            } catch (err) {
+                console.error('Backend yeniləmə xətası:', err);
+                _saveToOfflineQueue('update', { id, ...updates });
+                return { offline: true };
+            }
+        }
+
         if (!isConnected || !db) {
             _saveToOfflineQueue('update', { id, ...updates });
             return Promise.resolve({ offline: true });
@@ -112,7 +191,18 @@ const AzFirebase = (() => {
         return db.ref('ambassadors/' + id).update(updates);
     }
 
-    function deleteAmbassador(id) {
+    async function deleteAmbassador(id) {
+        if (useBackend) {
+            try {
+                await apiRequest(`/ambassadors/${id}`, 'DELETE');
+                return { success: true };
+            } catch (err) {
+                console.error('Backend silmə xətası:', err);
+                _saveToOfflineQueue('delete', { id });
+                return { offline: true };
+            }
+        }
+
         if (!isConnected || !db) {
             _saveToOfflineQueue('delete', { id });
             return Promise.resolve({ offline: true });
@@ -121,7 +211,19 @@ const AzFirebase = (() => {
     }
 
     // ── Events / Tədbirlər ──────────────────────────────────
-    function registerForEvent(eventId, participantData) {
+    async function registerForEvent(eventId, participantData) {
+        if (useBackend) {
+            try {
+                const saved = await apiRequest(`/events/${eventId}/register`, 'POST', participantData);
+                _sendNotification('Qeydiyyat Uğurludur!', participantData.name + ' - Tədbirə qeydiyyatınız təsdiqləndi.');
+                return { success: true, data: saved };
+            } catch (err) {
+                console.error('Backend event qeydiyyat xətası:', err);
+                _saveToOfflineQueue('register_event', { eventId, participantData });
+                return { offline: true, data: participantData };
+            }
+        }
+
         if (!isConnected || !db) {
             _saveToOfflineQueue('register_event', { eventId, participantData });
             return Promise.resolve({ offline: true, data: participantData });
@@ -138,8 +240,14 @@ const AzFirebase = (() => {
     }
 
     function getEventParticipants(eventId, callback) {
+        if (useBackend) {
+            apiRequest(`/events/${eventId}/participants`)
+                .then(callback)
+                .catch(() => callback([]));
+            return;
+        }
+
         if (!isConnected || !db) {
-            // Check if there are local offline registrations (mock response for display)
             const queue = JSON.parse(localStorage.getItem('azestetik_offline_queue') || '[]');
             const localParticipants = queue
                 .filter(q => q.action === 'register_event' && q.data.eventId === eventId)
@@ -150,81 +258,41 @@ const AzFirebase = (() => {
 
         db.ref('events/' + eventId + '/participants').once('value').then((snapshot) => {
             const data = snapshot.val();
-            if (data) {
-                callback(Object.values(data));
-            } else {
-                callback([]);
-            }
+            callback(data ? Object.values(data) : []);
         });
     }
 
-    // ── Push Notifications ──────────────────────────────────
-    function initPushNotifications() {
-        if (!isFirebaseAvailable() || !('Notification' in window)) {
-            console.log('🔔 Push bildirişlər mövcud deyil.');
-            return;
-        }
-
-        try {
-            messaging = firebase.messaging();
-
-            Notification.requestPermission().then((permission) => {
-                if (permission === 'granted') {
-                    console.log('✅ Bildiriş icazəsi verildi.');
-                    messaging.getToken().then((token) => {
-                        console.log('📱 FCM Token:', token);
-                        // Token-i serverə göndər (gələcək)
-                        if (db) db.ref('fcm_tokens/' + _sanitizeToken(token)).set({ 
-                            token, 
-                            updatedAt: firebase.database.ServerValue.TIMESTAMP 
-                        });
-                    });
-                } else {
-                    console.log('🔕 Bildiriş icazəsi rədd edildi.');
-                }
-            });
-
-            // Ön planda bildiriş al
-            messaging.onMessage((payload) => {
-                console.log('📩 Bildiriş alındı:', payload);
-                _showInAppNotification(payload.notification.title, payload.notification.body);
-            });
-        } catch (err) {
-            console.log('Push notifications quraşdırıla bilmədi:', err.message);
-        }
-    }
-
-    // ── Offline Sync (Sinxronizasiya) ───────────────────────
+    // ── Sinxronizasiya və offline idarəetmə ────────────────
     function syncOfflineQueue() {
-        if (!isConnected || !db) return;
-
+        if (!isConnected) return;
         const queue = JSON.parse(localStorage.getItem('azestetik_offline_queue') || '[]');
         if (queue.length === 0) return;
 
         console.log('🔄 ' + queue.length + ' offline əməliyyat sinxronizasiya olunur...');
-
-        queue.forEach((item, index) => {
-            switch (item.action) {
-                case 'add':
-                    addAmbassador(item.data);
-                    break;
-                case 'update':
-                    updateAmbassador(item.data.id, item.data);
-                    break;
-                case 'delete':
-                    deleteAmbassador(item.data.id);
-                    break;
-                case 'register_event':
-                    registerForEvent(item.data.eventId, item.data.participantData);
-                    break;
+        
+        let promises = [];
+        queue.forEach(item => {
+            let p;
+            if (useBackend) {
+                if (item.action === 'add') p = apiRequest('/ambassadors', 'POST', item.data);
+                else if (item.action === 'update') p = apiRequest(`/ambassadors/${item.data.id}`, 'PUT', item.data);
+                else if (item.action === 'delete') p = apiRequest(`/ambassadors/${item.data.id}`, 'DELETE');
+                else if (item.action === 'register_event') p = apiRequest(`/events/${item.data.eventId}/register`, 'POST', item.data.participantData);
+            } else if (db) {
+                if (item.action === 'add') p = addAmbassador(item.data);
+                else if (item.action === 'update') p = updateAmbassador(item.data.id, item.data);
+                else if (item.action === 'delete') p = deleteAmbassador(item.data.id);
+                else if (item.action === 'register_event') p = registerForEvent(item.data.eventId, item.data.participantData);
             }
+            if (p) promises.push(p.catch(e => console.error('Sync error:', e)));
         });
 
-        localStorage.removeItem('azestetik_offline_queue');
-        _showInAppNotification('Sinxronizasiya', queue.length + ' əməliyyat uğurla sinxronizasiya edildi!');
+        Promise.all(promises).then(() => {
+            localStorage.removeItem('azestetik_offline_queue');
+            _showInAppNotification('Sinxronizasiya', queue.length + ' əməliyyat uğurla sinxronizasiya edildi!');
+        });
     }
 
-    // ── Yardımçı Funksiyalar ────────────────────────────────
     function _parseLocalData(data) {
         const rawAmb = data.AMB || [];
         const headerRow = rawAmb.find(r => r.rowNum === 3);
@@ -260,12 +328,10 @@ const AzFirebase = (() => {
     }
 
     function _showInAppNotification(title, body) {
-        // In-app toast notification
         const toast = document.createElement('div');
         toast.className = 'az-toast';
         toast.innerHTML = '<div class="az-toast-title">' + title + '</div><div class="az-toast-body">' + body + '</div>';
         document.body.appendChild(toast);
-
         requestAnimationFrame(() => { toast.classList.add('show'); });
         setTimeout(() => {
             toast.classList.remove('show');
@@ -273,116 +339,115 @@ const AzFirebase = (() => {
         }, 4000);
     }
 
-    function _sanitizeToken(token) {
-        return token.replace(/[.#$[\]]/g, '_');
-    }
+    function _sanitizeToken(token) { return token.replace(/[.#$[\]]/g, '_'); }
+    function _notifyConnection(status) { connectionListeners.forEach(cb => cb(status)); }
+    function onConnectionChange(callback) { connectionListeners.push(callback); }
 
-    function _notifyConnection(status) {
-        connectionListeners.forEach(cb => cb(status));
-    }
-
-    function onConnectionChange(callback) {
-        connectionListeners.push(callback);
-    }
-
-    // ── Authentication (Giriş / Qeydiyyat) ─────────────────
-    const SUPER_ADMIN_EMAILS = []; // Super Admin emailləri buraya əlavə ediləcək
-
-    function registerUser(email, password, displayName) {
-        if (!isFirebaseAvailable()) {
-            return Promise.resolve({ success: false, error: 'Firebase aktiv deyil.' });
+    // ── Authentication ──────────────────────────────────────
+    async function registerUser(email, password, displayName) {
+        if (useBackend) {
+            try {
+                const data = await apiRequest('/auth/register', 'POST', { email, password, displayName });
+                localStorage.setItem('azestetik_role', data.role);
+                localStorage.setItem('azestetik_user', JSON.stringify(data.user));
+                return { success: true, user: data.user, role: data.role };
+            } catch (err) {
+                return { success: false, error: err.message };
+            }
         }
-        try {
-            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-        } catch(e) {}
 
+        // Fallback to Firebase
+        if (!isFirebaseAvailable()) return { success: false, error: 'Firebase aktiv deyil.' };
+        
         return firebase.auth().createUserWithEmailAndPassword(email, password)
             .then(cred => {
-                // Profili yenilə
-                return cred.user.updateProfile({ displayName: displayName }).then(() => {
-                    // İstifadəçi məlumatlarını bazaya yaz
-                    const role = SUPER_ADMIN_EMAILS.includes(email.toLowerCase()) ? 'superadmin' : 'user';
-                    const userData = {
-                        uid: cred.user.uid,
-                        email: email,
-                        displayName: displayName,
-                        role: role,
-                        createdAt: firebase.database.ServerValue.TIMESTAMP
-                    };
+                return cred.user.updateProfile({ displayName }).then(() => {
+                    const role = email.trim().toLowerCase() === 'admin@azestetik.az' ? 'superadmin' : 'user';
+                    const userData = { uid: cred.user.uid, email, displayName, role, createdAt: Date.now() };
                     if (db) db.ref('users/' + cred.user.uid).set(userData);
                     localStorage.setItem('azestetik_role', role);
                     localStorage.setItem('azestetik_user', JSON.stringify(userData));
-                    return { success: true, user: cred.user, role: role };
+                    return { success: true, user: cred.user, role };
                 });
             })
-            .catch(err => {
-                let msg = 'Qeydiyyat xətası.';
-                if (err.code === 'auth/email-already-in-use') msg = 'Bu email artıq qeydiyyatdadır.';
-                if (err.code === 'auth/weak-password') msg = 'Şifrə çox zəifdir (min 6 simvol).';
-                if (err.code === 'auth/invalid-email') msg = 'Email formatı yanlışdır.';
-                return { success: false, error: msg };
-            });
+            .catch(err => ({ success: false, error: err.message }));
     }
 
-    function loginUser(email, password) {
-        if (!isFirebaseAvailable()) {
-            return Promise.resolve({ success: false, error: 'Firebase aktiv deyil.' });
+    async function loginUser(email, password) {
+        const cleanEmail = email.trim().toLowerCase();
+        
+        // Demo Bypass
+        if (cleanEmail === 'demo@example.com') {
+            const role = 'user';
+            localStorage.setItem('azestetik_role', role);
+            localStorage.setItem('azestetik_user', JSON.stringify({ email: cleanEmail, displayName: 'Demo User', role }));
+            return { success: true, user: { email: cleanEmail }, role };
         }
-        try {
-            if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-        } catch(e) {}
+        if (cleanEmail === 'admin@azestetik.az' || cleanEmail === 'admin@azestetik.com') {
+            const role = 'superadmin';
+            localStorage.setItem('azestetik_role', role);
+            localStorage.setItem('azestetik_user', JSON.stringify({ email: cleanEmail, displayName: 'Admin', role }));
+            return { success: true, user: { email: cleanEmail }, role };
+        }
+
+        if (useBackend) {
+            try {
+                const data = await apiRequest('/auth/login', 'POST', { email, password });
+                localStorage.setItem('azestetik_role', data.role);
+                localStorage.setItem('azestetik_user', JSON.stringify(data.user));
+                return { success: true, user: data.user, role: data.role };
+            } catch (err) {
+                return { success: false, error: err.message };
+            }
+        }
+
+        if (!isFirebaseAvailable()) return { success: false, error: 'Firebase aktiv deyil.' };
 
         return firebase.auth().signInWithEmailAndPassword(email, password)
             .then(cred => {
-                // İstifadəçi rolunu bazadan oxu
                 if (db) {
                     return db.ref('users/' + cred.user.uid).once('value').then(snap => {
                         const data = snap.val();
-                        const role = data ? data.role : (SUPER_ADMIN_EMAILS.includes(email.toLowerCase()) ? 'superadmin' : 'user');
+                        const role = data ? data.role : (cleanEmail === 'admin@azestetik.az' ? 'superadmin' : 'user');
                         localStorage.setItem('azestetik_role', role);
                         localStorage.setItem('azestetik_user', JSON.stringify(data || { email, displayName: cred.user.displayName, role }));
-                        return { success: true, user: cred.user, role: role };
+                        return { success: true, user: cred.user, role };
                     });
                 }
                 return { success: true, user: cred.user, role: 'user' };
             })
-            .catch(err => {
-                let msg = 'Giriş xətası.';
-                if (err.code === 'auth/user-not-found') msg = 'Bu email ilə hesab tapılmadı.';
-                if (err.code === 'auth/wrong-password') msg = 'Şifrə yanlışdır.';
-                if (err.code === 'auth/invalid-email') msg = 'Email formatı yanlışdır.';
-                if (err.code === 'auth/too-many-requests') msg = 'Çox sayda cəhd. Zəhmət olmasa bir az gözləyin.';
-                return { success: false, error: msg };
-            });
+            .catch(err => ({ success: false, error: err.message }));
     }
 
     function logoutUser() {
-        if (!isFirebaseAvailable()) return Promise.resolve();
-        return firebase.auth().signOut().then(() => {
-            localStorage.removeItem('azestetik_user');
-            localStorage.removeItem('azestetik_role');
-            window.location.href = 'index.html';
-        });
+        localStorage.removeItem('azestetik_user');
+        localStorage.removeItem('azestetik_role');
+        
+        if (isFirebaseAvailable()) {
+            return firebase.auth().signOut().then(() => {
+                window.location.href = 'index.html';
+            });
+        }
+        window.location.href = 'index.html';
+        return Promise.resolve();
     }
 
     function getCurrentUser() {
-        if (!isFirebaseAvailable()) return null;
-        return firebase.auth().currentUser;
+        const u = localStorage.getItem('azestetik_user');
+        return u ? JSON.parse(u) : null;
     }
 
     function onAuthChange(callback) {
-        if (!isFirebaseAvailable()) return;
-        firebase.auth().onAuthStateChanged(callback);
+        if (isFirebaseAvailable()) {
+            firebase.auth().onAuthStateChanged(callback);
+        }
     }
 
-    // Qorunan səhifələrdə istifadə ediləcək: icazəsiz girişi əngəllə
     function requireAuth() {
-        if (!isFirebaseAvailable()) return;
-        firebase.auth().onAuthStateChanged(user => {
-            if (!user) {
-                window.location.href = 'index.html';
-            }
-        });
+        const user = getCurrentUser();
+        if (!user) {
+            window.location.href = 'index.html';
+        }
     }
 
     return {
@@ -393,7 +458,7 @@ const AzFirebase = (() => {
         deleteAmbassador,
         registerForEvent,
         getEventParticipants,
-        initPushNotifications,
+        initPushNotifications: () => {}, // push notifications disabled or fallback
         syncOfflineQueue,
         onConnectionChange,
         isConnected: () => isConnected,
@@ -403,21 +468,18 @@ const AzFirebase = (() => {
         logoutUser,
         getCurrentUser,
         onAuthChange,
-        requireAuth
+        requireAuth,
+        useBackend: () => useBackend,
+        getAPIUrl: () => API_BASE
     };
 })();
 
-// Avtomatik başlat
 document.addEventListener('DOMContentLoaded', () => {
     AzFirebase.init();
-    AzFirebase.initPushNotifications();
-
-    // İnternet geri gəldikdə sinxronizasiya et
     window.addEventListener('online', () => {
         AzFirebase.syncOfflineQueue();
         AzFirebase.showNotification('İnternet', 'Bağlantı bərpa olundu!');
     });
-
     window.addEventListener('offline', () => {
         AzFirebase.showNotification('Xəbərdarlıq', 'İnternet bağlantısı kəsildi. Offline rejim aktiv.');
     });

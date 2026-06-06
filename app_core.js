@@ -448,6 +448,7 @@ const AzCore = (() => {
         closeModal,
         openAddAmbassadorModal,
         openEventRegistrationModal,
+        openAdminRegistrationsModal,
         toast
     };
 })();

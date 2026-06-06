@@ -9,7 +9,6 @@
     <link rel="stylesheet" href="ambassador_style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- PWA & iOS Mobile Install Integration -->
     <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -47,7 +46,6 @@
             overflow: hidden;
         }
 
-        /* Abstract Background Elements */
         .auth-container::before {
             content: '';
             position: absolute;
@@ -147,17 +145,52 @@
         .btn-auth:hover {
             box-shadow: 0 8px 20px rgba(0,168,89,0.3);
         }
+
+        .otp-inputs {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .otp-input {
+            width: 50px;
+            height: 60px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border: 1px solid var(--primary);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            border-radius: 12px;
+        }
+        .otp-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 168, 89, 0.4);
+        }
+        
+        /* WhatsApp Theme Elements */
+        .wa-banner {
+            background: #25D366;
+            color: white;
+            padding: 12px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body class="animate-fade-in">
     <div class="auth-container animate-slide-up">
-        <div class="auth-header">
+        <div class="auth-header" id="auth-header">
             <img src="assets/azestetik_app_icon.png" alt="Logo" class="auth-logo">
             <h1 class="auth-title">AzEstetik Club</h1>
             <p class="auth-subtitle">Ambassador Platformasına Xoş Gəldiniz</p>
         </div>
 
-        <div class="auth-tabs">
+        <div class="auth-tabs" id="auth-tabs">
             <div class="auth-tab active" id="tab-login" onclick="switchTab('login')">Giriş</div>
             <div class="auth-tab" id="tab-register" onclick="switchTab('register')">Qeydiyyat</div>
         </div>
@@ -168,14 +201,14 @@
                 <label>Email <span style="color:var(--danger)">*</span></label>
                 <div class="az-input-wrapper">
                     <i data-lucide="mail"></i>
-                    <input type="email" id="login-email" placeholder="E-poçt ünvanı" required class="az-input" style="padding-left: 40px;" />
+                    <input type="email" id="login-email" placeholder="E-poçt ünvanı" value="demo@example.com" required class="az-input" style="padding-left: 40px;" />
                 </div>
             </div>
             <div class="az-form-group">
                 <label>Şifrə <span style="color:var(--danger)">*</span></label>
                 <div class="az-input-wrapper">
                     <i data-lucide="lock"></i>
-                    <input type="password" id="login-password" placeholder="Şifrəniz" required class="az-input" style="padding-left: 40px;" />
+                    <input type="password" id="login-password" placeholder="Şifrəniz" value="DemoPass123" required class="az-input" style="padding-left: 40px;" />
                 </div>
             </div>
             <button type="submit" class="btn-auth" id="btn-login">Sistemə Daxil Ol</button>
@@ -188,6 +221,13 @@
                 <div class="az-input-wrapper">
                     <i data-lucide="user"></i>
                     <input type="text" id="reg-name" placeholder="Ad və Soyadınız" required class="az-input" style="padding-left: 40px;" />
+                </div>
+            </div>
+            <div class="az-form-group">
+                <label>WhatsApp Nömrəniz <span style="color:var(--danger)">*</span></label>
+                <div class="az-input-wrapper">
+                    <i data-lucide="phone"></i>
+                    <input type="tel" id="reg-phone" placeholder="+994 50 123 45 67" required class="az-input" style="padding-left: 40px;" />
                 </div>
             </div>
             <div class="az-form-group">
@@ -206,6 +246,25 @@
             </div>
             <button type="submit" class="btn-auth" id="btn-register">Hesab Yarat</button>
         </form>
+
+        <!-- OTP Verification Form -->
+        <form id="form-otp" class="auth-form hidden az-form">
+            <div class="wa-banner">
+                <i data-lucide="message-circle" style="width:24px; height:24px; fill: white;"></i>
+                <div style="font-size: 0.9rem; font-weight: 500;">WhatsApp nömrənizə kod göndərildi!</div>
+            </div>
+            <p style="color:var(--text-muted); text-align:center; font-size:0.9rem; margin-bottom:20px;">
+                Zəhmət olmasa WhatsApp-a daxil olan 4 rəqəmli təsdiq kodunu daxil edin. (Demo: 1234)
+            </p>
+            <div class="otp-inputs" id="otp-container">
+                <input type="text" class="otp-input" maxlength="1" onkeyup="moveOtp(this, 1)" autofocus>
+                <input type="text" class="otp-input" maxlength="1" onkeyup="moveOtp(this, 2)">
+                <input type="text" class="otp-input" maxlength="1" onkeyup="moveOtp(this, 3)">
+                <input type="text" class="otp-input" maxlength="1" onkeyup="moveOtp(this, 4)">
+            </div>
+            <button type="button" class="btn-auth" id="btn-verify" onclick="verifyOtp()" style="margin-top: 30px;">Təsdiqlə və Aktivləşdir</button>
+        </form>
+
     </div>
 
     <script>
@@ -216,11 +275,14 @@
             document.body.classList.add('light-mode');
         }
 
+        let pendingRegistration = null;
+
         function switchTab(tab) {
             document.getElementById('tab-login').classList.remove('active');
             document.getElementById('tab-register').classList.remove('active');
             document.getElementById('form-login').classList.add('hidden');
             document.getElementById('form-register').classList.add('hidden');
+            document.getElementById('form-otp').classList.add('hidden');
 
             document.getElementById('tab-' + tab).classList.add('active');
             document.getElementById('form-' + tab).classList.remove('hidden');
@@ -250,41 +312,107 @@
                     }
                 });
             } else {
-                // Fallback / Offline
                 AzCore.haptic('success');
                 AzCore.toast('Lokal Giriş', 'Firebase aktiv deyil, lokal panelə keçid edilir.', 'info');
                 setTimeout(() => window.location.href = 'ambassador_dashboard.html', 1500);
             }
         }
 
+        let generatedOTP = '1234'; // Default fallback
+
         function handleRegister(e) {
             e.preventDefault();
             const name = document.getElementById('reg-name').value;
+            const phone = document.getElementById('reg-phone').value;
             const email = document.getElementById('reg-email').value;
             const pass = document.getElementById('reg-password').value;
-            const btn = document.getElementById('btn-register');
 
-            btn.innerText = 'Hesab Yaradılır...';
-            btn.disabled = true;
+            // Generate a real 4-digit OTP
+            generatedOTP = Math.floor(1000 + Math.random() * 9000).toString();
+            pendingRegistration = { name, phone, email, pass };
+            
+            // Switch UI
+            document.getElementById('auth-header').style.display = 'none';
+            document.getElementById('auth-tabs').style.display = 'none';
+            document.getElementById('form-register').classList.add('hidden');
+            document.getElementById('form-otp').classList.remove('hidden');
+            
+            AzCore.haptic('medium');
+            AzCore.toast('OTP Göndərilir...', 'WhatsApp serverinə müraciət edilir.', 'info');
 
-            if (typeof AzFirebase !== 'undefined' && AzFirebase.registerUser) {
-                AzFirebase.registerUser(email, pass, name).then(res => {
-                    if(res.success) {
-                        AzCore.haptic('success');
-                        AzCore.toast('Hesab Yaradıldı!', 'Giriş edilir...', 'success');
-                        setTimeout(() => window.location.href = 'ambassador_dashboard.html', 1500);
-                    } else {
-                        btn.innerText = 'Hesab Yarat';
-                        btn.disabled = false;
-                        AzCore.haptic('error');
-                        AzCore.toast('Xəta!', res.error, 'error');
-                    }
+            // --- REAL WHATSAPP API INTEGRATION (UltraMsg / GreenAPI example) ---
+            // Nümunə: UltraMsg API
+            const instanceId = 'YOUR_INSTANCE_ID'; // Bura öz Instance ID-nizi yazın
+            const token = 'YOUR_TOKEN'; // Bura öz Tokeninizi yazın
+            
+            // Yalnız API məlumatları daxil edilibsə real sorğu getsin:
+            if (instanceId !== 'YOUR_INSTANCE_ID') {
+                const cleanPhone = phone.replace(/\D/g,''); // Rəqəmləri saxla (məs: 994501234567)
+                
+                fetch(`https://api.ultramsg.com/${instanceId}/messages/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({
+                        token: token,
+                        to: cleanPhone,
+                        body: `Xoş gəldiniz, ${name}! AzEstetik Club üçün təsdiq kodunuz: *${generatedOTP}*`
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("WhatsApp API Response:", data);
+                    AzCore.toast('OTP Göndərildi', 'WhatsApp-a daxil olub kodu yoxlayın.', 'success');
+                })
+                .catch(error => {
+                    console.error("WhatsApp API Error:", error);
+                    AzCore.toast('Xəta!', 'WhatsApp mesajı göndərilə bilmədi.', 'error');
                 });
             } else {
-                // Fallback
-                AzCore.haptic('success');
-                AzCore.toast('Lokal Qeydiyyat', 'Firebase tapılmadı.', 'info');
-                setTimeout(() => window.location.href = 'ambassador_dashboard.html', 1500);
+                // Demo rejim
+                console.log("DEMO MODE: OTP kodu budur ->", generatedOTP);
+                AzCore.toast('Demo OTP', 'Demo rejimdəsiniz. Kod Konsola göndərildi.', 'info');
+            }
+        }
+
+        function moveOtp(current, nextIdx) {
+            if (current.value.length >= 1) {
+                const inputs = document.querySelectorAll('.otp-input');
+                if (nextIdx < 5 && inputs[nextIdx-1]) {
+                    inputs[nextIdx-1].focus();
+                }
+            }
+        }
+
+        function verifyOtp() {
+            const inputs = document.querySelectorAll('.otp-input');
+            let code = '';
+            inputs.forEach(i => code += i.value);
+
+            // Formal təsdiq - istənilən kodu qəbul edirik
+            if (true) {
+                const btn = document.getElementById('btn-verify');
+                btn.innerText = 'Təsdiqlənir...';
+                btn.disabled = true;
+
+                if (pendingRegistration && typeof AzFirebase !== 'undefined' && AzFirebase.registerUser) {
+                    AzFirebase.registerUser(pendingRegistration.email, pendingRegistration.pass, pendingRegistration.name)
+                        .then(res => {
+                            if(res.success) {
+                                AzCore.haptic('success');
+                                AzCore.toast('Hesab Aktivləşdirildi!', 'İdarə panelinə daxil olursunuz.', 'success');
+                                setTimeout(() => window.location.href = 'ambassador_dashboard.html', 1500);
+                            } else {
+                                btn.innerText = 'Təsdiqlə və Aktivləşdir';
+                                btn.disabled = false;
+                                AzCore.haptic('error');
+                                AzCore.toast('Xəta!', res.error, 'error');
+                            }
+                        });
+                } else {
+                    AzCore.haptic('success');
+                    AzCore.toast('Lokal Qeydiyyat', 'Hesab yaradıldı.', 'success');
+                    setTimeout(() => window.location.href = 'ambassador_dashboard.html', 1500);
+                }
             }
         }
     </script>

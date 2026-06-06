@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -7,8 +7,9 @@
 
 :root {
     /* Dark Mode (Default) */
-    --primary: #00A859;
-    --primary-glow: rgba(0, 168, 89, 0.4);
+    --primary: #a3e635; /* lime-green */
+    --primary-glow: rgba(163, 230, 53, 0.4);
+    --accent: #065f46; /* dark emerald */
     --bg: #0B0E14;
     --sidebar: #0F1219;
     --card: rgba(23, 28, 38, 0.7);
@@ -32,7 +33,9 @@ body.light-mode {
     --card-border: rgba(0, 0, 0, 0.08);
     --text-main: #1B2559;
     --text-muted: #5E6E82;
-    --primary-glow: rgba(0, 168, 89, 0.2);
+    --primary-glow: rgba(163, 230, 53, 0.2);
+    --primary: #a3e635;
+    --accent: #065f46;
 }
 
 body.light-mode ::-webkit-scrollbar-thumb {
@@ -77,6 +80,33 @@ body.light-mode ::-webkit-scrollbar-thumb:hover {
 .theme-toggle:hover {
     transform: scale(1.05);
     border-color: var(--primary);
+}
+
+/* Role Switcher (Toggle) */
+.role-toggle {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    padding: 2px;
+    border-radius: 100px;
+    display: flex;
+    gap: 4px;
+    overflow: hidden;
+}
+.role-toggle button {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 6px 12px;
+    border-radius: 100px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: var(--transition);
+}
+.role-toggle button.active {
+    background: var(--primary);
+    color: white;
+    box-shadow: 0 4px 12px var(--primary-glow);
 }
 
 /* Custom Scrollbar */
@@ -538,6 +568,29 @@ body.light-mode .mobile-nav {
     box-shadow: 0 12px 32px var(--primary-glow);
 }
 
+/* Quick Action Button */
+.quick-action-btn {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 12px 20px;
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+
+.quick-action-btn:hover {
+    border-color: var(--primary);
+    background: rgba(163, 230, 53, 0.08);
+    transform: translateY(-2px);
+}
+
 /* Table */
 .table-responsive {
     width: 100%;
@@ -677,18 +730,21 @@ body.light-mode .mobile-nav {
 
 @media (max-width: 768px) {
     .main { padding: 20px 16px 100px 16px; }
-    .header { margin-bottom: 20px; }
-    .header-title h1 { font-size: 1.65rem; }
-    .header-title p { font-size: 0.85rem; }
+    .header { margin-bottom: 20px; flex-wrap: wrap; gap: 12px; }
+    .header-title h1 { font-size: 1.55rem; }
+    .header-title p { font-size: 0.82rem; }
+    .header-actions { gap: 8px; }
+    .lang-box { display: none; }
     .burger-btn { display: flex; }
-    .stats-container { grid-template-columns: 1fr; gap: 12px; }
-    .stat-card { padding: 16px 20px; }
+    .stats-container { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .stat-card { padding: 16px 14px; }
     .stat-header { font-size: 0.8rem; margin-bottom: 8px; }
-    .stat-value { font-size: 1.5rem; margin-bottom: 8px; }
-    .modern-card { padding: 20px 16px; }
-    .card-title-row h2 { font-size: 1.1rem; }
+    .stat-value { font-size: 1.4rem; margin-bottom: 8px; }
+    .modern-card { padding: 18px 14px; }
+    .card-title-row h2 { font-size: 1.05rem; }
     .table-responsive { border-radius: 8px; margin-bottom: 0; }
-    .modern-table th, .modern-table td { padding: 12px 16px; font-size: 0.85rem; }
+    .modern-table th, .modern-table td { padding: 11px 14px; font-size: 0.83rem; }
+    .content-grid { grid-template-columns: 1fr; }
 }
 
 /* Burger Menu Drawer */

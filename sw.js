@@ -2,8 +2,8 @@
 // ─────────────────────────────────────
 // Full offline support with cache-first strategy and background sync
 
-const CACHE_NAME = 'azestetik-cache-v3';
-const DYNAMIC_CACHE = 'azestetik-dynamic-v1';
+const CACHE_NAME = 'azestetik-cache-v4';
+const DYNAMIC_CACHE = 'azestetik-dynamic-v2';
 
 const STATIC_ASSETS = [
   './',
