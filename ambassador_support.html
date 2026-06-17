@@ -23,42 +23,45 @@
     <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="mobile-drawer" id="drawer">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
-            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit: cover; border: none; padding: 2px; background: rgba(255,255,255,0.03);" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
             <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
         </div>
         <nav><ul class="nav-list">
-            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
-            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Filiallarım</a></li>
-            <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
-            <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="file-text"></i> Məhsullar</a></li>
-            <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
-            <li data-role-required="admin"><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
-            <li data-role-required="admin"><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
-            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
-            <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
-            <li><a href="ambassador_support.html" class="nav-link active"><i data-lucide="headphones"></i> Dəstək</a></li>
-            <li data-role-required="admin"><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
-        </ul></nav>
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+                <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
+                <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+                <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+                <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Köməkçi</a></li>
+                
+                <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                <li><a href="ambassador_support.html" class="nav-link active"><i data-lucide="headphones"></i> Dəstək</a></li>
+                <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+                <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
     </div>
 
     <div class="app-container">
         <aside class="sidebar">
-        <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit: cover; border: none; padding: 2px; background: rgba(255,255,255,0.03);" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+        <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
         <nav><ul class="nav-list">
             <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
-            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Filiallarım</a></li>
+            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
             <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
             <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_about.html" class="nav-link"><i data-lucide="info"></i> Şirkət Haqqında</a></li>
             <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
             <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
             <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
-            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+            
             <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
-            <li><a href="ambassador_support.html" class="nav-link active"><i data-lucide="headphones"></i> Dəstək</a></li>
+            <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
             <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
-        </ul></nav>
+        <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
     </aside>
 
         <main class="main">
@@ -146,6 +149,7 @@
             });
         });
     </script>
+    <script src="auth_guard.js"></script>
 </body>
 </html>
 

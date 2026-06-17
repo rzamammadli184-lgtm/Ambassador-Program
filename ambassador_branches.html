@@ -5,7 +5,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>* { font-family: 'Poppins', sans-serif !important; }</style>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>AzEstetik - Filiallarım</title>
+    <title>AzEstetik - Kompanyonlar</title>
     <link rel="stylesheet" href="ambassador_style.css">
     <script src="https://unpkg.com/lucide@latest"></script>
     
@@ -96,42 +96,45 @@
     <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="mobile-drawer" id="drawer">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
-            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit: cover; border: none; padding: 2px; background: rgba(255,255,255,0.03);" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
             <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
         </div>
         <nav><ul class="nav-list">
-            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
-            <li><a href="ambassador_branches.html" class="nav-link active"><i data-lucide="users-2"></i> Filiallarım</a></li>
-            <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
-            <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
-            <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
-            <li data-role-required="admin"><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
-            <li data-role-required="admin"><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
-            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
-            <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
-            <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
-            <li data-role-required="admin"><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
-        </ul></nav>
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+                <li><a href="ambassador_branches.html" class="nav-link active"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
+                <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+                <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+                <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Köməkçi</a></li>
+                
+                <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+                <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+                <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
     </div>
 
     <div class="app-container">
         <aside class="sidebar">
-        <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit: cover; border: none; padding: 2px; background: rgba(255,255,255,0.03);" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+        <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
         <nav><ul class="nav-list">
             <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
-            <li><a href="ambassador_branches.html" class="nav-link active"><i data-lucide="users-2"></i> Filiallarım</a></li>
+            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
             <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
             <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_about.html" class="nav-link"><i data-lucide="info"></i> Şirkət Haqqında</a></li>
             <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
             <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
             <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
-            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+            
             <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
             <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
             <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
-        </ul></nav>
+        <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
     </aside>
 
         <main class="main">
@@ -139,7 +142,7 @@
                 <div style="display:flex; align-items:center; gap:16px;">
                     <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
                     <div class="header-title">
-                        <h1>Filiallarım</h1>
+                        <h1>Kompanyonlar</h1>
                         <p>AzEstetik Club - Gözəllik sənayesində Liderlərin rəsmi Şəbəkəsi.</p>
                     </div>
                 </div>
@@ -326,6 +329,37 @@
                 </div>
             </div>
 
+            <!-- Referral Link Section -->
+            <div class="modern-card animate-slide-up" style="margin-bottom:24px;">
+                <div class="card-title-row">
+                    <h2><i data-lucide="link" style="width:18px;height:18px;color:var(--primary);margin-right:8px;vertical-align:middle;"></i>Referal Linkiniz</h2>
+                    <span class="badge badge-success" style="font-size:0.75rem;">Paylaş</span>
+                </div>
+                <p style="font-size:0.85rem;color:var(--text-muted);margin:0 0 16px;">Bu linki dostlarınıza, tanışlarınıza göndərin — qeydiyyatdan keçəndə avtomatik sizin komandanıza daxil olurlar.</p>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+                    <div style="flex:1;min-width:220px;background:rgba(255,255,255,0.03);border:1px solid var(--card-border);border-radius:12px;padding:12px 16px;font-size:0.85rem;color:var(--primary);font-family:monospace;word-break:break-all;" id="ref-link-display">Yüklənir...</div>
+                    <button onclick="copyRefLink()" style="padding:12px 20px;background:var(--primary);color:#0B0E14;border:none;border-radius:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;"><i data-lucide="copy" style="width:16px;height:16px;"></i>Kopyala</button>
+                    <button onclick="shareRefLink()" style="padding:12px 20px;background:rgba(255,255,255,0.06);border:1px solid var(--card-border);color:white;border-radius:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;white-space:nowrap;"><i data-lucide="share-2" style="width:16px;height:16px;"></i>Paylaş</button>
+                </div>
+                <!-- Referral Stats -->
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-top:16px;">
+                    <div style="background:rgba(163,230,53,0.06);border:1px solid rgba(163,230,53,0.2);border-radius:12px;padding:14px;text-align:center;">
+                        <div style="font-size:1.5rem;font-weight:800;color:var(--primary);" id="ref-total">0</div>
+                        <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">Qeydiyyat</div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03);border:1px solid var(--card-border);border-radius:12px;padding:14px;text-align:center;">
+                        <div style="font-size:1.5rem;font-weight:800;color:white;" id="ref-today">0</div>
+                        <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">Bu gün</div>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03);border:1px solid var(--card-border);border-radius:12px;padding:14px;text-align:center;">
+                        <div style="font-size:1.5rem;font-weight:800;color:#F59E0B;" id="ref-pending">0</div>
+                        <div style="font-size:0.75rem;color:var(--text-muted);margin-top:4px;">Gözləyən</div>
+                    </div>
+                </div>
+                <!-- Recent signups -->
+                <div id="ref-recent" style="margin-top:14px;"></div>
+            </div>
+
             <!-- Search and Filter Bar -->
             <div class="modern-card animate-slide-up delay-100" style="margin-bottom: 24px; padding: 16px;">
                 <div style="display: flex; gap: 12px; flex-wrap: wrap;">
@@ -337,7 +371,7 @@
                         <option value="all">Bütün Kateqoriyalar (Kompanyonlar)</option>
                         <option value="A+">Daxili Ambassadorlar (A+)</option>
                         <option value="A">Xarici Ambassadorlar (A)</option>
-                        <option value="K">Passiv Filiallarım (K)</option>
+                        <option value="K">Passiv Kompanyonlar (K)</option>
                     </select>
                     <select id="level-filter" style="padding: 12px 16px; background: var(--sidebar); border: 1px solid var(--card-border); border-radius: 10px; color: white; cursor: pointer; font-size: 0.9rem; flex: 1;">
                         <option value="all">Bütün Səviyyələr</option>
@@ -403,9 +437,98 @@
         <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
     </nav>
 
-    <script src="database_inline.js"></script>
+    <!-- Scripts -->
     <script>
         lucide.createIcons();
+
+
+        // REFERRAL LINK SYSTEM
+        function getMyRefCode() {
+            const userStr = localStorage.getItem('az_user');
+            if (userStr) {
+                try {
+                    const user = JSON.parse(userStr);
+                    if (user.myReferralCode) return user.myReferralCode;
+                } catch(e){}
+            }
+            return 'AZE_DEFAULT';
+        }
+        function getMyName() {
+            const userStr = localStorage.getItem('az_user');
+            if (userStr) {
+                try {
+                    const user = JSON.parse(userStr);
+                    if (user.fullName) return user.fullName;
+                } catch(e){}
+            }
+            return 'Kompanyon';
+        }
+        function buildRefLink() {
+            const code = getMyRefCode(), name = encodeURIComponent(getMyName());
+            const base = window.location.origin + window.location.pathname.replace('ambassador_branches.html', '');
+            return base + 'referral_register.html?ref=' + code + '&name=' + name + '&role=Kompanyon';
+        }
+        function copyRefLink() {
+            const link = buildRefLink();
+            navigator.clipboard.writeText(link).then(() => {
+                const btn = document.querySelector('[onclick="copyRefLink()"]');
+                const orig = btn.innerHTML;
+                btn.innerHTML = 'Kopyalandı!';
+                btn.style.background = '#10B981';
+                setTimeout(() => { btn.innerHTML = orig; btn.style.background = 'var(--primary)'; lucide.createIcons(); }, 2000);
+            }).catch(() => { prompt('Linki kopyalayın:', link); });
+        }
+        function shareRefLink() {
+            const link = buildRefLink();
+            const text = 'AzEstetik Club-a üzv olun! ' + link;
+            if (navigator.share) { navigator.share({ title: 'AzEstetik Club', text, url: link }); }
+            else { window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank'); }
+        }
+        async function loadRefStats() {
+            const token = localStorage.getItem('az_token');
+            if (!token) return;
+            try {
+                const res = await fetch(API_BASE + '/referrals/me', {
+                    headers: { 'Authorization': 'Bearer ' + token }
+                });
+                if (!res.ok) return;
+                const data = await res.json();
+                
+                const el1 = document.getElementById('ref-total');
+                const el2 = document.getElementById('ref-today');
+                const el3 = document.getElementById('ref-pending');
+                if (el1) el1.textContent = data.totalReferrals;
+                if (el2) el2.textContent = data.todaySignups;
+                if (el3) el3.textContent = '0'; // Pending is 0 for now since verification is instant
+                
+                const recentEl = document.getElementById('ref-recent');
+                if (!recentEl) return;
+                
+                if (data.users.length === 0) {
+                    recentEl.innerHTML = '<p style="text-align:center;padding:12px 0;font-size:0.82rem;color:#6B7280;">Hələ heç bir qeydiyyat yoxdur. Linki paylaşın!</p>';
+                } else {
+                    const recent = data.users.slice().reverse().slice(0, 5);
+                    let html = '<div style="font-size:0.8rem;font-weight:600;color:#6B7280;margin-bottom:8px;">Son Qeydiyyatlar</div>';
+                    recent.forEach(function(r) {
+                        const d = new Date(r.createdAt).toLocaleDateString();
+                        html += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:10px;margin-bottom:6px;">';
+                        html += '<div><div style="font-weight:600;color:white;font-size:0.85rem;">' + r.fullName + '</div>';
+                        html += '<div style="font-size:0.75rem;color:#6B7280;">' + d + '</div></div>';
+                        html += '<span style="font-size:0.75rem;padding:4px 10px;background:rgba(163,230,53,0.1);color:#a3e635;border-radius:20px;font-weight:600;">Müştəri</span></div>';
+                    });
+                    recentEl.innerHTML = html;
+                }
+            } catch (err) {
+                console.error("Referral stats fetch error:", err);
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            const el = document.getElementById('ref-link-display');
+            if (el) el.textContent = buildRefLink();
+            loadRefStats();
+        setInterval(loadRefStats, 3000); // Real-time update
+            lucide.createIcons();
+        });
 
         function toggleMenu() {
             const drawer = document.getElementById('drawer');
@@ -420,31 +543,23 @@
         let currentPage = 1;
         const rowsPerPage = 15;
 
-        // Load from embedded database
-        (function loadDatabase() {
-            const data = window.RAW_DATABASE || {};
-            const rawAmb = data.AMB || [];
-            ambassadors = rawAmb
-                .filter(item => item.rowNum >= 4)
-                .map(item => {
-                    const d = item.data || {};
-                    const rawG = String(d.G || '').replace(/[^\d.]/g, '');
-                    const salesVolume = parseFloat(rawG) || 0;
-                    return {
-                        id: d.A, name: (d.B || '').trim(), points: parseFloat(d.C) || 0, idCode: (d.D || '').trim(),
-                        leader: d.E, contractDate: d.F, birthday: d.G,
-                        status: d.H, level: d.I, phone: d.J,
-                        salesVolume: salesVolume
-                    };
-                })
-                .filter(a => a.name !== '' && a.idCode !== ''); // Filter empty rows
-            
-            filteredData = [...ambassadors];
-            updateStats();
-            updateCareerRoadmapStats();
-            renderTable();
-            console.log('Şəbəkə yükləndi: ' + ambassadors.length + ' nəfər tapıldı.');
-        })();
+        // Load from API/Firebase
+        function loadDatabase() {
+            if(typeof AzFirebase !== 'undefined') {
+                AzFirebase.getAmbassadors(data => {
+                    ambassadors = data.filter(a => a.name && a.name.trim() !== '');
+                    filteredData = [...ambassadors];
+                    updateStats();
+                    updateCareerRoadmapStats();
+                    renderTable();
+                    console.log('Şəbəkə yükləndi: ' + ambassadors.length + ' nəfər tapıldı.');
+                });
+            } else {
+                console.error("AzFirebase yüklənməyib.");
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadDatabase);
 
         function updateStats() {
             const total = ambassadors.length;
@@ -803,5 +918,6 @@
             setTimeout(updateCarousel, 200);
         });
     </script>
+    <script src="auth_guard.js"></script>
 </body>
 </html>

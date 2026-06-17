@@ -129,47 +129,50 @@
 <div class="mobile-drawer" id="drawer">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:36px;">
         <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;">
-            <img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit:cover;border:none;padding:2px;" alt="Logo">
-            <span class="brand-name">AzEstetik</span>
+            <img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span>
+            
         </a>
         <button onclick="toggleMenu()" style="background:var(--card);border:1px solid var(--card-border);color:white;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;">
             <i data-lucide="x"></i>
         </button>
     </div>
     <nav><ul class="nav-list">
-        <li><a href="ambassador_dashboard.html" class="nav-link active"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
-        <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Filiallarım</a></li>
-        <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
-        <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-        <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
-        <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
-        <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
-        <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
-        <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
-        <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
-        <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
-        <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
-    </ul></nav>
+                <li><a href="ambassador_dashboard.html" class="nav-link active"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+                <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
+                <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+                <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+                <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Köməkçi</a></li>
+                
+                <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+                <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+                <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
 </div>
 
 <div class="app-container">
     <!-- Sidebar -->
     <aside class="sidebar">
-        <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit: cover; border: none; padding: 2px; background: rgba(255,255,255,0.03);" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+        <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
         <nav><ul class="nav-list">
-            <li><a href="ambassador_dashboard.html" class="nav-link active"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
-            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Filiallarım</a></li>
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
             <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
             <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_about.html" class="nav-link"><i data-lucide="info"></i> Şirkət Haqqında</a></li>
             <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
             <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
             <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
-            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+            
             <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
             <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
             <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
-        </ul></nav>
+        <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
     </aside>
 
     <!-- Main Content -->
@@ -196,15 +199,14 @@
         <!-- Welcome Banner -->
         <div class="welcome-banner animate-slide-up">
             <div class="welcome-text">
-                <h2>Xoş Gəldiniz! 👋</h2>
-                <p id="welcome-msg">AzEstetik Club Ambassador Platformasına xoş gəldiniz.</p>
+                <h2 id="welcome-title" style="font-size:1.4rem;">AzEstetik Club Ambassador Platformasına xoş gəldiniz</h2>
             </div>
             <div class="welcome-actions">
                 <a href="ambassador_academy.html" class="quick-action-btn"><i data-lucide="graduation-cap" style="width:16px;height:16px;"></i> İmtahan</a>
-                <a href="ambassador_branches.html" class="quick-action-btn"><i data-lucide="users-2" style="width:16px;height:16px;"></i> Filiallarım</a>
-                <a href="ambassador_leaderboard.html" class="quick-action-btn"><i data-lucide="trophy" style="width:16px;height:16px;"></i> Liderlər</a>
+                <a href="ambassador_branches.html" class="quick-action-btn"><i data-lucide="users-2" style="width:16px;height:16px;"></i> Kompanyonlar</a>
+                
                 <a href="ambassador_bonuses.html" class="quick-action-btn" style="background:rgba(163,230,53,0.1);border-color:rgba(163,230,53,0.3);color:var(--primary);"><i data-lucide="coins" style="width:16px;height:16px;"></i> Bonuslar</a>
-                <button onclick="exportData()" class="quick-action-btn" style="background:rgba(59,130,246,0.1);border-color:rgba(59,130,246,0.3);color:#3B82F6;"><i data-lucide="download" style="width:16px;height:16px;"></i> İxrac</button>
+                
             </div>
         </div>
 
@@ -214,7 +216,24 @@
             <div class="kpi-card animate-slide-up">
                 <div class="kpi-row">
                     <span class="kpi-label">Ümumi Dövriyyə</span>
-                    <div class="kpi-icon" style="background:rgba(163,230,53,0.1);color:var(--primary);"><i data-lucide="banknote"></i></div>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <select class="kpi-month-filter" onchange="renderKPIs(this.value)" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--text-main); border-radius:6px; font-size:0.75rem; padding:4px; cursor:pointer; outline:none; height:26px;">
+                            <option value="all" style="color:black;">Bütün Aylar</option>
+                            <option value="yanvar" style="color:black;">Yanvar</option>
+                            <option value="fevral" style="color:black;">Fevral</option>
+                            <option value="mart" style="color:black;">Mart</option>
+                            <option value="aprel" style="color:black;">Aprel</option>
+                            <option value="may" style="color:black;">May</option>
+                            <option value="iyun" style="color:black;">İyun</option>
+                            <option value="iyul" style="color:black;">İyul</option>
+                            <option value="avqust" style="color:black;">Avqust</option>
+                            <option value="sentyabr" style="color:black;">Sentyabr</option>
+                            <option value="oktyabr" style="color:black;">Oktyabr</option>
+                            <option value="noyabr" style="color:black;">Noyabr</option>
+                            <option value="dekabr" style="color:black;">Dekabr</option>
+                        </select>
+                        <div class="kpi-icon" style="background:rgba(163,230,53,0.1);color:var(--primary); width:32px; height:32px; min-width:32px;"><i data-lucide="banknote"></i></div>
+                    </div>
                 </div>
                 <div class="kpi-value" id="stat-sales">0 ₼</div>
                 <div class="kpi-sub text-success"><i data-lucide="trending-up"></i> Real vaxt məlumatı</div>
@@ -223,7 +242,24 @@
             <div class="kpi-card animate-slide-up delay-100">
                 <div class="kpi-row">
                     <span class="kpi-label">Toplam Bonus</span>
-                    <div class="kpi-icon" style="background:rgba(245,158,11,0.1);color:#F59E0B;"><i data-lucide="coins"></i></div>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <select class="kpi-month-filter" onchange="renderKPIs(this.value)" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--text-main); border-radius:6px; font-size:0.75rem; padding:4px; cursor:pointer; outline:none; height:26px;">
+                            <option value="all" style="color:black;">Bütün Aylar</option>
+                            <option value="yanvar" style="color:black;">Yanvar</option>
+                            <option value="fevral" style="color:black;">Fevral</option>
+                            <option value="mart" style="color:black;">Mart</option>
+                            <option value="aprel" style="color:black;">Aprel</option>
+                            <option value="may" style="color:black;">May</option>
+                            <option value="iyun" style="color:black;">İyun</option>
+                            <option value="iyul" style="color:black;">İyul</option>
+                            <option value="avqust" style="color:black;">Avqust</option>
+                            <option value="sentyabr" style="color:black;">Sentyabr</option>
+                            <option value="oktyabr" style="color:black;">Oktyabr</option>
+                            <option value="noyabr" style="color:black;">Noyabr</option>
+                            <option value="dekabr" style="color:black;">Dekabr</option>
+                        </select>
+                        <div class="kpi-icon" style="background:rgba(245,158,11,0.1);color:#F59E0B; width:32px; height:32px; min-width:32px;"><i data-lucide="calendar"></i></div>
+                    </div>
                 </div>
                 <div class="kpi-value" style="color:#F59E0B;" id="stat-bonus">0 ₼</div>
                 <div class="kpi-sub">Ödəniləcək məbləğ</div>
@@ -232,7 +268,24 @@
             <div class="kpi-card animate-slide-up delay-200">
                 <div class="kpi-row">
                     <span class="kpi-label">Şəbəkə</span>
-                    <div class="kpi-icon" style="background:rgba(128,90,213,0.1);color:#805AD5;"><i data-lucide="users"></i></div>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <select class="kpi-month-filter" onchange="renderKPIs(this.value)" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--text-main); border-radius:6px; font-size:0.75rem; padding:4px; cursor:pointer; outline:none; height:26px;">
+                            <option value="all" style="color:black;">Bütün Aylar</option>
+                            <option value="yanvar" style="color:black;">Yanvar</option>
+                            <option value="fevral" style="color:black;">Fevral</option>
+                            <option value="mart" style="color:black;">Mart</option>
+                            <option value="aprel" style="color:black;">Aprel</option>
+                            <option value="may" style="color:black;">May</option>
+                            <option value="iyun" style="color:black;">İyun</option>
+                            <option value="iyul" style="color:black;">İyul</option>
+                            <option value="avqust" style="color:black;">Avqust</option>
+                            <option value="sentyabr" style="color:black;">Sentyabr</option>
+                            <option value="oktyabr" style="color:black;">Oktyabr</option>
+                            <option value="noyabr" style="color:black;">Noyabr</option>
+                            <option value="dekabr" style="color:black;">Dekabr</option>
+                        </select>
+                        <div class="kpi-icon" style="background:rgba(128,90,213,0.1);color:#805AD5; width:32px; height:32px; min-width:32px;"><i data-lucide="users"></i></div>
+                    </div>
                 </div>
                 <div class="kpi-value" style="color:#805AD5;" id="stat-members">0</div>
                 <div class="kpi-sub" id="stat-members-new"><i data-lucide="trending-up"></i> +0 yeni (2024)</div>
@@ -241,7 +294,24 @@
             <div class="kpi-card animate-slide-up delay-300">
                 <div class="kpi-row">
                     <span class="kpi-label">Aktiv Ambassador</span>
-                    <div class="kpi-icon" style="background:rgba(16,185,129,0.1);color:#10B981;"><i data-lucide="user-check"></i></div>
+                    <div style="display:flex; align-items:center; gap:6px;">
+                        <select class="kpi-month-filter" onchange="renderKPIs(this.value)" style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:var(--text-main); border-radius:6px; font-size:0.75rem; padding:4px; cursor:pointer; outline:none; height:26px;">
+                            <option value="all" style="color:black;">Bütün Aylar</option>
+                            <option value="yanvar" style="color:black;">Yanvar</option>
+                            <option value="fevral" style="color:black;">Fevral</option>
+                            <option value="mart" style="color:black;">Mart</option>
+                            <option value="aprel" style="color:black;">Aprel</option>
+                            <option value="may" style="color:black;">May</option>
+                            <option value="iyun" style="color:black;">İyun</option>
+                            <option value="iyul" style="color:black;">İyul</option>
+                            <option value="avqust" style="color:black;">Avqust</option>
+                            <option value="sentyabr" style="color:black;">Sentyabr</option>
+                            <option value="oktyabr" style="color:black;">Oktyabr</option>
+                            <option value="noyabr" style="color:black;">Noyabr</option>
+                            <option value="dekabr" style="color:black;">Dekabr</option>
+                        </select>
+                        <div class="kpi-icon" style="background:rgba(16,185,129,0.1);color:#10B981; width:32px; height:32px; min-width:32px;"><i data-lucide="user-check"></i></div>
+                    </div>
                 </div>
                 <div class="kpi-value" style="color:#10B981;" id="stat-active">0</div>
                 <div class="kpi-bar">
@@ -328,7 +398,7 @@
             <div class="modern-card animate-slide-up delay-100">
                 <div class="card-title-row">
                     <h2>🔥 Top Satış Aparatlar</h2>
-                    <a href="ambassador_marketing.html" style="color:var(--primary);font-size:0.85rem;font-weight:700;text-decoration:none;">Kataloq →</a>
+                    <a href="ambassador_products.html" style="color:var(--primary);font-size:0.85rem;font-weight:700;text-decoration:none;">Kataloq →</a>
                 </div>
                 <div style="display:flex;flex-direction:column;gap:12px;">
                     <div style="display:flex;gap:14px;align-items:center;padding:14px;background:rgba(255,255,255,0.02);border:1px solid var(--card-border);border-radius:12px;">
@@ -379,7 +449,6 @@
     <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
 </nav>
 
-<script src="database_inline.js"></script>
 <script>
     lucide.createIcons();
 
@@ -398,9 +467,8 @@
         return 0.04;
     }
 
-    const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-        ? 'http://localhost:3001/api'
-        : '/api';
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
+    const API_BASE = isLocal ? 'http://localhost:3001/api' : '/api';
 
     // ── Load & compute dashboard data ────────────────
     async function loadDashboard() {
@@ -415,7 +483,7 @@
             console.log('✅ Dashboard API-dən yükləndi:', apiData.length, 'ambassador');
 
             records = apiData.map(a => {
-                const salesVolume = a.salesVolume || 0;
+                const salesVolume = a.salesVolume || parseFloat(a.points) || 0;
                 const level = a.level || 0;
                 const flag = (a.status || '').trim();
                 const rate = a.rate || getRate(flag, level);
@@ -431,27 +499,8 @@
                 };
             });
         } catch (err) {
-            console.warn('⚠️ API əlçatmazdır, statik data istifadə olunur:', err.message);
-            const rawAmb = (window.RAW_DATABASE || {}).AMB || [];
-            records = rawAmb
-                .filter(item => item.rowNum >= 4 && item.data.B && item.data.B.trim())
-                .map(item => {
-                    const d = item.data;
-                    const salesVolume = parseFloat(String(d.G || '').replace(/[^\d.]/g, '')) || 0;
-                    const level = parseInt(d.I) || 0;
-                    const flag = (d.H || '').trim();
-                    const rate = getRate(flag, level);
-                    return {
-                        name: d.B.trim(),
-                        leader: (d.E || '').trim(),
-                        contractDate: d.F || '',
-                        status: flag,
-                        level, salesVolume, rate,
-                        teshekkurBonus: salesVolume * rate,
-                        komandaBonus: 0,
-                        totalBonus: 0
-                    };
-                });
+            console.warn('⚠️ API əlçatmazdır:', err.message);
+            records = [];
         }
 
         // Build name map and calculate team bonuses
@@ -472,6 +521,20 @@
                 if (prevRate >= 0.10) break;
             }
         });
+
+        window.allComputedRecords = records;
+        renderKPIs('all');
+    } // end loadDashboard
+
+    window.renderKPIs = function(monthFilter = 'all') {
+        let records = window.allComputedRecords || [];
+        
+        // Sync all filters
+        document.querySelectorAll('.kpi-month-filter').forEach(el => el.value = monthFilter);
+
+        if (monthFilter !== 'all') {
+            records = records.filter(r => (r.contractDate || '').toLowerCase().includes(monthFilter));
+        }
 
         let totalSales = 0, totalBonus = 0;
         records.forEach(r => {
@@ -502,8 +565,7 @@
         // Sub labels
         const newIn2024 = records.filter(a => a.contractDate && a.contractDate.includes('2024')).length;
         set('stat-members-new', '+' + newIn2024 + ' yeni (2024)');
-        set('dashboard-subtitle', 'Sistemdə ' + activeList.length + ' Aktiv Ambassador və ' + kompanyons + ' Kompanyon var.');
-        set('welcome-msg', activeList.length + ' Aktiv Ambassador, ' + kompanyons + ' Kompanyon — platformanız real vaxtda işləyir.');
+
 
         // Category cards
         const sumSales = arr => Math.round(arr.reduce((s, a) => s + a.salesVolume, 0));
@@ -540,13 +602,12 @@
         window._dashboardRecords = records;
 
         lucide.createIcons();
-        const src = apiLoaded ? 'API' : 'Statik';
-        console.log(`Dashboard (${src}): ${total} nəfər yükləndi. Dövriyyə: ${Math.round(totalSales).toLocaleString()} ₼`);
+        console.log(`Dashboard Update: ${total} nəfər, Dövriyyə: ${Math.round(totalSales).toLocaleString()} ₼`);
     }
 
     loadDashboard();
 
-    // ── Theme ─────────────────────────────────────────
+    // ── Theme & User Initialization ───────────────────
     function initTheme() {
         if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
         updateThemeIcon();
@@ -560,8 +621,26 @@
         const i = document.getElementById('theme-icon');
         if (i) { i.setAttribute('data-lucide', document.body.classList.contains('light-mode') ? 'moon' : 'sun'); lucide.createIcons(); }
     }
-    document.addEventListener('DOMContentLoaded', initTheme);
+    
+    function initUserWelcome() {
+        try {
+            const userStr = localStorage.getItem('az_user');
+            if (userStr) {
+                const u = JSON.parse(userStr);
+                if (u && u.fullName) {
+                    const wt = document.getElementById('welcome-title');
+                    if (wt) wt.textContent = `AzEstetik Club Ambassador Platformasına xoş gəldiniz ${u.fullName}`;
+                }
+            }
+        } catch(e) {}
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initTheme();
+        initUserWelcome();
+    });
     initTheme();
+    initUserWelcome();
 
     // ── Page Transitions ──────────────────────────────
     document.addEventListener('DOMContentLoaded', () => {
@@ -583,12 +662,9 @@
     // ── CSV Export ────────────────────────────────────
     function exportData() {
         try {
-            const rawAmb = (window.RAW_DATABASE || {}).AMB || [];
-            const data = rawAmb.filter(r => r.rowNum > 3).map(r => ({
-                Name: r.data.B || '', Leader: r.data.E || '', ContractDate: r.data.F || '', Status: r.data.H || ''
-            }));
+            const data = window.allComputedRecords || [];
             if (!data.length) return;
-            const csv = ['Ad Soyad,Rəhbər,Müqavilə,Status', ...data.map(d => `"${d.Name}","${d.Leader}","${d.ContractDate}","${d.Status}"`)].join('\n');
+            const csv = ['Ad Soyad,Rəhbər,Müqavilə,Status', ...data.map(d => `"${d.name}","${d.leader}","${d.contractDate}","${d.status}"`)].join('\n');
             const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a'); a.href = url; a.download = 'Ambassadorlar_' + new Date().toISOString().split('T')[0] + '.csv';
@@ -598,5 +674,6 @@
 
     function openPwaModal() { if (typeof AzCore !== 'undefined') AzCore.openPwaModal(); }
 </script>
+    <script src="auth_guard.js"></script>
 </body>
 </html>

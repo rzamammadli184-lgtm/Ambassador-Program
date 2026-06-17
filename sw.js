@@ -2,8 +2,8 @@
 // ─────────────────────────────────────
 // Full offline support with cache-first strategy and background sync
 
-const CACHE_NAME = 'azestetik-cache-v4';
-const DYNAMIC_CACHE = 'azestetik-dynamic-v2';
+const CACHE_NAME = 'azestetik-cache-v8';
+const DYNAMIC_CACHE = 'azestetik-dynamic-v6';
 
 const STATIC_ASSETS = [
   './',
@@ -15,8 +15,8 @@ const STATIC_ASSETS = [
   'ambassador_bonuses.html',
   'ambassador_customers.html',
   'ambassador_events.html',
-  'ambassador_leaderboard.html',
-  'ambassador_marketing.html',
+  
+  
   'ambassador_settings.html',
   'ambassador_support.html',
   'ambassador_style.css',

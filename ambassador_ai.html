@@ -25,42 +25,45 @@
     <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="mobile-drawer" id="drawer">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
-            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit: cover; border: none; padding: 2px; background: rgba(255,255,255,0.03);" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
             <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
         </div>
         <nav><ul class="nav-list">
-            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
-            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Filiallarım</a></li>
-            <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
-            <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
-            <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
-            <li data-role-required="admin"><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
-            <li data-role-required="admin"><a href="ambassador_ai.html" class="nav-link active"><i data-lucide="bot"></i> AI Analitika</a></li>
-            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
-            <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
-            <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
-            <li data-role-required="admin"><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
-        </ul></nav>
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+                <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
+                <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+                <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+                <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_ai.html" class="nav-link active"><i data-lucide="bot"></i> AI Köməkçi</a></li>
+                
+                <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+                <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+                <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
     </div>
 
     <div class="app-container">
         <aside class="sidebar">
-        <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit: cover; border: none; padding: 2px; background: rgba(255,255,255,0.03);" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+        <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
         <nav><ul class="nav-list">
             <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
-            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Filiallarım</a></li>
+            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
             <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
             <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_about.html" class="nav-link"><i data-lucide="info"></i> Şirkət Haqqında</a></li>
             <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
             <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
-            <li><a href="ambassador_ai.html" class="nav-link active"><i data-lucide="bot"></i> AI Analitika</a></li>
-            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+            <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
+            
             <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
             <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
             <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
-        </ul></nav>
+        <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
     </aside>
 
         <main class="main">
@@ -118,8 +121,6 @@
         <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
     </nav>
 
-    <!-- Database loaded from external file -->
-    <script src="database_inline.js"></script>
     <script>
         lucide.createIcons();
         function toggleMenu() {
@@ -127,38 +128,41 @@
             document.getElementById('overlay').classList.toggle('active');
         }
 
-        // — Parse Database —————————————————
+        // — Parse Database from Firebase API —
         let ambassadors = [];
         let kompanyonlar = [];
         
-        function parseDatabase() {
-            const data = window.RAW_DATABASE || {};
-            
-            // AMB sheet
-            const rawAmb = data.AMB || [];
-            ambassadors = rawAmb.filter(item => item.rowNum >= 4).map(item => {
-                const d = item.data || {};
-                return {
-                    num: d.A, idCode: d.D, name: (d.B || '').trim(),
-                    points: parseFloat(d.C) || 0, leader: (d.E || '').trim(),
-                    contractDate: d.F, birthday: d.G, status: (d.H || '').trim(),
-                    level: d.I, phone: d.J
-                };
-            }).filter(a => a.name);
-            
-            // Sayfa4 sheet (Kompanyonlar)
-            const rawKomp = data.Sayfa4 || [];
-            kompanyonlar = rawKomp.filter(item => item.rowNum >= 4).map(item => {
-                const d = item.data || {};
-                return {
-                    num: d.A, name: (d.B || '').trim(),
-                    points: parseFloat(d.C) || 0, leader: (d.D || '').trim(),
-                    contractDate: d.E, status: (d.F || '').trim(),
-                    level: d.G
-                };
-            }).filter(k => k.name);
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
+        const API_BASE = isLocal ? 'http://localhost:3001/api' : '/api';
+
+        async function parseDatabase() {
+            try {
+                const res = await fetch(API_BASE + '/ambassadors', { signal: AbortSignal.timeout(5000) });
+                if (!res.ok) throw new Error('API xətası: ' + res.status);
+                const data = await res.json();
+                ambassadors = data.map(a => ({
+                    num: a.id,
+                    idCode: a.idCode || a.id,
+                    name: (a.name || '').trim(),
+                    points: parseFloat(a.points) || 0,
+                    leader: (a.leader || '').trim(),
+                    contractDate: a.contractDate || '',
+                    birthday: a.birthday || '',
+                    status: (a.status || '').trim(),
+                    level: a.level || 0,
+                    phone: a.phone || '',
+                    salesVolume: parseFloat(a.salesVolume) || 0
+                })).filter(a => a.name);
+                kompanyonlar = ambassadors.filter(a => a.status === 'K');
+                console.log('✅ AI: Firebase-dən yükləndi:', ambassadors.length, 'ambassador');
+            } catch (err) {
+                console.warn('⚠️ AI: API əlçatmazdır:', err.message);
+                ambassadors = [];
+                kompanyonlar = [];
+            }
         }
         
+        // Load at startup
         parseDatabase();
         
         const chatMessages = document.getElementById('chat-messages');
@@ -514,6 +518,7 @@
             });
         });
     </script>
+    <script src="auth_guard.js"></script>
 </body>
 </html>
 

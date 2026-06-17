@@ -23,42 +23,49 @@
     <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
     <div class="mobile-drawer" id="drawer">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
-            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit: cover; border: none; padding: 2px; background: rgba(255,255,255,0.03);" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
             <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
         </div>
         <nav><ul class="nav-list">
-            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
-            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Shebekem</a></li>
-            <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
-            <li><a href="ambassador_customers.html" class="nav-link active"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Mehsullar</a></li>
-            <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
-            <li data-role-required="admin"><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
-            <li data-role-required="admin"><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
-            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
-            <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tedbirler</a></li>
-            <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Destek</a></li>
-            <li data-role-required="admin"><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tenzimlemeler</a></li>
-        </ul></nav>
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+                <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
+                <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+                <li><a href="ambassador_customers.html" class="nav-link active"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+                <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Köməkçi</a></li>
+                
+                <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+                <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+                <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
     </div>
 
     <div class="app-container">
         <aside class="sidebar">
-        <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="object-fit: cover; border: none; padding: 2px; background: rgba(255,255,255,0.03);" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+        <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
         <nav><ul class="nav-list">
             <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
-            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Filiallarım</a></li>
+            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
             <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
-            <li><a href="ambassador_customers.html" class="nav-link active"><i data-lucide="user-plus"></i> Müştərilər</a></li>
-            <li><a href="ambassador_marketing.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+            <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_about.html" class="nav-link"><i data-lucide="info"></i> Şirkət Haqqında</a></li>
             <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
             <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
             <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
-            <li><a href="ambassador_leaderboard.html" class="nav-link"><i data-lucide="trophy"></i> Liderlər</a></li>
+            
             <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
             <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
             <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
-        </ul></nav>
+        <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
+    </aside>
+
+        <main class="main">
+            <header class="header">
     </aside>
 
         <main class="main">
@@ -70,14 +77,9 @@
                         <p>AzEstetik Club - Gez?llik senayesind? Liderlerin resmi Shebekesi.</p>
                     </div>
                 </div>
-                            <div class="header-actions">
+                <div class="header-actions">
                     <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon"></i></button>
-                    <div class="lang-box">
-                        <button class="lang-btn active">AZ</button>
-                        <button class="lang-btn">EN</button>
-                        <button class="lang-btn">RU</button>
-                    </div>
-
+                    
                 </div>
             </header>
 
@@ -159,7 +161,48 @@
         <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
     </nav>
 
-    <script src="database_inline.js"></script>
+    <!-- Add Customer Modal -->
+    <div id="add-customer-modal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.7); backdrop-filter:blur(6px); align-items:center; justify-content:center; padding:20px;">
+        <div style="background:var(--card); border:1px solid var(--card-border); border-radius:20px; width:100%; max-width:520px; padding:32px; box-shadow:0 24px 60px rgba(0,0,0,0.5); animation:slideUp 0.3s ease;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                <h2 style="margin:0; font-size:1.3rem; font-weight:700;">Yeni Müştəri Əlavə Et</h2>
+                <button onclick="closeAddModal()" style="background:rgba(255,255,255,0.05); border:1px solid var(--card-border); color:var(--text-muted); width:36px; height:36px; border-radius:10px; cursor:pointer; display:flex; align-items:center; justify-content:center;"><i data-lucide="x"></i></button>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:16px;">
+                <div>
+                    <label style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px; display:block;">Ad Soyad *</label>
+                    <input type="text" id="new-name" placeholder="Məs: Əliyeva Aynur Murad" style="width:100%; padding:12px 16px; background:rgba(255,255,255,0.03); border:1px solid var(--card-border); border-radius:10px; color:var(--text-main); font-size:0.95rem; box-sizing:border-box;">
+                </div>
+                <div>
+                    <label style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px; display:block;">Qrup Rəhbəri</label>
+                    <input type="text" id="new-leader" placeholder="Məs: Məmmədov Malik" style="width:100%; padding:12px 16px; background:rgba(255,255,255,0.03); border:1px solid var(--card-border); border-radius:10px; color:var(--text-main); font-size:0.95rem; box-sizing:border-box;">
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                    <div>
+                        <label style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px; display:block;">Telefon</label>
+                        <input type="tel" id="new-phone" placeholder="050-XXX-XX-XX" style="width:100%; padding:12px 16px; background:rgba(255,255,255,0.03); border:1px solid var(--card-border); border-radius:10px; color:var(--text-main); font-size:0.95rem; box-sizing:border-box;">
+                    </div>
+                    <div>
+                        <label style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px; display:block;">Müqavilə Tarixi</label>
+                        <input type="date" id="new-date" style="width:100%; padding:12px 16px; background:rgba(255,255,255,0.03); border:1px solid var(--card-border); border-radius:10px; color:var(--text-main); font-size:0.95rem; box-sizing:border-box;">
+                    </div>
+                </div>
+                <div>
+                    <label style="font-size:0.8rem; color:var(--text-muted); margin-bottom:6px; display:block;">Status</label>
+                    <select id="new-status" style="width:100%; padding:12px 16px; background:var(--card); border:1px solid var(--card-border); border-radius:10px; color:var(--text-main); font-size:0.95rem; cursor:pointer;">
+                        <option value="K">Kompanyon (K) - Müştəri</option>
+                        <option value="A">Aktiv Ambassador (A)</option>
+                        <option value="A+">Üst Ambassador (A+)</option>
+                    </select>
+                </div>
+            </div>
+            <div style="display:flex; gap:12px; margin-top:24px;">
+                <button onclick="closeAddModal()" style="flex:1; padding:14px; background:rgba(255,255,255,0.05); border:1px solid var(--card-border); border-radius:12px; color:var(--text-muted); font-size:0.95rem; cursor:pointer;">Ləğv Et</button>
+                <button onclick="submitNewCustomer()" id="submit-btn" style="flex:2; padding:14px; background:linear-gradient(135deg,var(--primary),#6D28D9); border:none; border-radius:12px; color:white; font-size:0.95rem; font-weight:600; cursor:pointer;">Əlavə Et</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         lucide.createIcons();
         
@@ -171,9 +214,8 @@
         let currentPage = 1;
         const rowsPerPage = 15;
 
-        const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-            ? 'http://localhost:3001/api'
-            : '/api';
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
+        const API_BASE = isLocal ? 'http://localhost:3001/api' : '/api';
 
         // API-first with static fallback
         async function loadDatabase() {
@@ -218,6 +260,94 @@
         }
 
         loadDatabase();
+
+        function openAddModal() {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('new-date').value = today;
+            document.getElementById('new-name').value = '';
+            document.getElementById('new-leader').value = '';
+            document.getElementById('new-phone').value = '';
+            document.getElementById('new-status').value = 'K';
+            const modal = document.getElementById('add-customer-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => document.getElementById('new-name').focus(), 100);
+        }
+
+        function closeAddModal() {
+            document.getElementById('add-customer-modal').style.display = 'none';
+        }
+
+        async function submitNewCustomer() {
+            const name = document.getElementById('new-name').value.trim();
+            if (!name) {
+                document.getElementById('new-name').style.borderColor = '#EF4444';
+                document.getElementById('new-name').focus();
+                return;
+            }
+            document.getElementById('new-name').style.borderColor = '';
+
+            const btn = document.getElementById('submit-btn');
+            btn.disabled = true;
+            btn.textContent = 'Əlavə edilir...';
+
+            const newCustomer = {
+                name: name,
+                leader: document.getElementById('new-leader').value.trim() || 'Şirkət',
+                phone: document.getElementById('new-phone').value.trim(),
+                contractDate: document.getElementById('new-date').value || new Date().toISOString().split('T')[0],
+                status: document.getElementById('new-status').value,
+                points: 0,
+                level: 0,
+                salesVolume: 0,
+                createdAt: Date.now()
+            };
+
+            try {
+                const res = await fetch(API_BASE + '/ambassadors', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newCustomer)
+                });
+                if (!res.ok) throw new Error('HTTP ' + res.status);
+                const saved = await res.json();
+                console.log('✅ Yeni müştəri əlavə edildi:', saved.name);
+
+                // Add to local list immediately
+                customers.unshift({
+                    id: saved.id || saved.name,
+                    name: saved.name,
+                    points: 0,
+                    idCode: saved.idCode || saved.id || '-',
+                    leader: saved.leader,
+                    contractDate: saved.contractDate,
+                    status: saved.status,
+                    level: 0,
+                    phone: saved.phone
+                });
+
+                filteredCustomers = [...customers];
+                updateStats();
+                renderTable();
+                closeAddModal();
+
+                // Show success toast
+                showToast('✅ ' + saved.name + ' uğurla əlavə edildi!');
+            } catch (err) {
+                console.error('Əlavə xətası:', err);
+                showToast('❌ Xəta: ' + err.message, true);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Əlavə Et';
+            }
+        }
+
+        function showToast(message, isError = false) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:${isError ? '#EF4444' : 'var(--primary)'};color:white;padding:12px 24px;border-radius:12px;font-size:0.9rem;font-weight:600;z-index:99999;box-shadow:0 8px 24px rgba(0,0,0,0.3);animation:slideUp 0.3s ease;`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+        }
 
         function toggleMenu() {
             const drawer = document.getElementById('drawer');
@@ -349,5 +479,6 @@
             });
         });
     </script>
+    <script src="auth_guard.js"></script>
 </body>
 </html>
