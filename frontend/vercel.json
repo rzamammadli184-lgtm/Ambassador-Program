@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://YOUR_RENDER_APP_URL.onrender.com/api/$1"
+      "destination": "https://azestetik-platform-9ndf.onrender.com/api/$1"
     }
   ]
 }
