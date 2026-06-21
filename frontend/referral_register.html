@@ -53,25 +53,54 @@
         }
         .btn-premium:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 12px 24px rgba(0, 166, 81, 0.25); }
 
-        /* Hero Section */
+        /* Hero Section Split Layout */
         .hero {
-            padding: 160px 6% 100px; text-align: center; position: relative;
+            padding: 140px 6% 80px; position: relative; max-width: 1400px; margin: 0 auto;
+        }
+        .hero-container {
+            display: flex; align-items: center; justify-content: space-between; gap: 60px;
+        }
+        .hero-content {
+            flex: 1; max-width: 600px; text-align: left;
         }
         .hero-badge {
             display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px;
             background: var(--primary-light); color: var(--primary-dark);
-            border-radius: 100px; font-weight: 600; font-size: 0.85rem; margin-bottom: 24px;
+            border-radius: 100px; font-weight: 600; font-size: 0.9rem; margin-bottom: 24px;
         }
-        .hero h1 { font-size: 4rem; font-weight: 800; margin-bottom: 24px; color: var(--text-main); line-height: 1.1; letter-spacing: -1px; }
+        .hero h1 { font-size: 3.8rem; font-weight: 800; margin-bottom: 24px; color: var(--text-main); line-height: 1.15; letter-spacing: -1px; }
         .hero h1 span { background: linear-gradient(135deg, var(--primary), #10B981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero p { font-size: 1.25rem; color: var(--text-muted); max-width: 650px; margin: 0 auto 40px; line-height: 1.7; font-weight: 400; }
+        .hero p.lead-text { font-size: 1.2rem; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; font-weight: 400; }
+        .hero p.about-text { font-size: 1.05rem; color: #475569; margin-bottom: 40px; line-height: 1.7; padding-left: 20px; border-left: 3px solid var(--primary); }
         
-        .hero-actions { display: flex; justify-content: center; gap: 16px; }
+        .hero-actions { display: flex; gap: 16px; }
         .btn-outline {
-            padding: 12px 28px; background: transparent; color: var(--text-main); border: 2px solid var(--border);
-            border-radius: 100px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.3s;
+            padding: 14px 32px; background: transparent; color: var(--text-main); border: 2px solid var(--border);
+            border-radius: 100px; font-weight: 600; font-size: 1rem; cursor: pointer; transition: all 0.3s; display: inline-flex; align-items: center; justify-content: center;
         }
         .btn-outline:hover { border-color: var(--text-main); }
+
+        .hero-image-wrapper {
+            flex: 1; position: relative; border-radius: 32px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.1); transform: perspective(1000px) rotateY(-5deg); transition: 0.5s;
+        }
+        .hero-image-wrapper:hover { transform: perspective(1000px) rotateY(0deg) translateY(-10px); }
+        .hero-image-wrapper img { width: 100%; height: auto; display: block; object-fit: cover; }
+        .hero-stats {
+            position: absolute; bottom: 30px; left: -30px; background: white; padding: 20px 30px; border-radius: 24px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); display: flex; gap: 30px;
+        }
+        .stat-item h4 { font-size: 1.8rem; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
+        .stat-item p { font-size: 0.9rem; color: var(--text-muted); font-weight: 500; margin: 0; }
+
+        @media (max-width: 992px) {
+            .hero-container { flex-direction: column; text-align: center; }
+            .hero-content { text-align: center; }
+            .hero p.about-text { border-left: none; padding-left: 0; border-top: 3px solid var(--primary); padding-top: 20px; }
+            .hero-actions { justify-content: center; }
+            .hero-stats { position: relative; bottom: 0; left: 0; margin-top: -40px; justify-content: center; z-index: 10; }
+            .hero-image-wrapper { transform: none; width: 100%; max-width: 600px; margin: 0 auto; }
+            .hero-image-wrapper:hover { transform: translateY(-10px); }
+        }
+
 
         /* Premium Showcase */
         .showcase { padding: 80px 6%; background: var(--surface); position: relative; }
@@ -207,12 +236,30 @@
     </nav>
 
     <section class="hero">
-        <div class="hero-badge"><i data-lucide="sparkles" style="width:14px;height:14px;"></i> Premium Tərəfdaşlıq Proqramı</div>
-        <h1>Gözəllik Sənayesində <br><span>Yeni Standartlar</span></h1>
-        <p>Sizə özəl referal linki vasitəsilə ən müasir lazer cihazlarına xüsusi endirimlərlə sahib olun. Peşəkar təlimlər, fasiləsiz texniki dəstək və orijinal cihazlar.</p>
-        <div class="hero-actions">
-            <button onclick="openModal()" class="btn-premium" style="padding: 16px 36px; font-size: 1.1rem;">İndi Başlayın</button>
-            <a href="#kataloq" class="btn-outline" style="padding: 16px 36px; font-size: 1.1rem; text-decoration: none;">Kataloq</a>
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-badge"><i data-lucide="sparkles" style="width:14px;height:14px;"></i> Premium Tərəfdaşlıq Proqramı</div>
+                <h1>Gözəllik Sənayesində <br><span>Yeni Standartlar</span></h1>
+                <p class="lead-text">Sizə özəl referal linki vasitəsilə ən müasir lazer cihazlarına xüsusi endirimlərlə sahib olun. Peşəkar təlimlər, fasiləsiz texniki dəstək və orijinal cihazlar.</p>
+                <p class="about-text"><strong>AzEstetik Group</strong> — Azərbaycanda estetik cihazların və gözəllik avadanlıqlarının rəsmi distribyutorudur. 10 ildən artıq təcrübə, 1000-dən çox məmnun müştəri və fasiləsiz texniki dəstək xidməti ilə sektorun liderlərindənik.</p>
+                <div class="hero-actions">
+                    <button onclick="openModal()" class="btn-premium" style="padding: 16px 36px; font-size: 1.1rem;">İndi Başlayın</button>
+                    <a href="#kataloq" class="btn-outline" style="padding: 16px 36px; font-size: 1.1rem; text-decoration: none;">Kataloq</a>
+                </div>
+            </div>
+            <div class="hero-image-wrapper">
+                <img src="assets/azestetik_building.png" alt="AzEstetik Group Building">
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <h4>10+</h4>
+                        <p>İl Təcrübə</p>
+                    </div>
+                    <div class="stat-item">
+                        <h4>1000+</h4>
+                        <p>Müştəri</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
