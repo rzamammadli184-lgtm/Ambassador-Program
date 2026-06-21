@@ -1,0 +1,264 @@
+﻿<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>* { font-family: 'Poppins', sans-serif !important; }</style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AzEstetik - Tədbirlər</title>
+    <link rel="stylesheet" href="ambassador_style.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- PWA & iOS Mobile Install Integration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AzEstetik Club">
+    <link rel="apple-touch-icon" href="assets/azestetik_app_icon.png">
+    <script src="pwa_installer.js" defer></script>
+    <script src="app_core.js" defer></script>
+    <script src="firebase_service.js" defer></script>
+</head>
+<body class="animate-fade-in">
+    <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-drawer" id="drawer">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+            <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
+        </div>
+        <nav><ul class="nav-list">
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+                <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
+                <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+                <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+                <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Köməkçi</a></li>
+                
+                <li><a href="ambassador_events.html" class="nav-link active"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+                <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+                <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
+    </div>
+
+    <div class="app-container">
+        <aside class="sidebar">
+        <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+        <nav><ul class="nav-list">
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
+            <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+            <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+            <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_about.html" class="nav-link"><i data-lucide="info"></i> Şirkət Haqqında</a></li>
+            <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+            <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+            <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
+            
+            <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+            <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+            <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+        <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
+    </aside>
+
+        <main class="main">
+            <header class="header">
+                <div style="display:flex; align-items:center; gap:16px;">
+                    <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
+                    <div class="header-title"><h1>Tədbirlər</h1><p>Gələcək və keçmiş tədbirlər.</p></div>
+                </div>
+                <div class="header-actions">
+                    <button data-role-required="superadmin" onclick="if(typeof AzCore!=='undefined') AzCore.openAdminRegistrationsModal('event-party-001')" class="quick-action-btn" style="background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); color: #EF4444; margin-right: 8px;">
+                        <i data-lucide="shield-alert" style="width: 18px;"></i> Qeydiyyatlar (Admin)
+                    </button>
+                    <select class="role-switcher-select" onchange="AzCore.setRole(this.value)" style="background: rgba(255,255,255,0.05); color: var(--text-main); border: 1px solid var(--card-border); border-radius: 8px; padding: 6px 12px; font-size: 0.8rem; cursor: pointer; outline: none; margin-right: 8px;">
+                        <option value="user">İstifadəçi</option>
+                        <option value="moderator">Moderator</option>
+                        <option value="admin">Admin</option>
+                        <option value="superadmin">Super Admin</option>
+                    </select>
+                    <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon"></i></button>
+                    <div class="lang-box">
+                        <button class="lang-btn active">AZ</button>
+                        <button class="lang-btn">EN</button>
+                        <button class="lang-btn">RU</button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Event Card: AMBASSADOR PARTY -->
+            <div class="modern-card animate-slide-up delay-100" style="padding: 0; overflow: hidden; border: 1px solid var(--primary); position: relative;">
+                <!-- Decorative Top/Right Background -->
+                <div style="position: absolute; top: 0; right: 0; width: 100%; height: 250px; background: linear-gradient(135deg, rgba(0,168,89,0.1), transparent); z-index: 0; pointer-events: none;"></div>
+                
+                <div style="padding: 32px; position: relative; z-index: 1;">
+                    <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                                <img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span>
+                                <span style="font-weight: 700; font-size: 1.2rem; color: var(--text-main);">AzEstetik Group</span>
+                            </div>
+                            <h1 style="font-size: 2.8rem; font-weight: 800; line-height: 1.1; margin: 0; color: var(--text-main);">AMBASSADOR</h1>
+                            <h1 style="font-size: 3.2rem; font-weight: 800; line-height: 1; margin: 0; color: #00A859;">PARTY</h1>
+                            <div style="display: inline-block; margin-top: 16px; padding: 6px 16px; background: rgba(255,255,255,0.05); border-radius: 20px; font-weight: 600; font-size: 0.85rem; letter-spacing: 1px; color: var(--text-muted);">
+                                NƏZAKƏT &nbsp;â€¢&nbsp; ÜNSİYYƏT &nbsp;â€¢&nbsp; DƏYƏR
+                            </div>
+                            <p style="margin-top: 24px; font-size: 1rem; color: var(--text-muted); max-width: 400px; line-height: 1.6;">
+                                Xüsusi qonaqlarımızla unudulmaz bir axşam üçün bir araya gəlirik.
+                            </p>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="display: inline-flex; flex-direction: column; align-items: center; justify-content: center; background: #00A859; color: white; width: 100px; height: 100px; border-radius: 20px; border-top-right-radius: 50px; border-bottom-left-radius: 50px; font-weight: 700; font-size: 0.9rem; text-align: center; line-height: 1.3; box-shadow: 0 10px 25px rgba(0,168,89,0.3);">
+                                <i data-lucide="party-popper" style="margin-bottom: 8px;"></i>
+                                XÜSUSİ<br>TƏDBİR
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Features -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px; margin-top: 40px; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid var(--card-border);">
+                        <div style="text-align: center;">
+                            <div style="width: 50px; height: 50px; background: rgba(0,168,89,0.1); color: #00A859; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto;">
+                                <i data-lucide="utensils-crossed"></i>
+                            </div>
+                            <div style="font-weight: 600; font-size: 0.85rem;">FURÅET</div>
+                            <div style="font-size: 0.7rem; color: var(--text-muted);">(AYAQÜSTÜ YEMƏKLƏR)</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 50px; height: 50px; background: rgba(0,168,89,0.1); color: #00A859; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto;">
+                                <i data-lucide="headphones"></i>
+                            </div>
+                            <div style="font-weight: 600; font-size: 0.85rem; margin-top: 10px;">DJ MUSİQİSİ</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 50px; height: 50px; background: rgba(0,168,89,0.1); color: #00A859; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto;">
+                                <i data-lucide="flag-triangle-right"></i>
+                            </div>
+                            <div style="font-weight: 600; font-size: 0.85rem; margin-top: 10px;">GİRLANDALAR</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="width: 50px; height: 50px; background: rgba(0,168,89,0.1); color: #00A859; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px auto;">
+                                <i data-lucide="projector"></i>
+                            </div>
+                            <div style="font-weight: 600; font-size: 0.85rem;">PROYEKTOR VƏ</div>
+                            <div style="font-size: 0.7rem; color: var(--text-muted);">EKRAN TƏQDİMATI</div>
+                        </div>
+                    </div>
+
+                    <!-- Info Details -->
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-top: 20px;">
+                        <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--card-border);">
+                            <i data-lucide="calendar-days" style="color: #00A859; width: 32px; height: 32px;"></i>
+                            <div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Tarix</div>
+                                <div style="font-weight: 700; font-size: 1rem;">22.06.2026</div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Bazar ertəsi</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--card-border);">
+                            <i data-lucide="clock" style="color: #00A859; width: 32px; height: 32px;"></i>
+                            <div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Saat</div>
+                                <div style="font-weight: 700; font-size: 1rem;">17:00 - 23:00</div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Dəqiq gəlin</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--card-border);">
+                            <i data-lucide="map-pin" style="color: #00A859; width: 32px; height: 32px;"></i>
+                            <div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Məkan</div>
+                                <div style="font-weight: 700; font-size: 1rem;">BADAMDAR</div>
+                                <div style="font-size: 0.75rem; color: var(--text-muted);">Etika Akademiyası Mərkəzi</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Call to Action -->
+                    <div style="margin-top: 32px; display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; padding-top: 24px; border-top: 1px solid var(--card-border);">
+                        <div>
+                            <div style="font-weight: 700; font-size: 1.1rem; color: var(--text-main);">YERİNİZİ İNDİ TƏSDİQLƏYİN!</div>
+                            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Zəhmət olmasa iştirakınızı təsdiqləyin</div>
+                        </div>
+                        <button onclick="if(typeof AzCore!=='undefined') AzCore.openEventRegistrationModal('event-party-001', 'Ambassador Party 2026')" style="background: #00A859; color: white; border: none; border-radius: 30px; padding: 16px 32px; font-weight: 700; font-size: 1rem; cursor: pointer; display: flex; align-items: center; gap: 12px; box-shadow: 0 8px 20px rgba(0,168,89,0.3); transition: transform 0.2s;">
+                            SİZİ GÖZLƏYİRİK! <i data-lucide="arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; letter-spacing: 2px;">
+                AMBASSADORLAR ÜÇÜN XÜSUSİ TƏDBİR
+            </div>
+        </main>
+    </div>
+
+    <nav class="mobile-nav">
+        <a href="ambassador_dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i></a>
+        <a href="ambassador_branches.html" class="bottom-nav-item"><i data-lucide="users-2"></i></a>
+        <a href="ambassador_academy.html" class="bottom-nav-item"><i data-lucide="graduation-cap"></i></a>
+        <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
+    </nav>
+
+    <script>
+        lucide.createIcons();
+        function toggleMenu() {
+            const drawer = document.getElementById('drawer');
+            const overlay = document.getElementById('overlay');
+            drawer.classList.toggle('open');
+            overlay.classList.toggle('active');
+        }
+    
+        // Theme Toggle Logic
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'light') {
+                document.body.classList.add('light-mode');
+            }
+            updateThemeIcon();
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            updateThemeIcon();
+        }
+
+        function updateThemeIcon() {
+            const iconElement = document.getElementById('theme-icon');
+            if(iconElement) {
+                const isLight = document.body.classList.contains('light-mode');
+                iconElement.setAttribute('data-lucide', isLight ? 'moon' : 'sun');
+                lucide.createIcons();
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', initTheme);
+        initTheme();
+
+        // Page Transitions
+        function transitionToPage(e, url) {
+            e.preventDefault();
+            document.body.style.transition = 'opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+            document.body.style.opacity = '0';
+            document.body.style.transform = 'translateY(15px)';
+            setTimeout(() => { window.location.href = url; }, 350);
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-link, .bottom-nav-item, a.brand, .card-title-row a').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('javascript') && !href.startsWith('tel:')) {
+                    link.addEventListener('click', function(e) {
+                        transitionToPage(e, href);
+                    });
+                }
+            });
+        });
+    </script>
+    <script src="auth_guard.js"></script>
+</body>
+</html>
+

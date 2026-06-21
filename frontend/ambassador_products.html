@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AzEstetik - Məhsullar</title>
+    <link rel="stylesheet" href="ambassador_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <script src="pwa_installer.js" defer></script>
+    <script src="app_core.js" defer></script>
+    <script src="firebase_service.js" defer></script>
+    <style>
+        * { font-family: 'Poppins', sans-serif !important; }
+
+        /* Product Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .product-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 60px rgba(0, 166, 81, 0.2);
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: var(--primary);
+            color: #fff;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 100px;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+
+        .product-img-wrap {
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(ellipse at 50% 80%, rgba(0,166,81,0.08) 0%, transparent 70%);
+            padding: 24px 0 8px;
+        }
+
+        .product-img-wrap img {
+            max-height: 230px;
+            max-width: 90%;
+            object-fit: contain;
+            filter: drop-shadow(0 12px 32px rgba(0,166,81,0.18));
+            transition: transform 0.4s ease;
+        }
+
+        .product-card:hover .product-img-wrap img {
+            transform: scale(1.05) translateY(-4px);
+        }
+
+        .product-body {
+            padding: 20px;
+        }
+
+        .product-category {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .product-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .product-desc {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .product-specs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 18px;
+        }
+
+        .spec-tag {
+            background: rgba(0,166,81,0.08);
+            border: 1px solid rgba(0,166,81,0.15);
+            color: var(--primary);
+            font-size: 0.72rem;
+            font-weight: 600;
+            padding: 3px 10px;
+            border-radius: 100px;
+        }
+
+        .product-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 16px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .product-price {
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-main);
+        }
+
+        .product-price span {
+            color: var(--primary);
+        }
+
+        .btn-detail {
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 10px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-detail:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+
+        .filter-btn {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            color: var(--text-muted);
+            padding: 7px 18px;
+            border-radius: 100px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        /* Product Detail Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-box {
+            background: var(--sidebar);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            max-width: 820px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 32px;
+            position: relative;
+            transform: scale(0.95);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .modal-close:hover { border-color: var(--primary); color: var(--primary); }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+
+        @media (max-width: 640px) {
+            .modal-grid { grid-template-columns: 1fr; }
+            .products-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 400px) {
+            .products-grid { grid-template-columns: 1fr; }
+        }
+
+        .modal-img-wrap {
+            background: radial-gradient(ellipse at 50% 100%, rgba(0,166,81,0.12) 0%, transparent 70%);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 280px;
+        }
+
+        .modal-img-wrap img {
+            max-height: 280px;
+            object-fit: contain;
+            filter: drop-shadow(0 16px 40px rgba(0,166,81,0.2));
+        }
+
+        .detail-spec-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--card-border);
+            font-size: 0.88rem;
+        }
+
+        .detail-spec-row:last-child { border-bottom: none; }
+        .detail-spec-row .spec-key { color: var(--text-muted); }
+        .detail-spec-row .spec-val { font-weight: 600; color: var(--text-main); }
+
+        .btn-contact {
+            width: 100%;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            padding: 14px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-contact:hover { background: var(--primary-dark); transform: translateY(-2px); }
+    </style>
+</head>
+<body class="animate-fade-in">
+
+<div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
+<div class="mobile-drawer" id="drawer">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:40px;">
+        <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;">
+            <img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span>
+        </a>
+        <button onclick="toggleMenu()" style="background:var(--card);border:1px solid var(--card-border);color:white;width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;"><i data-lucide="x"></i></button>
+    </div>
+    <nav><ul class="nav-list">
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+                <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
+                <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+                <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                <li><a href="ambassador_products.html" class="nav-link active"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+                <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Köməkçi</a></li>
+                
+                <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+                <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+                <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
+</div>
+
+<div class="app-container">
+    <aside class="sidebar">
+        <a href="ambassador_dashboard.html" class="brand">
+            <img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span>
+        </a>
+        <nav><ul class="nav-list">
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
+            <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+            <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+            <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_about.html" class="nav-link"><i data-lucide="info"></i> Şirkət Haqqında</a></li>
+            <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+            <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+            <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
+            <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+            <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+            <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+        <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
+    </aside>
+
+    <main class="main">
+        <header class="header">
+            <div style="display:flex;align-items:center;gap:16px;">
+                <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
+                <div class="header-title">
+                    <h1>Məhsullar Kataloqu</h1>
+                    <p>AzEstetik Group — Professional Estetik Cihazlar</p>
+                </div>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon"></i></button>
+            </div>
+        </header>
+
+        <!-- Stats -->
+        <div class="stats-container">
+            <div class="stat-card animate-slide-up">
+                <div class="stat-header">Cihaz Sayı</div>
+                <div class="stat-value">4</div>
+            </div>
+            <div class="stat-card animate-slide-up">
+                <div class="stat-header">Kateqoriyalar</div>
+                <div class="stat-value">3</div>
+            </div>
+            <div class="stat-card animate-slide-up">
+                <div class="stat-header">Başlanğıc Qiyməti</div>
+                <div class="stat-value" style="font-size:1.2rem;">9,500 ₼</div>
+            </div>
+            <div class="stat-card animate-slide-up">
+                <div class="stat-header">Zəmanət</div>
+                <div class="stat-value" style="font-size:1rem;">1-2 İl</div>
+            </div>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar animate-fade-in">
+            <button class="filter-btn active" data-filter="all" onclick="filterProducts(this,'all')">Hamısı</button>
+            <button class="filter-btn" data-filter="laser" onclick="filterProducts(this,'laser')">Laser Texnologiyası</button>
+            <button class="filter-btn" data-filter="ipl" onclick="filterProducts(this,'ipl')">IPL / SHR</button>
+            <button class="filter-btn" data-filter="co2" onclick="filterProducts(this,'co2')">CO₂ Fraksional</button>
+        </div>
+
+        <!-- Products Grid -->
+        <div class="products-grid" id="products-grid"></div>
+    </main>
+</div>
+
+<!-- Mobile Nav -->
+<nav class="mobile-nav">
+    <a href="ambassador_dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i></a>
+    <a href="ambassador_products.html" class="bottom-nav-item active"><i data-lucide="shopping-bag"></i></a>
+    <a href="ambassador_ai.html" class="bottom-nav-item"><i data-lucide="bot"></i></a>
+    <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
+</nav>
+
+<!-- Product Detail Modal -->
+<div class="modal-overlay" id="detailModal" onclick="closeModal(event)">
+    <div class="modal-box" id="modal-box">
+        <button class="modal-close" onclick="closeDetailModal()"><i data-lucide="x"></i></button>
+        <div id="modal-content"></div>
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+    function toggleMenu() { document.getElementById('drawer').classList.toggle('open'); document.getElementById('overlay').classList.toggle('active'); }
+
+    const PRODUCTS = [
+        {
+            id: 1,
+            name: "Fiona CO₂ Fractional Laser",
+            category: "co2",
+            categoryLabel: "CO₂ Fraksional",
+            badge: "Bestseller",
+            price: 15000,
+            image: "assets/fiona_laser.png",
+            imageFallback: "https://img.freepik.com/free-vector/medical-laser-device_1284-7019.jpg",
+            desc: "Müasir fraksional CO₂ laser texnologiyası ilə dəri yenilənməsi, çapıq silinməsi və cavan görünüş üçün professional həll.",
+            specs: [
+                { k: "Laser Tipi", v: "CO₂ Fraksional" },
+                { k: "Dalğa Uzunluğu", v: "10,600 nm" },
+                { k: "Güc", v: "60 W (Max)" },
+                { k: "Yayma Texnologiyası", v: "Dot Matrix" },
+                { k: "Soyutma Sistemi", v: "Su + Hava" },
+                { k: "Ekran", v: "10.4\" Toxunan" },
+                { k: "Zəmanət", v: "2 il" }
+            ],
+            tags: ["Dəri Cavanlaşdırma", "Çapıq Silinməsi", "Wrinkle Removal", "Pigment"],
+            features: [
+                "Ultra-fraksional dot matrix texnologiyası",
+                "Dəqiq güc tənzimləməsi 1-60W",
+                "Sürətli müalicə vaxtı — 20-30 dəq",
+                "Minimal bərpa dövrü",
+                "Çox sayda müalicə rejimi"
+            ]
+        },
+        {
+            id: 2,
+            name: "A8+ MAX IPL/SHR",
+            category: "ipl",
+            categoryLabel: "IPL / SHR",
+            badge: "Yeni",
+            price: 22000,
+            image: "assets/a8plus_max.png",
+            imageFallback: "https://img.freepik.com/free-vector/laser-hair-removal-machine_1284-8721.jpg",
+            desc: "Qıl azaldılması, damar müalicəsi və dəri cavanlaşdırması üçün 3-ü 1-də güclü IPL / SHR texnologiyası.",
+            specs: [
+                { k: "Texnologiya", v: "IPL + SHR + E-light" },
+                { k: "Dalğa Uzunluğu", v: "530–1200 nm" },
+                { k: "Enerji Sıxlığı", v: "1–80 J/cm²" },
+                { k: "Atış Sürəti", v: "1 Hz (SHR: 10 Hz)" },
+                { k: "Soyutma", v: "Kontakt + Hava" },
+                { k: "Ekran", v: "15\" Touch" },
+                { k: "Zəmanət", v: "2 il" }
+            ],
+            tags: ["Qıl Azaldılması", "Damar Müalicəsi", "Dəri Cavanlaşdırması", "E-light"],
+            features: [
+                "3 texnologiya birlikdə (IPL + SHR + E-light)",
+                "Bütün dəri növlərə uyğun",
+                "Böyük spot ölçüsü: 15×50mm",
+                "10 Hz sürətli atış rejimi",
+                "Ağrısız müalicə"
+            ]
+        },
+        {
+            id: 3,
+            name: "Quartet Alexandrite Pulse",
+            category: "laser",
+            categoryLabel: "Laser",
+            badge: "Premium",
+            price: 38000,
+            image: "assets/quartet_laser.png",
+            imageFallback: "https://img.freepik.com/free-vector/medical-equipment-vector_1284-1819.jpg",
+            desc: "4 fərqli texnologiya eyni platformada: Alexandrite, Nd:YAG, Diode və RF — tam spektr estetik müalicə.",
+            specs: [
+                { k: "Texnologiyalar", v: "Alex + Nd:YAG + Diode + RF" },
+                { k: "Dalğa Uzunluqları", v: "755 / 1064 / 808 nm" },
+                { k: "Güc", v: "2400 W (Max)" },
+                { k: "Spot Ölçüsü", v: "6–24 mm" },
+                { k: "Soyutma", v: "Dinamik Soyuq Hava" },
+                { k: "Ekran", v: "15.6\" Multi-touch" },
+                { k: "Zəmanət", v: "2 il" }
+            ],
+            tags: ["Alexandrite", "Nd:YAG", "Diode", "RF Gəncləşdirmə"],
+            features: [
+                "4-ü 1-də texnologiya platforması",
+                "Bütün dəri tipləri (Fitzpatrick I-VI)",
+                "Dinamik soyutma sistemi",
+                "Yüksək repetisiya dərəcəsi: 10 Hz",
+                "Çox funksiyalı müalicə başlıqları"
+            ]
+        },
+        {
+            id: 4,
+            name: "DioLasHair Diode Laser",
+            category: "laser",
+            categoryLabel: "Diode Laser",
+            badge: "Pro",
+            price: 18500,
+            image: "assets/diolashair.png",
+            imageFallback: "https://img.freepik.com/free-vector/medical-technology_1284-4219.jpg",
+            desc: "808nm dalğa uzunluğunda yüksək güclü diode laser sistemi. Daimi qıl azaldılması üçün sənaye standartı.",
+            specs: [
+                { k: "Texnologiya", v: "Diode Laser 808nm" },
+                { k: "Güc", v: "1200 W" },
+                { k: "Atış Sürəti", v: "10 Hz" },
+                { k: "Spot Ölçüsü", v: "12×12 mm" },
+                { k: "Soyutma", v: "TEC + Su" },
+                { k: "Ekran", v: "12\" Touch Screen" },
+                { k: "Zəmanət", v: "1 il" }
+            ],
+            tags: ["808nm Diode", "Daimi Depilasiya", "Bütün dəri tipləri", "Sürətli müalicə"],
+            features: [
+                "3 dalğa uzunluğu seçimi (755/808/1064nm)",
+                "Titanium Sapphire kontakt soyutma",
+                "Compact dizayn, mobil təkərlər",
+                "Real-time temperatura nəzarət",
+                "Çox dilli interfeys"
+            ]
+        }
+    ];
+
+    let activeFilter = 'all';
+
+    function filterProducts(btn, filter) {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = filter;
+        renderProducts();
+    }
+
+    function renderProducts() {
+        const grid = document.getElementById('products-grid');
+        const filtered = activeFilter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === activeFilter);
+
+        grid.innerHTML = filtered.map((p, idx) => `
+            <div class="product-card animate-slide-up" style="animation-delay:${idx * 80}ms;" onclick="openDetail(${p.id})">
+                <span class="product-badge">${p.badge}</span>
+                <div class="product-img-wrap">
+                    <img src="${p.image}" alt="${p.name}" onerror="this.src='${p.imageFallback}'">
+                </div>
+                <div class="product-body">
+                    <div class="product-category">${p.categoryLabel}</div>
+                    <div class="product-name">${p.name}</div>
+                    <div class="product-desc">${p.desc.substring(0, 100)}...</div>
+                    <div class="product-specs">
+                        ${p.tags.slice(0, 3).map(t => `<span class="spec-tag">${t}</span>`).join('')}
+                    </div>
+                    <div class="product-footer">
+                        <div class="product-price">${p.price.toLocaleString()} <span>₼</span></div>
+                        <button class="btn-detail" onclick="event.stopPropagation(); openDetail(${p.id})">
+                            <i data-lucide="eye" style="width:14px;height:14px;"></i>
+                            Ətraflı
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+        lucide.createIcons();
+    }
+
+    function openDetail(id) {
+        const p = PRODUCTS.find(x => x.id === id);
+        if (!p) return;
+
+        document.getElementById('modal-content').innerHTML = `
+            <div class="modal-grid">
+                <div class="modal-img-wrap">
+                    <img src="${p.image}" alt="${p.name}" onerror="this.src='${p.imageFallback}'">
+                </div>
+                <div>
+                    <span class="product-badge" style="position:relative;top:0;left:0;display:inline-block;margin-bottom:12px;">${p.badge}</span>
+                    <div class="product-category">${p.categoryLabel}</div>
+                    <h2 style="font-size:1.4rem;font-weight:800;margin:8px 0 12px;">${p.name}</h2>
+                    <p style="color:var(--text-muted);font-size:0.88rem;line-height:1.7;margin-bottom:20px;">${p.desc}</p>
+                    <div style="font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;"><i data-lucide="check-circle" style="width:16px;height:16px;color:var(--primary);"></i> Xüsusiyyətlər</div>
+                    ${p.features.map(f => `<div style="display:flex;align-items:center;gap:8px;font-size:0.83rem;color:var(--text-muted);margin-bottom:6px;"><span style="color:var(--primary);font-size:1rem;">✓</span>${f}</div>`).join('')}
+                    <div style="font-size:1.6rem;font-weight:800;margin-top:20px;">${p.price.toLocaleString()} <span style="color:var(--primary);">₼</span></div>
+                    <button class="btn-contact" onclick="window.open('https://wa.me/994501234567?text=Salam!%20${encodeURIComponent(p.name)}%20haqqında%20məlumat%20almaq%20istəyirəm.','_blank')">
+                        <i data-lucide="message-circle" style="width:18px;height:18px;"></i>
+                        Sifariş et / Əlaqə
+                    </button>
+                </div>
+            </div>
+            <div style="margin-top:28px;padding-top:24px;border-top:1px solid var(--card-border);">
+                <div style="font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:6px;"><i data-lucide="settings-2" style="width:16px;height:16px;color:var(--primary);"></i> Texniki Xüsusiyyətlər</div>
+                ${p.specs.map(s => `<div class="detail-spec-row"><span class="spec-key">${s.k}</span><span class="spec-val">${s.v}</span></div>`).join('')}
+            </div>
+        `;
+        document.getElementById('detailModal').classList.add('active');
+        lucide.createIcons();
+    }
+
+    function closeModal(e) {
+        if (e.target === document.getElementById('detailModal')) closeDetailModal();
+    }
+
+    function closeDetailModal() {
+        document.getElementById('detailModal').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetailModal(); });
+
+    function initTheme() { const s = localStorage.getItem('theme'); if (s === 'light') document.body.classList.add('light-mode'); updateThemeIcon(); }
+    function toggleTheme() { document.body.classList.toggle('light-mode'); localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark'); updateThemeIcon(); }
+    function updateThemeIcon() { const i = document.getElementById('theme-icon'); if (i) { i.setAttribute('data-lucide', document.body.classList.contains('light-mode') ? 'moon' : 'sun'); lucide.createIcons(); } }
+    function transitionToPage(e, url) { e.preventDefault(); document.body.style.transition = 'opacity 0.4s ease'; document.body.style.opacity = '0'; setTimeout(() => { window.location.href = url; }, 350); }
+    document.addEventListener('DOMContentLoaded', () => {
+        initTheme();
+        renderProducts();
+        document.querySelectorAll('.nav-link, .bottom-nav-item, a.brand').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && !href.startsWith('#') && !href.startsWith('javascript'))
+                link.addEventListener('click', function(e) { transitionToPage(e, href); });
+        });
+    });
+</script>
+<script src="auth_guard.js"></script>
+</body>
+</html>

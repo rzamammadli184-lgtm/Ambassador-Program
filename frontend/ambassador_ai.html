@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AzEstetik - AI Analitika</title>
+    <link rel="stylesheet" href="ambassador_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- PWA & iOS Mobile Install Integration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AzEstetik Club">
+    <link rel="apple-touch-icon" href="assets/azestetik_app_icon.png">
+    <script src="pwa_installer.js" defer></script>
+    <script src="app_core.js" defer></script>
+    <script src="firebase_service.js" defer></script>
+    <style>
+        * { font-family: 'Poppins', sans-serif !important; }
+    </style>
+</head>
+<body class="animate-fade-in">
+    <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-drawer" id="drawer">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+            <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
+        </div>
+        <nav><ul class="nav-list">
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+                <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
+                <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+                <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+                <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_ai.html" class="nav-link active"><i data-lucide="bot"></i> AI Köməkçi</a></li>
+                
+                <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+                <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+                <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
+    </div>
+
+    <div class="app-container">
+        <aside class="sidebar">
+        <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+        <nav><ul class="nav-list">
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
+            <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+            <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+            <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_about.html" class="nav-link"><i data-lucide="info"></i> Şirkət Haqqında</a></li>
+            <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+            <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+            <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
+            
+            <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+            <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+            <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+        <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
+    </aside>
+
+        <main class="main">
+            <header class="header">
+                <div style="display:flex; align-items:center; gap:16px;">
+                    <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
+                    <div class="header-title">
+                        <h1>AI Analitika <span class="badge badge-success" style="font-size:0.7rem; margin-left:8px;">BETA</span></h1>
+                        <p>Real-vaxt məlumatlarına əsaslanan süni intellekt köməkçisi</p>
+                    </div>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon"></i></button>
+                    <div class="lang-box">
+                        <button class="lang-btn active">AZ</button>
+                        <button class="lang-btn">EN</button>
+                        <button class="lang-btn">RU</button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="chat-container animate-fade-in" style="margin-top:20px; background:var(--card); border:1px solid var(--card-border); border-radius:20px; display:flex; flex-direction:column; height:calc(100vh - 140px); overflow:hidden;">
+                <div class="chat-header" style="padding:20px; border-bottom:1px solid var(--card-border); display:flex; align-items:center; gap:16px; background:rgba(255,255,255,0.02);">
+                    <div style="width:48px; height:48px; border-radius:14px; background:linear-gradient(135deg, var(--primary), #8B5CF6); display:flex; align-items:center; justify-content:center; color:white;"><i data-lucide="bot" style="width:24px; height:24px;"></i></div>
+                    <div>
+                        <h2 style="font-size:1.1rem; margin-bottom:4px; font-weight:600;">AzEstetik AI</h2>
+                        <p style="font-size:0.8rem; color:var(--text-muted);">Bütün rəsmi baza ilə əlaqəlidir</p>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chat-messages" style="flex:1; overflow-y:auto; padding:24px; display:flex; flex-direction:column; gap:16px;">
+                    <div class="message ai-message animate-slide-up" style="max-width:85%; padding:16px 20px; border-radius:16px; font-size:0.95rem; line-height:1.6; background:rgba(var(--primary-rgb), 0.05); border:1px solid rgba(var(--primary-rgb), 0.2); align-self:flex-start; border-top-left-radius:4px;">
+                        Salam! Mən AzEstetik sisteminin süni intellekt analitik köməkçisiyəm. Şəbəkənizdə bütün rəsmi iştirakçı məlumatlarını oxuyub təhlil etmişəm. Məndən aşağıdakı mövzularda ətraflı məlumat istəyə bilərsiniz.
+                    </div>
+                </div>
+                <div class="chat-suggestions" style="padding:16px 24px; display:flex; gap:10px; flex-wrap:wrap; border-top:1px solid rgba(255,255,255,0.05);">
+                    <button onclick="sendPrompt('leaders')" style="background:rgba(255,255,255,0.05); border:1px solid var(--card-border); color:var(--text-muted); padding:10px 18px; border-radius:20px; font-size:0.85rem; cursor:pointer; display:flex; align-items:center; gap:8px;"><i data-lucide="crown" style="width:14px; height:14px;"></i> Ə n güclü liderlər</button>
+                    <button onclick="sendPrompt('passive')" style="background:rgba(255,255,255,0.05); border:1px solid var(--card-border); color:var(--text-muted); padding:10px 18px; border-radius:20px; font-size:0.85rem; cursor:pointer; display:flex; align-items:center; gap:8px;"><i data-lucide="user-minus" style="width:14px; height:14px;"></i> Passivləşən üzvlər</button>
+                    <button onclick="sendPrompt('stats')" style="background:rgba(255,255,255,0.05); border:1px solid var(--card-border); color:var(--text-muted); padding:10px 18px; border-radius:20px; font-size:0.85rem; cursor:pointer; display:flex; align-items:center; gap:8px;"><i data-lucide="pie-chart" style="width:14px; height:14px;"></i> Ümumi Statistika</button>
+                    <button onclick="sendPrompt('birthdays')" style="background:rgba(255,255,255,0.05); border:1px solid var(--card-border); color:var(--text-muted); padding:10px 18px; border-radius:20px; font-size:0.85rem; cursor:pointer; display:flex; align-items:center; gap:8px;"><i data-lucide="gift" style="width:14px; height:14px;"></i> Ad günləri</button>
+                    <button onclick="sendPrompt('vip')" style="background:rgba(255,255,255,0.05); border:1px solid var(--card-border); color:var(--text-muted); padding:10px 18px; border-radius:20px; font-size:0.85rem; cursor:pointer; display:flex; align-items:center; gap:8px;"><i data-lucide="gem" style="width:14px; height:14px;"></i> VIP Üzvlər</button>
+                    <button onclick="sendPrompt('kompanyonlar')" style="background:rgba(255,255,255,0.05); border:1px solid var(--card-border); color:var(--text-muted); padding:10px 18px; border-radius:20px; font-size:0.85rem; cursor:pointer; display:flex; align-items:center; gap:8px;"><i data-lucide="users" style="width:14px; height:14px;"></i> Kompanyonlar</button>
+                </div>
+                <div class="chat-input-area" style="padding:20px 24px; border-top:1px solid var(--card-border); display:flex; gap:12px; background:var(--bg-dark);">
+                    <input type="text" id="chat-input" placeholder="Süni intellektə sual verin..." onkeypress="if(event.key === 'Enter') sendCustomMessage()" style="flex:1; background:var(--card); border:1px solid var(--card-border); padding:0 20px; border-radius:16px; color:white; font-family:inherit; font-size:0.95rem; outline:none;">
+                    <button class="send-btn" onclick="sendCustomMessage()" style="width:54px; height:54px; border-radius:16px; background:var(--primary); color:white; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;"><i data-lucide="send" style="width:20px; height:20px;"></i></button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <nav class="mobile-nav">
+        <a href="ambassador_dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i></a>
+        <a href="ambassador_branches.html" class="bottom-nav-item"><i data-lucide="users-2"></i></a>
+        <a href="ambassador_ai.html" class="bottom-nav-item active"><i data-lucide="bot"></i></a>
+        <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
+    </nav>
+
+    <script>
+        lucide.createIcons();
+        function toggleMenu() {
+            document.getElementById('drawer').classList.toggle('open');
+            document.getElementById('overlay').classList.toggle('active');
+        }
+
+        // — Parse Database from Firebase API —
+        let ambassadors = [];
+        let kompanyonlar = [];
+        
+        const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || window.location.protocol === 'file:';
+        const API_BASE = isLocal ? 'http://localhost:3001/api' : '/api';
+
+        async function parseDatabase() {
+            try {
+                const res = await fetch(API_BASE + '/ambassadors', { signal: AbortSignal.timeout(5000) });
+                if (!res.ok) throw new Error('API xətası: ' + res.status);
+                const data = await res.json();
+                ambassadors = data.map(a => ({
+                    num: a.id,
+                    idCode: a.idCode || a.id,
+                    name: (a.name || '').trim(),
+                    points: parseFloat(a.points) || 0,
+                    leader: (a.leader || '').trim(),
+                    contractDate: a.contractDate || '',
+                    birthday: a.birthday || '',
+                    status: (a.status || '').trim(),
+                    level: a.level || 0,
+                    phone: a.phone || '',
+                    salesVolume: parseFloat(a.salesVolume) || 0
+                })).filter(a => a.name);
+                kompanyonlar = ambassadors.filter(a => a.status === 'K');
+                console.log('✅ AI: Firebase-dən yükləndi:', ambassadors.length, 'ambassador');
+            } catch (err) {
+                console.warn('⚠️ AI: API əlçatmazdır:', err.message);
+                ambassadors = [];
+                kompanyonlar = [];
+            }
+        }
+        
+        // Load at startup
+        parseDatabase();
+        
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+
+        function appendMessage(sender, text) {
+            const m = document.createElement('div');
+            m.className = 'message ' + sender + '-message';
+            if (sender === 'user') { m.style.cssText = 'background:var(--primary);color:white;align-self:flex-end;border-top-right-radius:4px;'; }
+            else { m.style.cssText = 'background:rgba(var(--primary-rgb),0.05);border:1px solid rgba(var(--primary-rgb),0.2);align-self:flex-start;border-top-left-radius:4px;'; }
+            m.style.cssText += 'max-width:85%;padding:16px 20px;border-radius:16px;font-size:0.95rem;line-height:1.6;animation:slideUp 0.3s ease;';
+            m.innerHTML = text;
+            chatMessages.appendChild(m);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            const t = document.createElement('div');
+            t.id = 'typing';
+            t.innerHTML = '<div style="display:flex;align-items:center;gap:10px;"><div style="display:flex;gap:4px;"><span style="width:8px;height:8px;background:var(--primary);border-radius:50%;animation:pulse 1s infinite 0s;display:inline-block;"></span><span style="width:8px;height:8px;background:var(--primary);border-radius:50%;animation:pulse 1s infinite 0.2s;display:inline-block;"></span><span style="width:8px;height:8px;background:var(--primary);border-radius:50%;animation:pulse 1s infinite 0.4s;display:inline-block;"></span></div><span style="color:var(--text-muted);font-size:0.85rem;">AI cavab hazırlayır...</span></div>';
+            t.style.cssText = 'padding:10px 20px;';
+            chatMessages.appendChild(t);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        function removeTyping() { const t = document.getElementById('typing'); if (t) t.remove(); }
+
+        function getPromptText(type) {
+            const map = {
+                'leaders': 'Ə n güclü qrup rəhbərlərini və onların göstəricilərini təhlil et.',
+                'passive': 'Şəbəkədəki ən passiv iştirakçıları tap.',
+                'stats': 'Bütün şəbəkənin ümumi dövriyyə və aktivlik statistikasını çıxar.',
+                'birthdays': 'Yaxın günlərdə ad günü olan iştirakçılar kimlərdir?',
+                'vip': 'VIP ambassadorları göstər.',
+                'kompanyonlar': 'Bütün kompanyonların siyahısını və statistikasını çıxar.',
+                'new_members': 'Ə n son qoşulan yeni üzvləri göstər.'
+            };
+            return map[type] || type;
+        }
+
+        function sendPrompt(type) {
+            if (ambassadors.length === 0) parseDatabase();
+            if (ambassadors.length === 0) { appendMessage('ai', '⚠️ Məlumatlar hələ yüklənməyib.'); return; }
+            const promptText = getPromptText(type);
+            appendMessage('user', promptText);
+            processAI(type, promptText);
+        }
+
+        function sendCustomMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            appendMessage('user', text);
+            chatInput.value = '';
+            if (ambassadors.length === 0) parseDatabase();
+            
+            let type = 'general';
+            let originalText = text;
+            const t = text.toLowerCase();
+
+            // — Kompanyon axtarışı
+            if (t.includes('kompanyon') || t.includes('companyon') || t.includes('companion')) { type = 'kompanyonlar'; }
+            // — Yeni üzvlər
+            else if (t.includes('yeni') && (t.includes('uzv') || t.includes('üzv') || t.includes('qosul') || t.includes('qoşul'))) { type = 'new_members'; }
+            // — Level filter
+            else if (t.match(/(seviyye|level|səviyyə)\s*(\d+)/) || t.match(/(\d+)(?:\s*-?(ci|cu|cı|cü))?\s*(seviyye|level|səviyyə|ambassador)/)) {
+                const numMatch = t.match(/\d+/);
+                if (numMatch) type = 'filter_level_' + numMatch[0];
+            }
+            // — Points filter
+            else if (t.match(/(\d+)[- ]?(den|dan|daha)?\s*(cox|çox|yuxari|yuxarı|boyuk|böyük)/) && (t.includes('bal') || t.includes('dovriyye') || t.includes('xal'))) {
+                const numMatch = t.match(/(\d+)/);
+                if (numMatch) type = 'filter_points_above_' + numMatch[0];
+            }
+            // — Status filter
+            else if (t.match(/statusu?\s+([A-Za-z\+]+)/) || t.match(/([A-Za-z\+]+)\s+status/)) {
+                const stMatch = t.match(/statusu?\s+([A-Za-z\+]+)/) || t.match(/([A-Za-z\+]+)\s+status/);
+                if (stMatch) type = 'filter_status_' + stMatch[1].toUpperCase();
+            }
+            // — Count
+            else if (t.includes('nece nefer') || t.includes('neçə nəfər') || t.includes('sayi') || t.includes('sayı') || t.includes('total') || t.includes('umumi sayi')) { type = 'count_total'; }
+            // — Common categories
+            else if (t.includes('lider') || t.includes('rehber') || t.includes('guclu') || t.includes('güclü') || t.includes('top') || t.includes('leader') || t.includes('best')) type = 'leaders';
+            else if (t.includes('passiv') || t.includes('zeif') || t.includes('klassik') || t.includes('islemeyen')) type = 'passive';
+            else if (t.includes('statistika') || t.includes('umumi') || t.includes('dovriyye') || t.includes('say')) type = 'stats';
+            else if (t.includes('ad gunu') || t.includes('dogum') || t.includes('birthday') || t.includes('ad günü')) type = 'birthdays';
+            else if (t.includes('salam') || t.includes('necesen') || t.includes('hello') || t.includes('hi')) type = 'greeting';
+            else {
+                // Free text search across all people
+                const allPeople = [...ambassadors, ...kompanyonlar];
+                const match = allPeople.find(a => {
+                    const name = (a.name || '').toLowerCase();
+                    return name.includes(t) || t.split(' ').some(w => w.length > 2 && name.includes(w));
+                });
+                if (match) {
+                    type = 'search_person';
+                    originalText = match.name;
+                }
+            }
+            processAI(type, originalText);
+        }
+
+        function processAI(type, originalText) {
+            showTyping();
+            setTimeout(() => {
+                removeTyping();
+                const response = generateAIResponse(type, originalText || '');
+                appendMessage('ai', response);
+                lucide.createIcons();
+            }, 800 + Math.random() * 400);
+        }
+
+        function generateAIResponse(type, originalText) {
+            try {
+                const total = ambassadors.length;
+                const totalKomp = kompanyonlar.length;
+                if (total === 0) return "⚠️ Bazada məlumat tapılmadı. database_inline.js faylını yoxlayın.";
+
+                const active = ambassadors.filter(a => a.status === 'A' || a.status === 'A+');
+                const passive = ambassadors.filter(a => a.status === 'K');
+                const totalPoints = ambassadors.reduce((s, a) => s + a.points, 0);
+                const avgPoints = active.length > 0 ? Math.round(totalPoints / active.length) : 0;
+                const bonusEligible = ambassadors.filter(a => a.points >= 60);
+                const t = (originalText || '').toLowerCase();
+
+                // — Leaders map
+                const getLeaders = () => {
+                    const leaders = {};
+                    ambassadors.forEach(a => {
+                        const ldr = (a.leader || '').trim();
+                        if (ldr && ldr !== 'Şirkət') {
+                            if (!leaders[ldr]) leaders[ldr] = { count: 0, points: 0, active: 0 };
+                            leaders[ldr].count++;
+                            leaders[ldr].points += a.points;
+                            if (a.status === 'A' || a.status === 'A+') leaders[ldr].active++;
+                        }
+                    });
+                    return Object.entries(leaders).sort((a, b) => b[1].count - a[1].count);
+                };
+
+                let res = '';
+
+                // — Greeting
+                if (type === 'greeting') {
+                    return `👋 <b style="color:white;">Salam!</b><br>Mən AzEstetik AI köməkçisiyəm. Bazada <b style="color:var(--primary);">${total}</b> ambassador və <b style="color:#805AD5;">${totalKomp}</b> kompanyon var.<br><br>Məndən istənilən sualı soruşa bilərsiniz!<br>Məs: "Ə n güclü liderlər kimdir?", "Kompanyonları göstər", "Ə liyeva haqqında məlumat"`;
+                }
+
+                // — Count total
+                if (type === 'count_total') {
+                    return `📊 <b style="color:white;">Ümumi Say</b><br>
+                    - Ambassador: <b style="color:var(--primary);">${total}</b> nəfər<br>
+                    - Kompanyon: <b style="color:#805AD5;">${totalKomp}</b> nəfər<br>
+                    - Cəmi: <b style="color:white;">${total + totalKomp}</b> nəfər<br><br>
+                    ✅ Aktiv: <b style="color:#10B981;">${active.length}</b> | ❌ Passiv: <b style="color:#EF4444;">${passive.length}</b><br>
+                    🎁 Bonus haqq edən (60+ bal): <b style="color:#F59E0B;">${bonusEligible.length}</b> nəfər`;
+                }
+
+                // — Kompanyonlar
+                if (type === 'kompanyonlar') {
+                    if (kompanyonlar.length === 0) return '⚠️ Kompanyon məlumatları bazada tapılmadı.';
+                    const aktiv = kompanyonlar.filter(k => k.status === 'A' || k.status === 'A+');
+                    const passivK = kompanyonlar.filter(k => k.status === 'K');
+                    const topKomp = [...kompanyonlar].sort((a,b) => b.points - a.points).slice(0, 10);
+                    
+                    res = `👥 <b style="color:white;">Kompanyon Statistikası</b><br>`;
+                    res += `- Ümumi: <b style="color:#805AD5;">${kompanyonlar.length}</b> nəfər<br>`;
+                    res += `- Aktiv: <b style="color:#10B981;">${aktiv.length}</b> | Passiv: <b style="color:#EF4444;">${passivK.length}</b><br><br>`;
+                    res += `👑 <b style="color:white;">Top 10 Kompanyon</b><br>`;
+                    topKomp.forEach((k, i) => {
+                        const icon = i < 3 ? ['🥇','🥈','🥉'][i] : `${i+1}.`;
+                        res += `${icon} <span style="color:white;">${k.name}</span> — <span style="color:var(--primary);">${k.points} bal</span> (${k.leader || 'Yoxdur'})<br>`;
+                    });
+                    return res;
+                }
+
+                // — New members
+                if (type === 'new_members') {
+                    const recent = [...ambassadors].reverse().slice(0, 10);
+                    res = `🆕 <b style="color:white;">Son Qeydiyyat Olunan Üzvlər</b><br><br>`;
+                    recent.forEach((m, i) => {
+                        res += `${i+1}. <b style="color:white;">${m.name}</b> — ${m.contractDate || 'Tarix yoxdur'} — <span style="color:var(--primary);">${m.points} bal</span> (${m.status})<br>`;
+                    });
+                    return res;
+                }
+
+                // — Leaders
+                if (type === 'leaders') {
+                    const sortedLeaders = getLeaders().slice(0, 10);
+                    res = `👑 <b style="color:white;">Ə n Güclü Qrup Rəhbərləri</b><br><br>`;
+                    sortedLeaders.forEach((l, i) => {
+                        const icon = i < 3 ? ['🥇','🥈','🥉'][i] : `${i+1}.`;
+                        const pct = l[1].count > 0 ? Math.round((l[1].active / l[1].count) * 100) : 0;
+                        res += `${icon} <b style="color:white;">${l[0]}</b> — ${l[1].count} nəfər — <span style="color:var(--primary);">${Math.round(l[1].points)} bal</span> — Aktivlik: ${pct}%<br>`;
+                    });
+                    res += `<br>🎯 <b style="color:white;">AI Tövsiyə:</b> Liderləri xüsusi tədbirlərdə fərqləndirmək şəbəkə motivasiyasını artırır.`;
+                    return res;
+                }
+
+                // — Passive
+                if (type === 'passive') {
+                    if (passive.length === 0) return '✅ Şəbəkədə passiv üzv yoxdur!';
+                    const worst = [...passive].sort((a,b) => a.points - b.points).slice(0, 10);
+                    res = `⚠️ <b style="color:white;">Ə n Passiv Üzvlər</b> (${passive.length} nəfər)<br><br>`;
+                    worst.forEach((m, i) => {
+                        res += `${i+1}. <b style="color:white;">${m.name}</b> — <span style="color:#EF4444;">${m.points} bal</span> — Sponsor: ${m.leader || 'Şirkət'}<br>`;
+                    });
+                    res += `<br>🚀 <b style="color:white;">AI Tövsiyə:</b> Bu üzvlərin rəhbərləri ilə əlaqə saxlayıb reaktivasiya kampaniyası başladın.`;
+                    return res;
+                }
+
+                // — Stats
+                if (type === 'stats') {
+                    const levels = {};
+                    ambassadors.forEach(a => { const l = a.level || '1'; levels[l] = (levels[l] || 0) + 1; });
+                    
+                    res = `📊 <b style="color:white;">Ümumi Şəbəkə Statistikası</b><br><br>`;
+                    res += `👤 Ümumi Ambassador: <b style="color:white;">${total}</b><br>`;
+                    res += `👥 Ümumi Kompanyon: <b style="color:#805AD5;">${totalKomp}</b><br>`;
+                    res += `✅ Aktiv: <b style="color:#10B981;">${active.length}</b> (${Math.round(active.length/total*100)}%)<br>`;
+                    res += `❌ Passiv: <b style="color:#EF4444;">${passive.length}</b> (${Math.round(passive.length/total*100)}%)<br>`;
+                    res += `💰 Ümumi Dövriyyə: <b style="color:var(--primary);">${Math.round(totalPoints).toLocaleString()} Bal</b><br>`;
+                    res += `📈 Orta Bal: <b style="color:white;">${avgPoints}</b><br>`;
+                    res += `🎁 Bonus Haqq Edən (60+): <b style="color:#F59E0B;">${bonusEligible.length}</b><br><br>`;
+                    res += `📶 <b style="color:white;">Səviyyə Dağılımı</b><br>`;
+                    Object.entries(levels).sort((a,b) => parseInt(b[0]) - parseInt(a[0])).forEach(([lv, cnt]) => {
+                        const bar = '█'.repeat(Math.min(Math.round(cnt / total * 40), 20));
+                        res += `Level ${lv}: <span style="color:var(--primary);">${bar}</span> ${cnt} nəfər<br>`;
+                    });
+                    return res;
+                }
+
+                // — Birthdays
+                if (type === 'birthdays') {
+                    const withBday = ambassadors.filter(a => a.birthday && a.birthday.toString().trim() && a.birthday.toString().length > 3);
+                    if (withBday.length === 0) return '⚠️ Ad günü məlumatı olan üzv tapılmadı.';
+                    const sample = withBday.slice(0, 10);
+                    res = `🎂 <b style="color:white;">Ad Günü Məlumatları</b><br><br>`;
+                    sample.forEach((m, i) => {
+                        res += `${i+1}. <b style="color:white;">${m.name}</b> — 🎂 ${m.birthday}<br>`;
+                    });
+                    res += `<br>🎯 <b style="color:white;">AI Tövsiyə:</b> Ad günü olan üzvlərə özəl endirim kuponu göndərmək loyallığı artırır.`;
+                    return res;
+                }
+
+                // — VIP
+                if (type === 'vip') {
+                    const vips = ambassadors.filter(a => a.level == '4' || a.level == '5' || a.points > 500).sort((a,b) => b.points - a.points);
+                    if (vips.length === 0) return '⚠️ VIP statuslu üzv tapılmadı.';
+                    res = `💎 <b style="color:white;">VIP Ambassadorlar</b> (${vips.length} nəfər)<br><br>`;
+                    vips.slice(0, 10).forEach((m, i) => {
+                        const icon = i < 3 ? ['🥇','🥈','🥉'][i] : `${i+1}.`;
+                        res += `${icon} <b style="color:white;">${m.name}</b> — <span style="color:var(--primary);">${m.points} bal</span> — Level ${m.level || '?'}<br>`;
+                    });
+                    res += `<br>🎯 <b style="color:white;">AI Tövsiyə:</b> Bu şəxslərə xüsusi status və özəl endirimlər təklif edilməlidir.`;
+                    return res;
+                }
+
+                // — Level filter
+                if (type.startsWith('filter_level_')) {
+                    const level = type.split('_')[2];
+                    const matches = ambassadors.filter(a => a.level == level).sort((a,b) => b.points - a.points);
+                    if (matches.length === 0) return `⚠️ Level ${level} səviyyəsində üzv tapılmadı.`;
+                    res = `📶 <b style="color:white;">Level ${level} Ambassadorlar</b> (${matches.length} nəfər)<br><br>`;
+                    matches.slice(0, 15).forEach((m, i) => {
+                        res += `${i+1}. <b style="color:white;">${m.name}</b> — <span style="color:var(--primary);">${m.points} bal</span> (${m.status})<br>`;
+                    });
+                    if (matches.length > 15) res += `<br><i style="color:var(--text-muted);">...və ${matches.length - 15} nəfər daha</i>`;
+                    return res;
+                }
+
+                // — Points filter
+                if (type.startsWith('filter_points_above_')) {
+                    const threshold = parseInt(type.split('_')[3]);
+                    const matches = ambassadors.filter(a => a.points > threshold).sort((a,b) => b.points - a.points);
+                    if (matches.length === 0) return `⚠️ ${threshold} baldan çox olan üzv tapılmadı.`;
+                    res = `💰 <b style="color:white;">${threshold}+ Bal Toplayan Üzvlər</b> (${matches.length} nəfər)<br><br>`;
+                    matches.slice(0, 15).forEach((m, i) => {
+                        res += `${i+1}. <b style="color:white;">${m.name}</b> — <span style="color:var(--primary);">${m.points} bal</span><br>`;
+                    });
+                    return res;
+                }
+
+                // — Status filter
+                if (type.startsWith('filter_status_')) {
+                    const st = type.split('_')[2];
+                    const matches = ambassadors.filter(a => (a.status || '').toUpperCase() === st);
+                    if (matches.length === 0) return `⚠️ "${st}" statuslu üzv tapılmadı.`;
+                    res = `📍 <b style="color:white;">"${st}" Statuslu Üzvlər</b> (${matches.length} nəfər)<br><br>`;
+                    matches.slice(0, 15).forEach((m, i) => {
+                        res += `${i+1}. <b style="color:white;">${m.name}</b> — ${m.points} bal — Sponsor: ${m.leader || 'Şirkət'}<br>`;
+                    });
+                    return res;
+                }
+
+                // — Search person
+                if (type === 'search_person') {
+                    const allP = [...ambassadors, ...kompanyonlar];
+                    const matches = allP.filter(a => {
+                        const name = (a.name || '').toLowerCase();
+                        return name.includes(t) || t.split(' ').some(w => w.length > 2 && name.includes(w));
+                    });
+                    if (matches.length === 0) return 'âš ï¸ Bu adla uyğun nəticə tapılmadı.';
+                    
+                    res = `ğŸ” <b style="color:white;">Axtarış Nəticələri</b><br><br>`;
+                    matches.slice(0, 10).forEach((m, i) => {
+                        res += `<div style="background:rgba(255,255,255,0.03);border:1px solid var(--card-border);border-radius:12px;padding:12px;margin-bottom:8px;">`;
+                        res += `<b style="color:white;font-size:1rem;">${m.name}</b><br>`;
+                        res += `<span style="color:var(--text-muted);font-size:0.85rem;">`;
+                        if (m.idCode) res += `ID: ${m.idCode} | `;
+                        res += `Bal: <b style="color:var(--primary);">${m.points}</b>`;
+                        if (m.level) res += ` | Level: ${m.level}`;
+                        res += ` | Status: ${m.status || '-'}`;
+                        if (m.leader) res += `<br>Sponsor: ${m.leader}`;
+                        if (m.phone) res += ` | Tel: ${m.phone}`;
+                        if (m.contractDate) res += `<br>Müqavilə: ${m.contractDate}`;
+                        res += `</span></div>`;
+                    });
+                    return res;
+                }
+
+                // — General / Fallback
+                res = `📊 <b style="color:white;">Ümumi Baxış</b><br>`;
+                res += `- Ambassador: <b style="color:white;">${total}</b> | Kompanyon: <b style="color:#805AD5;">${totalKomp}</b><br>`;
+                res += `- Aktiv: <b style="color:#10B981;">${active.length}</b> | Passiv: <b style="color:#EF4444;">${passive.length}</b><br>`;
+                res += `- Dövriyyə: <b style="color:var(--primary);">${Math.round(totalPoints).toLocaleString()} Bal</b><br><br>`;
+                
+                const top5 = [...ambassadors].sort((a,b) => b.points - a.points).slice(0, 5);
+                res += `👑 <b style="color:white;">Top 5 Ambassador</b><br>`;
+                top5.forEach((m, i) => {
+                    const icon = i < 3 ? ['🥇','🥈','🥉'][i] : `${i+1}.`;
+                    res += `${icon} <b style="color:white;">${m.name}</b> — ${m.points} bal<br>`;
+                });
+                res += `<br>💡 <b style="color:white;">Daha dəqiq nəticə üçün:</b> ad, "level 3", "passivlər", "kompanyonlar" kimi sözlərlə sual verin.`;
+                return res;
+
+            } catch (err) {
+                console.error("AI Error:", err);
+                return `âŒ <b style="color:white;">Xəta baş verdi:</b> ${err.message}<br>Zəhmət olmasa yenidən cəhd edin.`;
+            }
+        }
+
+        // — Theme & Navigation ———————————————
+        function initTheme() { const s = localStorage.getItem('theme'); if (s === 'light') document.body.classList.add('light-mode'); updateThemeIcon(); }
+        function toggleTheme() { document.body.classList.toggle('light-mode'); localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark'); updateThemeIcon(); }
+        function updateThemeIcon() { const i = document.getElementById('theme-icon'); if (i) { i.setAttribute('data-lucide', document.body.classList.contains('light-mode') ? 'moon' : 'sun'); lucide.createIcons(); } }
+        document.addEventListener('DOMContentLoaded', initTheme);
+        initTheme();
+        lucide.createIcons();
+
+        function transitionToPage(e, url) { e.preventDefault(); document.body.style.transition = 'opacity 0.4s ease'; document.body.style.opacity = '0'; setTimeout(() => { window.location.href = url; }, 350); }
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.nav-link, .bottom-nav-item, a.brand').forEach(link => {
+                const href = link.getAttribute('href');
+                if (href && !href.startsWith('#') && !href.startsWith('javascript')) link.addEventListener('click', function(e) { transitionToPage(e, href); });
+            });
+        });
+    </script>
+    <script src="auth_guard.js"></script>
+</body>
+</html>
+

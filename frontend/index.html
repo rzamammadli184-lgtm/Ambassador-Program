@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AzEstetik Club — Giriş</title>
+    <link rel="stylesheet" href="ambassador_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AzEstetik Club">
+    <link rel="apple-touch-icon" href="assets/azestetik_app_icon.png">
+    <script src="app_core.js" defer></script>
+
+    <style>
+        * { font-family: 'Poppins', sans-serif !important; box-sizing: border-box; }
+
+        @keyframes authBg {
+            0%,100% { transform: translate(0,0) scale(1); }
+            33%      { transform: translate(30px,-20px) scale(1.08); }
+            66%      { transform: translate(-20px,30px) scale(0.95); }
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bg-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(90px);
+            pointer-events: none;
+            z-index: 0;
+            animation: authBg 12s ease-in-out infinite;
+        }
+        .bg-orb-1 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,166,81,0.22) 0%, transparent 70%); top:-100px; right:-80px; }
+        .bg-orb-2 { width: 300px; height: 300px; background: radial-gradient(circle, rgba(0,166,81,0.12) 0%, transparent 70%); bottom:-80px; left:-60px; animation-delay:-6s; }
+
+        .auth-wrapper {
+            width: 100%;
+            max-width: 420px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 28px;
+            padding: 44px 36px;
+            box-shadow: 0 32px 80px rgba(0,0,0,0.35), 0 0 0 1px rgba(0,166,81,0.08);
+            backdrop-filter: blur(12px);
+        }
+
+        /* Logo Area */
+        .logo-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin-bottom: 32px;
+        }
+        .logo-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            object-fit: cover;
+            box-shadow: 0 8px 24px rgba(0,166,81,0.25);
+        }
+        .logo-text h1 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: var(--text-main);
+            line-height: 1.1;
+        }
+        .logo-text p {
+            margin: 2px 0 0;
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: rgba(255,255,255,0.04);
+            border-radius: 14px;
+            padding: 4px;
+            margin-bottom: 28px;
+            gap: 4px;
+        }
+        .tab-btn {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            transition: all 0.25s;
+        }
+        .tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(0,166,81,0.3);
+        }
+
+        /* Input Group */
+        .form-group { margin-bottom: 18px; }
+        .form-label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            margin-bottom: 7px;
+        }
+        .input-wrap {
+            position: relative;
+        }
+        .input-wrap i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            color: var(--text-muted);
+        }
+        .auth-input {
+            width: 100%;
+            padding: 13px 14px 13px 42px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-size: 0.92rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+        .auth-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0,166,81,0.15);
+        }
+        .auth-input::placeholder { color: var(--text-muted); }
+
+        .eye-btn {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            padding: 0;
+        }
+
+        /* Submit Button */
+        .btn-submit {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 6px;
+            transition: all 0.25s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-submit:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(0,166,81,0.35); }
+        .btn-submit:active { transform: scale(0.98); }
+        .btn-submit:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+        /* Spinner */
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .spinner {
+            width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            display: none;
+        }
+        .btn-submit.loading .spinner { display: block; }
+        .btn-submit.loading .btn-label { display: none; }
+
+        /* Error/Success Messages */
+        .msg-box {
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-size: 0.84rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        .msg-box.error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #ef4444; }
+        .msg-box.success { background: rgba(0,166,81,0.1); border: 1px solid rgba(0,166,81,0.3); color: var(--primary); }
+        .msg-box.show { display: flex; }
+
+        /* OTP Panel */
+        .otp-panel { display: none; }
+        .otp-panel.show { display: block; }
+
+        .otp-header {
+            text-align: center;
+            padding: 20px 0 16px;
+        }
+        .otp-icon {
+            width: 68px;
+            height: 68px;
+            background: rgba(0,166,81,0.12);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+        .otp-title { font-size: 1.1rem; font-weight: 700; margin: 0 0 6px; }
+        .otp-sub { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+        .otp-email { color: var(--primary); font-weight: 600; }
+
+        .otp-boxes {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 24px 0;
+        }
+        .otp-box {
+            width: 52px;
+            height: 62px;
+            text-align: center;
+            font-size: 1.6rem;
+            font-weight: 800;
+            border: 2px solid var(--card-border);
+            background: rgba(255,255,255,0.04);
+            color: var(--text-main);
+            border-radius: 14px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            caret-color: var(--primary);
+        }
+        .otp-box:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0,166,81,0.18);
+        }
+        .otp-box.filled { border-color: var(--primary); color: var(--primary); }
+
+        .resend-row {
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-top: 14px;
+        }
+        .resend-btn {
+            color: var(--primary);
+            font-weight: 700;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 0.82rem;
+        }
+        .resend-btn:disabled { color: var(--text-muted); cursor: not-allowed; }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.82rem;
+        }
+        .back-link a {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: color 0.2s;
+        }
+        .back-link a:hover { color: var(--primary); }
+
+        .divider {
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin: 20px 0;
+            position: relative;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 40%;
+            height: 1px;
+            background: var(--card-border);
+        }
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+
+        @media (max-width: 480px) {
+            .auth-card { padding: 32px 22px; }
+            .otp-box { width: 44px; height: 54px; font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-orb bg-orb-1"></div>
+    <div class="bg-orb bg-orb-2"></div>
+
+    <div class="auth-wrapper animate-slide-up">
+        <div class="auth-card">
+
+            <!-- Logo -->
+            <div class="logo-area">
+                <img src="assets/azestetik_app_icon.png" class="logo-icon" alt="AzEstetik Logo">
+                <div class="logo-text">
+                    <h1>AzEstetik</h1>
+                    <p>Ambassador Platform</p>
+                </div>
+            </div>
+
+            <!-- ═══ MAIN AUTH PANEL ═══ -->
+            <div id="main-panel">
+                <!-- Tabs -->
+                <div class="tabs">
+                    <button class="tab-btn active" id="tab-login" onclick="switchTab('login')">Giriş</button>
+                    <button class="tab-btn" id="tab-reg" onclick="switchTab('reg')">Qeydiyyat</button>
+                </div>
+
+                <!-- Error/Success Box -->
+                <div class="msg-box error" id="msg-error"><i data-lucide="alert-circle" style="width:16px;height:16px;flex-shrink:0;"></i><span id="msg-error-text"></span></div>
+                <div class="msg-box success" id="msg-success"><i data-lucide="check-circle" style="width:16px;height:16px;flex-shrink:0;"></i><span id="msg-success-text"></span></div>
+
+                <!-- LOGIN FORM -->
+                <form id="form-login" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">Gmail Ünvanı</label>
+                        <div class="input-wrap">
+                            <i data-lucide="mail"></i>
+                            <input type="email" id="login-email" class="auth-input" placeholder="example@gmail.com" autocomplete="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Şifrə</label>
+                        <div class="input-wrap">
+                            <i data-lucide="lock"></i>
+                            <input type="password" id="login-pass" class="auth-input" placeholder="••••••••" autocomplete="current-password" required>
+                            <button type="button" class="eye-btn" onclick="togglePass('login-pass',this)"><i data-lucide="eye" style="width:16px;height:16px;"></i></button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit" id="btn-login">
+                        <span class="spinner"></span>
+                        <span class="btn-label">Daxil Ol</span>
+                    </button>
+                </form>
+
+                <!-- REGISTER FORM -->
+                <form id="form-reg" onsubmit="handleRegister(event)" style="display:none;">
+                    <div class="form-group">
+                        <label class="form-label">Ad və Soyad</label>
+                        <div class="input-wrap">
+                            <i data-lucide="user"></i>
+                            <input type="text" id="reg-name" class="auth-input" placeholder="Adınız Soyadınız" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Gmail Ünvanı</label>
+                        <div class="input-wrap">
+                            <i data-lucide="mail"></i>
+                            <input type="email" id="reg-email" class="auth-input" placeholder="example@gmail.com" autocomplete="email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Şifrə (min 6 simvol)</label>
+                        <div class="input-wrap">
+                            <i data-lucide="lock"></i>
+                            <input type="password" id="reg-pass" class="auth-input" placeholder="••••••••" minlength="6" required>
+                            <button type="button" class="eye-btn" onclick="togglePass('reg-pass',this)"><i data-lucide="eye" style="width:16px;height:16px;"></i></button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-submit" id="btn-reg">
+                        <span class="spinner"></span>
+                        <span class="btn-label">Hesab Yarat</span>
+                    </button>
+                </form>
+            </div>
+
+            <!-- ═══ OTP PANEL ═══ -->
+            <div class="otp-panel" id="otp-panel">
+                <div class="otp-header">
+                    <div class="otp-icon">
+                        <i data-lucide="mail-check" style="width:32px;height:32px;color:var(--primary);"></i>
+                    </div>
+                    <div class="otp-title">E-poçtunuzu Yoxlayın</div>
+                    <p class="otp-sub">6 rəqəmli kod <span class="otp-email" id="otp-email-display"></span> ünvanına göndərildi.</p>
+                </div>
+
+                <div class="msg-box error" id="otp-msg-error"><i data-lucide="alert-circle" style="width:16px;height:16px;flex-shrink:0;"></i><span id="otp-msg-error-text"></span></div>
+
+                <div class="otp-boxes" id="otp-boxes">
+                    <input type="tel" inputmode="numeric" maxlength="1" class="otp-box" id="otp-0" onkeyup="otpKey(this,0)" oninput="otpInput(this,0)">
+                    <input type="tel" inputmode="numeric" maxlength="1" class="otp-box" id="otp-1" onkeyup="otpKey(this,1)" oninput="otpInput(this,1)">
+                    <input type="tel" inputmode="numeric" maxlength="1" class="otp-box" id="otp-2" onkeyup="otpKey(this,2)" oninput="otpInput(this,2)">
+                    <input type="tel" inputmode="numeric" maxlength="1" class="otp-box" id="otp-3" onkeyup="otpKey(this,3)" oninput="otpInput(this,3)">
+                    <input type="tel" inputmode="numeric" maxlength="1" class="otp-box" id="otp-4" onkeyup="otpKey(this,4)" oninput="otpInput(this,4)">
+                    <input type="tel" inputmode="numeric" maxlength="1" class="otp-box" id="otp-5" onkeyup="otpKey(this,5)" oninput="otpInput(this,5)">
+                </div>
+
+                <button class="btn-submit" id="btn-verify-otp" onclick="verifyOTP()">
+                    <span class="spinner"></span>
+                    <span class="btn-label">Doğrula və Daxil Ol</span>
+                </button>
+
+                <div class="resend-row">
+                    <button class="resend-btn" id="btn-resend" onclick="resendOTP()" disabled>
+                        Kodu yenidən göndər (<span id="countdown">60</span>s)
+                    </button>
+                </div>
+
+                <div class="back-link">
+                    <a href="#" onclick="backToAuth()">
+                        <i data-lucide="arrow-left" style="width:13px;height:13px;"></i>
+                        Geri qayıt
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // ── Config ─────────────────────────────────────────────────────────────
+        const API = window.location.protocol === 'file:' ? 'http://localhost:3001/api' : '/api';
+        let otpMode = null; // 'login' or 'register'
+        let pendingEmail = '';
+        let countdownTimer = null;
+
+        // Init
+        lucide.createIcons();
+        if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-mode');
+
+        // If already logged in, redirect
+        if (localStorage.getItem('az_token')) {
+            window.location.href = 'ambassador_dashboard.html';
+        }
+
+        // ── Tab Switch ─────────────────────────────────────────────────────────
+        function switchTab(tab) {
+            document.getElementById('tab-login').classList.toggle('active', tab === 'login');
+            document.getElementById('tab-reg').classList.toggle('active', tab === 'reg');
+            document.getElementById('form-login').style.display = tab === 'login' ? 'block' : 'none';
+            document.getElementById('form-reg').style.display = tab === 'reg' ? 'block' : 'none';
+            hideMsg();
+        }
+
+        // ── Helper ─────────────────────────────────────────────────────────────
+        function showError(id, text) {
+            const el = document.getElementById(id);
+            document.getElementById(id + '-text').textContent = text;
+            el.classList.add('show');
+            el.classList.remove('success');
+            el.classList.add('error');
+            lucide.createIcons();
+        }
+        function showSuccess(id, text) {
+            const el = document.getElementById(id);
+            document.getElementById(id + '-text').textContent = text;
+            el.classList.add('show');
+            el.classList.remove('error');
+            el.classList.add('success');
+            lucide.createIcons();
+        }
+        function hideMsg() {
+            ['msg-error','msg-success'].forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.classList.remove('show');
+            });
+        }
+
+        function setBtnLoading(id, loading) {
+            const btn = document.getElementById(id);
+            if (!btn) return;
+            btn.classList.toggle('loading', loading);
+            btn.disabled = loading;
+        }
+
+        function togglePass(inputId, btn) {
+            const inp = document.getElementById(inputId);
+            const show = inp.type === 'password';
+            inp.type = show ? 'text' : 'password';
+            btn.innerHTML = `<i data-lucide="${show ? 'eye-off' : 'eye'}" style="width:16px;height:16px;"></i>`;
+            lucide.createIcons();
+        }
+
+        // ── LOGIN ──────────────────────────────────────────────────────────────
+        async function handleLogin(e) {
+            e.preventDefault();
+            hideMsg();
+            const email = document.getElementById('login-email').value.trim();
+            const pass  = document.getElementById('login-pass').value;
+
+            setBtnLoading('btn-login', true);
+            try {
+                const res = await fetch(`${API}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password: pass })
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    showError('msg-error', data.error || 'Giriş xətası');
+                    return;
+                }
+
+                if (data.requireOtp) {
+                    pendingEmail = email;
+                    otpMode = 'login';
+                    showOtpPanel(email);
+                } else if (data.token) {
+                    // Direct login (no OTP)
+                    saveSession(data.token, data.user);
+                }
+            } catch(err) {
+                showError('msg-error', 'Server ilə əlaqə qurulamadı. Serverin işlədiyini yoxlayın.');
+                console.error(err);
+            } finally {
+                setBtnLoading('btn-login', false);
+            }
+        }
+
+        // ── REGISTER ───────────────────────────────────────────────────────────
+        async function handleRegister(e) {
+            e.preventDefault();
+            hideMsg();
+            const fullName = document.getElementById('reg-name').value.trim();
+            const email    = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-pass').value;
+
+            if (!fullName || !email || !password) {
+                showError('msg-error', 'Bütün xanaları doldurun');
+                return;
+            }
+
+            setBtnLoading('btn-reg', true);
+            try {
+                const res = await fetch(`${API}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ fullName, email, password })
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    showError('msg-error', data.error || 'Qeydiyyat xətası');
+                    return;
+                }
+
+                pendingEmail = email;
+                otpMode = 'register';
+                showOtpPanel(email);
+            } catch(err) {
+                showError('msg-error', 'Server ilə əlaqə qurulamadı. Serverin işlədiyini yoxlayın.');
+            } finally {
+                setBtnLoading('btn-reg', false);
+            }
+        }
+
+        // ── OTP Panel ──────────────────────────────────────────────────────────
+        function showOtpPanel(email) {
+            document.getElementById('main-panel').style.display = 'none';
+            document.getElementById('otp-panel').classList.add('show');
+            document.getElementById('otp-email-display').textContent = email;
+            document.getElementById('otp-0').focus();
+            startCountdown();
+            lucide.createIcons();
+        }
+
+        function backToAuth() {
+            document.getElementById('main-panel').style.display = 'block';
+            document.getElementById('otp-panel').classList.remove('show');
+            clearCountdown();
+            for(let i=0;i<6;i++) {
+                const el = document.getElementById('otp-'+i);
+                if(el) { el.value=''; el.classList.remove('filled'); }
+            }
+        }
+
+        function otpInput(el, idx) {
+            el.value = el.value.replace(/\D/g,'');
+            el.classList.toggle('filled', el.value.length > 0);
+            if (el.value && idx < 5) document.getElementById('otp-'+(idx+1)).focus();
+        }
+
+        function otpKey(el, idx) {
+            if (event.key === 'Backspace' && !el.value && idx > 0) {
+                const prev = document.getElementById('otp-'+(idx-1));
+                prev.value = '';
+                prev.classList.remove('filled');
+                prev.focus();
+            }
+            if (event.key === 'Enter') verifyOTP();
+        }
+
+        function getOTPCode() {
+            let code = '';
+            for(let i=0;i<6;i++) code += (document.getElementById('otp-'+i)?.value || '');
+            return code;
+        }
+
+        async function verifyOTP() {
+            const code = getOTPCode();
+            if (code.length !== 6) {
+                showError('otp-msg-error', '6 rəqəmli kodu tam daxil edin');
+                return;
+            }
+            const el = document.getElementById('otp-msg-error');
+            if(el) el.classList.remove('show');
+
+            setBtnLoading('btn-verify-otp', true);
+            try {
+                const endpoint = otpMode === 'register' ? '/auth/verify-registration' : '/auth/verify-login';
+                const res = await fetch(`${API}${endpoint}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: pendingEmail, otp: code })
+                });
+                const data = await res.json();
+
+                if (!res.ok) {
+                    showError('otp-msg-error', data.error || 'OTP doğrulama xətası');
+                    lucide.createIcons();
+                    return;
+                }
+
+                clearCountdown();
+                saveSession(data.token, data.user);
+            } catch(err) {
+                showError('otp-msg-error', 'Server xətası: əlaqə yoxlanın.');
+                lucide.createIcons();
+            } finally {
+                setBtnLoading('btn-verify-otp', false);
+            }
+        }
+
+        async function resendOTP() {
+            const endpoint = otpMode === 'register' ? '/auth/resend-otp' : '/auth/resend-otp';
+            try {
+                await fetch(`${API}/auth/resend-otp`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: pendingEmail, mode: otpMode })
+                });
+            } catch(e) {}
+            startCountdown();
+        }
+
+        function startCountdown() {
+            clearCountdown();
+            let t = 60;
+            document.getElementById('btn-resend').disabled = true;
+            const tick = () => {
+                document.getElementById('countdown').textContent = t;
+                if(t <= 0) {
+                    document.getElementById('btn-resend').disabled = false;
+                    document.getElementById('btn-resend').textContent = 'Kodu yenidən göndər';
+                    return;
+                }
+                t--;
+                countdownTimer = setTimeout(tick, 1000);
+            };
+            tick();
+        }
+
+        function clearCountdown() {
+            if(countdownTimer) clearTimeout(countdownTimer);
+        }
+
+        // ── Session Save ───────────────────────────────────────────────────────
+        function saveSession(token, user) {
+            localStorage.setItem('az_token', token);
+            localStorage.setItem('az_user', JSON.stringify(user || {}));
+            localStorage.setItem('user_role', 'user');
+            window.location.href = 'ambassador_dashboard.html';
+        }
+    </script>
+</body>
+</html>

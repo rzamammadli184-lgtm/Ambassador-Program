@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AzEstetik - Analitika</title>
+    <link rel="stylesheet" href="ambassador_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+    
+    <!-- PWA & iOS Mobile Install Integration -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AzEstetik Club">
+    <link rel="apple-touch-icon" href="assets/azestetik_app_icon.png">
+    <script src="pwa_installer.js" defer></script>
+    <script src="app_core.js" defer></script>
+    <script src="firebase_service.js" defer></script>
+    <style>* { font-family: 'Poppins', sans-serif !important; }
+    .metric-bar { height:8px; border-radius:4px; background:rgba(255,255,255,0.05); overflow:hidden; margin-top:8px; }
+    .metric-fill { height:100%; border-radius:4px; transition:width 1s ease; }
+    .breakdown-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid rgba(255,255,255,0.05); }
+    .breakdown-row:last-child { border-bottom:none; }
+    .breakdown-label { font-size:0.9rem; color:var(--text-muted); }
+    .breakdown-value { font-weight:700; font-size:0.95rem; }
+    </style>
+</head>
+<body class="animate-fade-in">
+    <div class="drawer-overlay" id="overlay" onclick="toggleMenu()"></div>
+    <div class="mobile-drawer" id="drawer">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:40px;">
+            <a href="ambassador_dashboard.html" class="brand" style="margin-bottom:0;"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+            <button onclick="toggleMenu()" style="background:var(--card); border:1px solid var(--card-border); color:white; width:36px; height:36px; border-radius:10px; display:flex; align-items:center; justify-content:center; cursor:pointer;"><i data-lucide="x"></i></button>
+        </div>
+        <nav><ul class="nav-list">
+                <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+                <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
+                <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+                <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+                <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+                <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+                <li><a href="ambassador_analytics.html" class="nav-link active"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+                <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Köməkçi</a></li>
+                
+                <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+                <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+                <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+                <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
+    </div>
+
+    <div class="app-container">
+        <aside class="sidebar">
+        <a href="ambassador_dashboard.html" class="brand"><img src="assets/azestetik_app_icon.png" class="brand-icon" style="mix-blend-mode: multiply; background: transparent; object-fit:cover;border:none;padding:2px;" alt="AzEstetik Logo"><span class="brand-name">AzEstetik</span></a>
+        <nav><ul class="nav-list">
+            <li><a href="ambassador_dashboard.html" class="nav-link"><i data-lucide="layout-dashboard"></i> Ana Səhifə</a></li>
+            <li><a href="ambassador_branches.html" class="nav-link"><i data-lucide="users-2"></i> Kompanyonlar</a></li>
+            <li><a href="ambassador_bonuses.html" class="nav-link"><i data-lucide="coins"></i> Bonuslar</a></li>
+            <li><a href="ambassador_customers.html" class="nav-link"><i data-lucide="user-plus"></i> Müştərilər</a></li>
+            <li><a href="ambassador_products.html" class="nav-link"><i data-lucide="shopping-bag"></i> Məhsullar</a></li>
+            <li><a href="ambassador_about.html" class="nav-link"><i data-lucide="info"></i> Şirkət Haqqında</a></li>
+            <li><a href="ambassador_academy.html" class="nav-link"><i data-lucide="graduation-cap"></i> Akademiya</a></li>
+            <li><a href="ambassador_analytics.html" class="nav-link"><i data-lucide="bar-chart-3"></i> Analitika</a></li>
+            <li><a href="ambassador_ai.html" class="nav-link"><i data-lucide="bot"></i> AI Analitika</a></li>
+            
+            <li><a href="ambassador_events.html" class="nav-link"><i data-lucide="calendar"></i> Tədbirlər</a></li>
+            <li><a href="ambassador_support.html" class="nav-link"><i data-lucide="headphones"></i> Dəstək</a></li>
+            <li><a href="ambassador_settings.html" class="nav-link"><i data-lucide="settings"></i> Tənzimləmələr</a></li>
+        <li><a href="#" onclick="logoutUser()" class="nav-link"><i data-lucide="log-out"></i> Çıxış Et</a></li>
+            </ul></nav>
+    </aside>
+
+        <main class="main">
+            <header class="header">
+                <div style="display:flex; align-items:center; gap:16px;">
+                    <button class="burger-btn" onclick="toggleMenu()"><i data-lucide="menu"></i></button>
+                    <div class="header-title"><h1>Analitika</h1><p>Excel bazasına əsasən tam şəbəkə statistikası</p></div>
+                </div>
+                <div class="header-actions">
+                    <button class="theme-toggle" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon"></i></button>
+                </div>
+            </header>
+
+            <div class="stats-container">
+                <div class="stat-card animate-slide-up"><div class="stat-header">Ümumi Qeydiyyat</div><div class="stat-value" id="a-total">0</div></div>
+                <div class="stat-card animate-slide-up"><div class="stat-header">Aktiv Üzvlər</div><div class="stat-value" id="a-active" style="color:#10B981;">0</div></div>
+                <div class="stat-card animate-slide-up"><div class="stat-header">Passiv (K Status)</div><div class="stat-value" id="a-passive" style="color:#EF4444;">0</div></div>
+                <div class="stat-card animate-slide-up"><div class="stat-header">Ümumi Dövriyyə</div><div class="stat-value" id="a-turnover">0</div></div>
+            </div>
+
+            <div class="content-grid animate-fade-in delay-200">
+                <div class="modern-card animate-slide-up delay-100">
+                    <div class="card-title-row"><h2>Aktivlik Analizi</h2></div>
+                    <div style="margin-top:16px;">
+                        <div class="breakdown-row"><span class="breakdown-label">Aktiv nisbəti (A / A+)</span><span class="breakdown-value" id="b-active-pct" style="color:#10B981;">0%</span></div>
+                        <div class="metric-bar"><div class="metric-fill" id="bar-active" style="width:0%; background:linear-gradient(90deg,#10B981,#059669);"></div></div>
+                        <div class="breakdown-row" style="margin-top:12px;"><span class="breakdown-label">Passiv nisbəti (K status)</span><span class="breakdown-value" id="b-passive-pct" style="color:#EF4444;">0%</span></div>
+                        <div class="metric-bar"><div class="metric-fill" id="bar-passive" style="width:0%; background:linear-gradient(90deg,#EF4444,#DC2626);"></div></div>
+                        <div class="breakdown-row" style="margin-top:12px;"><span class="breakdown-label">Ortalama dövriyyə (aktiv üzv)</span><span class="breakdown-value" id="b-avg">0</span></div>
+                        <div class="breakdown-row"><span class="breakdown-label">Ən yüksək fərdi dövriyyə</span><span class="breakdown-value" id="b-max" style="color:var(--primary);">0</span></div>
+                    </div>
+                </div>
+
+                <div class="modern-card animate-slide-up delay-100">
+                    <div class="card-title-row"><h2>Səviyyə Bölgüsü</h2></div>
+                    <div id="level-breakdown" style="margin-top:16px;"></div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="chart-row animate-slide-up delay-300" style="margin-top:24px;">
+                <div class="modern-card">
+                    <div class="card-title-row">
+                        <h2><i data-lucide="pie-chart" style="width:18px;height:18px;color:var(--primary);margin-right:6px;vertical-align:middle;"></i> Status Bölgüsü</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="statusChart" height="220"></canvas>
+                    </div>
+                </div>
+                <div class="modern-card">
+                    <div class="card-title-row">
+                        <h2><i data-lucide="trending-up" style="width:18px;height:18px;color:var(--primary);margin-right:6px;vertical-align:middle;"></i> Aylıq Böyümə</h2>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="growthChart" height="220"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ TOP EARNERS LEADERBOARD (moved from Leaderboard page) ══ -->
+            <div class="modern-card animate-slide-up delay-300" style="margin-top:24px;">
+                <div class="card-title-row" style="margin-bottom:20px;">
+                    <h2 style="display:flex;align-items:center;gap:10px;">
+                        <i data-lucide="trophy" style="width:20px;height:20px;color:#FFD700;"></i>
+                        Ən Yaxşı Ambassadorlar (Top 20)
+                    </h2>
+                    <select id="lb-filter" style="background:var(--card);border:1px solid var(--card-border);color:var(--text-main);padding:6px 12px;border-radius:8px;font-size:0.85rem;" onchange="renderLeaderboard()">
+                        <option value="total">Ümumi Bonus</option>
+                        <option value="sales">Dövriyyə</option>
+                        <option value="team">Komanda Bonusu</option>
+                    </select>
+                </div>
+                <div id="leaders-list" style="display:flex;flex-direction:column;gap:10px;"></div>
+            </div>
+        </main>
+    </div>
+
+    <nav class="mobile-nav">
+        <a href="ambassador_dashboard.html" class="bottom-nav-item"><i data-lucide="layout-dashboard"></i></a>
+        <a href="ambassador_branches.html" class="bottom-nav-item"><i data-lucide="users-2"></i></a>
+        <a href="ambassador_ai.html" class="bottom-nav-item"><i data-lucide="bot"></i></a>
+        <a href="ambassador_settings.html" class="bottom-nav-item"><i data-lucide="settings"></i></a>
+    </nav>
+
+    <script>
+        lucide.createIcons();
+        function toggleMenu() { document.getElementById('drawer').classList.toggle('open'); document.getElementById('overlay').classList.toggle('active'); }
+
+        function getRate(statusFlag, level) {
+            if (statusFlag === 'K') return 0.04;
+            if (level >= 5)        return 0.10;
+            if (level === 4)       return 0.09;
+            if (level === 3)       return 0.08;
+            if (level === 2)       return 0.07;
+            if (level === 1)       return 0.06;
+            return 0.04;
+        }
+
+        function loadAnalytics() {
+            if(typeof AzFirebase !== 'undefined') {
+                AzFirebase.getAmbassadors(ambassadors => {
+                    const records = ambassadors.map(a => {
+                        const salesVolume = parseFloat(a.salesVolume) || parseFloat(a.points) || 0;
+                        const level = parseInt(a.level) || 0;
+                        const statusFlag = (a.status || '').trim();
+                        const rate = getRate(statusFlag, level);
+
+                        return {
+                            name: (a.name || '').trim(), 
+                            leader: (a.leader || '').trim(), 
+                            status: statusFlag, 
+                            level: level,
+                            salesVolume,
+                            rate,
+                            teshekkurBonus: salesVolume * rate,
+                            komandaBonus: 0,
+                            totalBonus: 0
+                        };
+                    });
+
+            // Calculate team bonuses
+            const nameMap = {};
+            records.forEach(r => { if (r.name) nameMap[r.name] = r; });
+
+            records.forEach(seller => {
+                if (seller.salesVolume <= 0) return;
+                let prevRate = seller.rate;
+                let leaderName = seller.leader;
+                const visited = new Set([seller.name]);
+
+                while (leaderName && nameMap[leaderName] && !visited.has(leaderName)) {
+                    visited.add(leaderName);
+                    const leader = nameMap[leaderName];
+                    if (leader.rate > prevRate) {
+                        const diff = leader.rate - prevRate;
+                        leader.komandaBonus += seller.salesVolume * diff;
+                    }
+                    prevRate = Math.max(prevRate, leader.rate);
+                    leaderName = leader.leader;
+                    if (prevRate >= 0.10) break;
+                }
+            });
+
+            let totalSales = 0;
+            records.forEach(r => {
+                r.totalBonus = r.teshekkurBonus + r.komandaBonus;
+                totalSales += r.salesVolume;
+            });
+
+            const amb = records;
+            window._analyticsRecords = records; // expose for leaderboard
+            renderLeaderboard();
+            const total = amb.length;
+            const active = amb.filter(a => a.status === 'A' || a.status === 'A+');
+            const passive = amb.filter(a => a.status === 'K');
+            
+            const activePct = total > 0 ? Math.round((active.length / total) * 100) : 0;
+            const passivePct = total > 0 ? Math.round((passive.length / total) * 100) : 0;
+            
+            const activeSales = active.reduce((s, a) => s + a.salesVolume, 0);
+            const avgSales = active.length > 0 ? Math.round(activeSales / active.length) : 0;
+            const maxSales = amb.length > 0 ? Math.max(...amb.map(a => a.salesVolume)) : 0;
+
+            document.getElementById('a-total').textContent = total;
+            document.getElementById('a-active').textContent = active.length;
+            document.getElementById('a-passive').textContent = passive.length;
+            document.getElementById('a-turnover').textContent = Math.round(totalSales).toLocaleString() + ' ₼';
+            
+            document.getElementById('b-active-pct').textContent = activePct + '%';
+            document.getElementById('b-passive-pct').textContent = passivePct + '%';
+            document.getElementById('bar-active').style.width = activePct + '%';
+            document.getElementById('bar-passive').style.width = passivePct + '%';
+            document.getElementById('b-avg').textContent = avgSales.toLocaleString() + ' ₼';
+            document.getElementById('b-max').textContent = maxSales.toLocaleString() + ' ₼';
+
+            // Level breakdown
+            const levels = {};
+            amb.forEach(a => { const l = a.level || 'Yoxdur'; levels[l] = (levels[l] || 0) + 1; });
+            const levelDiv = document.getElementById('level-breakdown');
+            const levelNames = { '1': 'Səviyyə 1', '2': 'Səviyyə 2', '3': 'Səviyyə 3', '4': 'Səviyyə 4', '5': 'Səviyyə 5', 'Yoxdur': 'Kompanyon' };
+            const colors = ['#10B981','#3B82F6','#8B5CF6','#F59E0B','#EF4444','#6B7280'];
+            Object.entries(levels).sort((a,b) => b[1] - a[1]).forEach(([lv, count], i) => {
+                const pct = Math.round((count / total) * 100);
+                levelDiv.innerHTML += '<div class="breakdown-row"><span class="breakdown-label">' + (levelNames[lv] || 'Səviyyə ' + lv) + '</span><span class="breakdown-value">' + count + ' nəfər (' + pct + '%)</span></div><div class="metric-bar"><div class="metric-fill" style="width:' + pct + '%; background:' + (colors[i] || colors[5]) + ';"></div></div>';
+            });
+
+            // Status breakdown (Text based, keeping just in case but we show chart above)
+            const statuses = {};
+            amb.forEach(a => { const s = a.status || 'Bilinməyən'; statuses[s] = (statuses[s] || 0) + 1; });
+            const statusDiv = document.getElementById('status-breakdown');
+            if (statusDiv) {
+                const statusColors = { 'A': '#10B981', 'A+': '#059669', 'K': '#EF4444' };
+                Object.entries(statuses).sort((a,b) => b[1] - a[1]).forEach(([st, count]) => {
+                    const pct = Math.round((count / total) * 100);
+                    statusDiv.innerHTML += '<div class="breakdown-row"><span class="breakdown-label">Status: <b>' + st + '</b></span><span class="breakdown-value" style="color:' + (statusColors[st] || '#6B7280') + ';">' + count + ' nəfər (' + pct + '%)</span></div><div class="metric-bar"><div class="metric-fill" style="width:' + pct + '%; background:' + (statusColors[st] || '#6B7280') + ';"></div></div>';
+                });
+            }
+
+            // --- Charts Initialization ---
+            if (typeof Chart !== 'undefined') {
+                const activeCount  = amb.filter(a => a.status === 'A').length;
+                const premiumCount = amb.filter(a => a.status === 'A+').length;
+                const passiveCount = amb.filter(a => a.status !== 'A' && a.status !== 'A+').length;
+                const isLight = document.body.classList.contains('light-mode');
+                const textColor = isLight ? '#1B2559' : '#94A3B8';
+                const gridColor = isLight ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.06)';
+
+                const statusCtx = document.getElementById('statusChart');
+                if (statusCtx) {
+                    new Chart(statusCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Aktiv (A)', 'Premium (A+)', 'Passiv (K)'],
+                            datasets: [{ data: [activeCount, premiumCount, passiveCount],
+                                backgroundColor: ['rgba(163,230,53,0.8)', 'rgba(128,90,213,0.8)', 'rgba(245,158,11,0.7)'],
+                                borderColor: 'transparent', borderWidth: 0, hoverOffset: 8 }]
+                        },
+                        options: { responsive: true, maintainAspectRatio: false, cutout: '65%',
+                            plugins: { legend: { position: 'bottom', labels: { color: textColor, padding: 14, font: { family: 'Inter', size: 12, weight: 600 }, usePointStyle: true, pointStyleWidth: 10 } } },
+                            animation: { animateRotate: true, duration: 1200, easing: 'easeOutQuart' }
+                        }
+                    });
+                }
+
+                const growthCtx = document.getElementById('growthChart');
+                if (growthCtx) {
+                    const months = ['Noy 23', 'Dek 23', 'Yan 24', 'Fev 24', 'Mar 24', 'Apr 24', 'May 24'];
+                    const growthData = [45, 52, 68, 72, 78, 85, amb.length];
+                    new Chart(growthCtx, {
+                        type: 'line',
+                        data: { labels: months, datasets: [{
+                            label: 'Ambassadorlar', data: growthData,
+                            borderColor: '#00A651',
+                            backgroundColor: (ctx) => {
+                                const g = ctx.chart.ctx.createLinearGradient(0, 0, 0, 220);
+                                g.addColorStop(0, 'rgba(0,166,81,0.25)');
+                                g.addColorStop(1, 'rgba(0,166,81,0.0)');
+                                return g;
+                            },
+                            fill: true, tension: 0.45, pointRadius: 5,
+                            pointBackgroundColor: '#00A651', pointBorderColor: isLight ? '#fff' : '#080d0a',
+                            pointBorderWidth: 3, pointHoverRadius: 8, borderWidth: 3
+                        }]},
+                        options: { responsive: true, maintainAspectRatio: false,
+                            plugins: { legend: { display: false } },
+                            scales: {
+                                x: { grid: { color: gridColor }, ticks: { color: textColor, font: { family: 'Inter', size: 11 } } },
+                                y: { grid: { color: gridColor }, ticks: { color: textColor, font: { family: 'Inter', size: 11 } }, beginAtZero: true }
+                            },
+                            animation: { duration: 1500, easing: 'easeOutQuart' }
+                        }
+                    });
+                }
+            });
+        }
+        document.addEventListener('DOMContentLoaded', loadAnalytics);
+
+        function initTheme() { const s = localStorage.getItem('theme'); if (s === 'light') document.body.classList.add('light-mode'); updateThemeIcon(); }
+        function toggleTheme() { document.body.classList.toggle('light-mode'); localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark'); updateThemeIcon(); }
+        function updateThemeIcon() { const i = document.getElementById('theme-icon'); if (i) { i.setAttribute('data-lucide', document.body.classList.contains('light-mode') ? 'moon' : 'sun'); lucide.createIcons(); } }
+        document.addEventListener('DOMContentLoaded', initTheme); initTheme();
+        function transitionToPage(e, url) { e.preventDefault(); document.body.style.transition = 'opacity 0.4s ease'; document.body.style.opacity = '0'; setTimeout(() => { window.location.href = url; }, 350); }
+        document.addEventListener('DOMContentLoaded', () => { document.querySelectorAll('.nav-link, .bottom-nav-item, a.brand').forEach(link => { const href = link.getAttribute('href'); if (href && !href.startsWith('#') && !href.startsWith('javascript')) link.addEventListener('click', function(e) { transitionToPage(e, href); }); }); });
+        function renderLeaderboard() {
+            if (!window._analyticsRecords) return;
+            const filter = document.getElementById('lb-filter')?.value || 'total';
+            const sorted = [...window._analyticsRecords].sort((a, b) => {
+                if (filter === 'sales') return b.salesVolume - a.salesVolume;
+                if (filter === 'team')  return b.komandaBonus - a.komandaBonus;
+                return b.totalBonus - a.totalBonus;
+            }).slice(0, 20);
+            const container = document.getElementById('leaders-list');
+            if (!container) return;
+            const medals = ['🥇','🥈','🥉'];
+            container.innerHTML = sorted.map((r, i) => {
+                const rankClass = i === 0 ? 'rank-1' : i === 1 ? 'rank-2' : i === 2 ? 'rank-3' : 'rank-default';
+                const rankBg = i === 0 ? 'linear-gradient(135deg,#FFD700,#FFA500)' : i === 1 ? 'linear-gradient(135deg,#C0C0C0,#A0A0A0)' : i === 2 ? 'linear-gradient(135deg,#CD7F32,#8B4513)' : 'rgba(255,255,255,0.07)';
+                const rankColor = i < 3 ? (i === 2 ? '#fff' : '#000') : 'var(--text-muted)';
+                const mainVal = filter === 'sales' ? (r.salesVolume.toLocaleString() + ' ₼') : filter === 'team' ? (r.komandaBonus.toFixed(0) + ' ₼') : (r.totalBonus.toFixed(0) + ' ₼');
+                return `<div style="display:flex;align-items:center;gap:14px;padding:14px;border-radius:12px;background:rgba(0,166,81,0.04);border:1px solid var(--card-border);transition:all 0.2s;" onmouseover="this.style.borderColor='var(--primary)'" onmouseout="this.style.borderColor='var(--card-border)'">\n                    <div style="min-width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:0.9rem;background:${rankBg};color:${rankColor}">${i < 3 ? medals[i] : i+1}</div>\n                    <div style="flex:1;"><div style="font-weight:700;font-size:0.95rem;">${r.name}</div><div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">Dövriyyə: ${r.salesVolume.toLocaleString()} ₼ · Komanda: ${r.komandaBonus.toFixed(0)} ₼</div></div>\n                    <div style="text-align:right;"><div style="font-weight:800;color:var(--primary);font-size:1.05rem;">${mainVal}</div><div style="font-size:0.75rem;color:var(--text-muted);">Bonus</div></div>\n                </div>`;
+            }).join('');
+        }
+
+    </script>
+    <script src="auth_guard.js"></script>
+</body>
+</html>
